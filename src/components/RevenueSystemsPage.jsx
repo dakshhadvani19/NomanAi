@@ -38,7 +38,7 @@ function HeroSection() {
       <motion.div
         animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(129,140,248,0.3) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }}
+        style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }}
       />
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 2rem', textAlign: 'center', position: 'relative', zIndex: 10 }}>
@@ -46,7 +46,7 @@ function HeroSection() {
           {...fadeUp(0)}
           style={{ display: 'inline-flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}
         >
-          <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#818cf8' }}>REVENUE SYSTEMS</span>
+          <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#22d3ee' }}>REVENUE SYSTEMS</span>
         </motion.div>
 
         <motion.h1
@@ -63,7 +63,7 @@ function HeroSection() {
           Three of the most expensive problems in any growing business — each one fixed completely.
         </motion.p>
 
-        <motion.div {...fadeUp(0.45)}>
+        <motion.div {...fadeUp(0.45)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
           <Link
             to="/audit"
             style={{
@@ -72,12 +72,12 @@ function HeroSection() {
               justifyContent: 'center',
               padding: '1.1rem 2.5rem',
               borderRadius: 999,
-              background: 'linear-gradient(135deg, #6366f1, #818cf8)',
+              background: 'linear-gradient(135deg, #0ea5e9, #06b6d4)',
               color: '#fff',
               fontWeight: 800,
               fontSize: '1.1rem',
               textDecoration: 'none',
-              boxShadow: '0 0 40px rgba(99,102,241,0.4)',
+              boxShadow: '0 0 40px rgba(6,182,212,0.4)',
               position: 'relative',
               overflow: 'hidden'
             }}
@@ -135,7 +135,7 @@ const SYSTEMS_DATA = [
 
 function SystemsSection() {
   return (
-    <section style={{ padding: '6rem 2rem', background: '#03070f', position: 'relative' }}>
+    <section style={{ padding: '6rem 2rem', background: 'transparent', position: 'relative' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
         {SYSTEMS_DATA.map((sys, i) => (
           <motion.div
@@ -147,7 +147,7 @@ function SystemsSection() {
             style={{ position: 'relative' }}
           >
             <HoverCloudCard
-              whileHover={{ scale: 1.015, borderColor: 'rgba(129,140,248,0.5)' }}
+              whileHover={{ scale: 1.015, borderColor: 'rgba(6,182,212,0.5)' }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               style={{
                 background: 'rgba(10,13,28,0.6)',
@@ -161,15 +161,15 @@ function SystemsSection() {
               }}
             >
               {/* Dynamic hover gradient behind the card border */}
-              <div style={{ position: 'absolute', top: 0, right: 0, width: 300, height: 300, background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+              <div style={{ position: 'absolute', top: 0, right: 0, width: 300, height: 300, background: 'radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', position: 'relative', zIndex: 10 }}>
                 {/* Top header row */}
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#818cf8' }}>System {sys.num}</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#22d3ee' }}>System {sys.num}</span>
                     {sys.badge && (
-                      <span style={{ padding: '0.2rem 0.6rem', borderRadius: 999, background: 'rgba(99,102,241,0.2)', border: '1px solid rgba(99,102,241,0.4)', color: '#a5b4fc', fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{sys.badge}</span>
+                      <span style={{ padding: '0.2rem 0.6rem', borderRadius: 999, background: 'rgba(6,182,212,0.2)', border: '1px solid rgba(6,182,212,0.4)', color: '#67e8f9', fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{sys.badge}</span>
                     )}
                   </div>
                   <h3 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#fff', marginBottom: '0.5rem' }}>{sys.title}</h3>
@@ -190,7 +190,7 @@ function SystemsSection() {
                         transition={{ delay: 0.3 + (j * 0.1) }}
                         style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem' }}
                       >
-                        <CheckCircle2 size={16} color="#818cf8" style={{ flexShrink: 0 }} />
+                        <CheckCircle2 size={16} color="#22d3ee" style={{ flexShrink: 0 }} />
                         {feat}
                       </motion.div>
                     ))}
@@ -225,7 +225,7 @@ function SystemsSection() {
 /* ─── SECTION 3: BANNER CTA ─── */
 function BannerCTA() {
   return (
-    <section style={{ padding: '0 2rem 6rem', background: '#03070f' }}>
+    <section style={{ padding: '0 2rem 6rem', background: 'transparent' }}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -237,8 +237,8 @@ function BannerCTA() {
           animate={{ y: [-5, 5, -5] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           style={{
-            background: 'linear-gradient(90deg, rgba(99,102,241,0.05), transparent)',
-            border: '1px solid rgba(99,102,241,0.2)',
+            background: 'linear-gradient(90deg, rgba(6,182,212,0.05), transparent)',
+            border: '1px solid rgba(6,182,212,0.2)',
             borderRadius: 24,
             padding: '3rem',
             display: 'flex',
@@ -251,10 +251,10 @@ function BannerCTA() {
           }}
         >
           {/* Subtle glow inside banner */}
-          <div style={{ position: 'absolute', top: '-50%', right: '10%', width: 200, height: 200, background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)', filter: 'blur(30px)' }} />
+          <div style={{ position: 'absolute', top: '-50%', right: '10%', width: 200, height: 200, background: 'radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)', filter: 'blur(30px)' }} />
 
           <div style={{ maxWidth: 500, position: 'relative', zIndex: 10 }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#818cf8', marginBottom: '0.75rem', display: 'block' }}>INDIVIDUAL SOLUTIONS</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#22d3ee', marginBottom: '0.75rem', display: 'block' }}>INDIVIDUAL SOLUTIONS</span>
             <h3 style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', marginBottom: '1rem' }}>Not ready for a full system?</h3>
             <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>Don't wait to fix what hurts most. Explore our library of 19 standalone solutions designed to solve specific bottlenecks instantly.</p>
           </div>
@@ -300,13 +300,13 @@ function BottomCTA() {
   return (
     <section style={{
       padding: '8rem 2rem',
-      background: 'linear-gradient(to bottom, #03070f, #0a0d24)',
+      background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
       textAlign: 'center'
     }}>
       {/* Background orbs */}
-      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(14,165,233,0.1) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
 
       <div style={{ maxWidth: 800, margin: '0 auto', position: 'relative', zIndex: 10 }}>
@@ -334,12 +334,12 @@ function BottomCTA() {
               justifyContent: 'center',
               padding: '1.1rem 2.5rem',
               borderRadius: 999,
-              background: 'linear-gradient(135deg, #6366f1, #818cf8)',
+              background: 'linear-gradient(135deg, #0ea5e9, #06b6d4)',
               color: '#fff',
               fontWeight: 800,
               fontSize: '1.1rem',
               textDecoration: 'none',
-              boxShadow: '0 0 30px rgba(99,102,241,0.3)',
+              boxShadow: '0 0 30px rgba(6,182,212,0.3)',
               transition: 'transform 0.2s ease'
             }}
             onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
@@ -397,7 +397,7 @@ export default function RevenueSystemsPage() {
   }, []);
 
   return (
-    <div style={{ background: '#03070f', color: '#fff', minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ background: 'transparent', color: '#fff', minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
       <HeroSection />
       <SystemsSection />
       <BannerCTA />

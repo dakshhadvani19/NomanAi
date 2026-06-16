@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, Clock, Mail, Phone, ArrowRight, Sparkles, Send } from 'lucide-react';
 import VoiceAgentBanner from './VoiceAgentBanner';
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -108,26 +110,40 @@ export default function AuditPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const response = await fetch('http://localhost:3000/api/book-audit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          goal: `${form.businessType} (${form.businessSize})`,
-          message: form.challenge
-        }),
+      // Send data to Firestore
+      await addDoc(collection(db, 'audit_bookings'), {
+        ...form,
+        createdAt: serverTimestamp(),
       });
-      const data = await response.json();
-      console.log('Lead submission response:', data);
-    } catch (err) {
-      console.error('Failed to connect to backend server:', err);
+
+      // Trigger outbound Vapi voice call
+      try {
+        const response = await fetch('http://localhost:3000/api/book-audit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            goal: `${form.businessType} (${form.businessSize})`,
+            message: form.challenge
+          }),
+        });
+        const data = await response.json();
+        console.log('Lead submission response:', data);
+      } catch (err) {
+        console.error('Failed to connect to backend server:', err);
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
-    setSubmitted(true);
   };
 
   const checklistItems = [
@@ -304,8 +320,8 @@ export default function AuditPage() {
                     </FormField>
                   </div>
 
-                  <FormField label="Biggest Challenge *" delay={0.45}>
-                    <FocusTextarea name="challenge" rows={4} placeholder="What is the biggest operational or growth challenge your business faces right now?" required value={form.challenge} onChange={handleChange} />
+                  <FormField label="Biggest Challenge (Optional)" delay={0.45}>
+                    <FocusTextarea name="challenge" rows={4} placeholder="What is the biggest operational or growth challenge your business faces right now?" value={form.challenge} onChange={handleChange} />
                   </FormField>
 
                   <motion.button

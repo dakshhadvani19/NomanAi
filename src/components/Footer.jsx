@@ -102,17 +102,6 @@ export default function Footer() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.35)', fontSize: '0.78rem' }}>
             <span>outpero.com</span>
-            <span>·</span>
-            <a
-              href="https://instagram.com/outpero"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: 'rgba(255,255,255,0.35)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '3px', transition: 'color 0.2s' }}
-              onMouseOver={e => e.currentTarget.style.color = '#0ea5e9'}
-              onMouseOut={e => e.currentTarget.style.color = 'rgba(255,255,255,0.35)'}
-            >
-              <ExternalLink size={12} /> @outpero
-            </a>
           </div>
         </motion.div>
 

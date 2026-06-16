@@ -17,7 +17,7 @@ function SoundWave() {
             width: 3,
             height: h,
             borderRadius: 4,
-            background: 'linear-gradient(180deg, #0ea5e9, #6366f1)',
+            background: 'linear-gradient(180deg, #22d3ee, #06b6d4)',
             transformOrigin: 'center',
             opacity: 0.8,
           }}
@@ -36,8 +36,8 @@ export default function VoiceAgentBanner() {
       style={{
         position: 'relative',
         borderRadius: '16px',
-        background: 'rgba(99,102,241,0.07)',
-        border: '1px solid rgba(99,102,241,0.25)',
+        background: 'rgba(6,182,212,0.07)',
+        border: '1px solid rgba(6,182,212,0.25)',
         padding: '1.25rem 1.75rem',
         marginBottom: '3rem',
         display: 'flex',
@@ -47,19 +47,19 @@ export default function VoiceAgentBanner() {
         flexWrap: 'wrap',
         overflow: 'hidden',
         backdropFilter: 'blur(12px)',
-        boxShadow: '0 0 30px rgba(99,102,241,0.1)',
+        boxShadow: '0 0 30px rgba(6,182,212,0.1)',
       }}
     >
       {/* Subtle gradient overlay */}
       <div style={{
         position: 'absolute', inset: 0, borderRadius: '16px',
-        background: 'linear-gradient(120deg, rgba(99,102,241,0.08) 0%, transparent 60%)',
+        background: 'linear-gradient(120deg, rgba(6,182,212,0.08) 0%, transparent 60%)',
         pointerEvents: 'none',
       }} />
 
       {/* Floating mic icon with pulse ring */}
       <div style={{ position: 'absolute', right: '200px', top: '50%', transform: 'translateY(-50%)', opacity: 0.06, pointerEvents: 'none' }}>
-        <Mic size={90} color="#6366f1" />
+        <Mic size={90} color="#06b6d4" />
       </div>
 
       {/* Left: text */}
@@ -67,11 +67,11 @@ export default function VoiceAgentBanner() {
         {/* Animated mic + soundwave */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <motion.div
-            animate={{ boxShadow: ['0 0 0 0 rgba(99,102,241,0)', '0 0 0 8px rgba(99,102,241,0.15)', '0 0 0 0 rgba(99,102,241,0)'] }}
+            animate={{ boxShadow: ['0 0 0 0 rgba(6,182,212,0)', '0 0 0 8px rgba(6,182,212,0.15)', '0 0 0 0 rgba(6,182,212,0)'] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-            style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
+            style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(6,182,212,0.15)', border: '1px solid rgba(6,182,212,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
           >
-            <Mic size={18} color="#818cf8" />
+            <Mic size={18} color="#22d3ee" />
           </motion.div>
           <SoundWave />
         </div>
@@ -97,10 +97,10 @@ export default function VoiceAgentBanner() {
           style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
             padding: '0.7rem 1.5rem', borderRadius: '999px',
-            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            background: 'linear-gradient(135deg, #06b6d4, #0891b2)',
             color: '#fff', textDecoration: 'none',
             fontWeight: 700, fontSize: '0.85rem',
-            boxShadow: '0 0 20px rgba(99,102,241,0.4)',
+            boxShadow: '0 0 20px rgba(6,182,212,0.4)',
             whiteSpace: 'nowrap',
           }}
         >
