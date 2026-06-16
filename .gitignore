@@ -27,3 +27,6 @@ dist-ssr
 .env
 *.txt
 *.mp4
+
+.vercel
+.env*.local
