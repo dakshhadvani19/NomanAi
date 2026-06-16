@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight } from 'lucide-react';
 
-// Typing Animation Component
-const TypewriterText = ({ text, delay = 0 }) => {
-  const [displayedText, setDisplayedText] = useState("");
-
-  useEffect(() => {
-    let i = 0;
-    const intervalId = setInterval(() => {
-      setDisplayedText(text.slice(0, i + 1));
-      i++;
-      if (i === text.length) clearInterval(intervalId);
-    }, 50); // Speed of typing
-    
-    // Add delay start if needed (using timeout wrapper)
-    return () => clearInterval(intervalId);
-  }, [text]);
-
-  return <span>{displayedText}</span>;
+// Smooth Typing Animation Component
+const SmoothTypewriter = ({ text, delay = 0, speed = 0.05 }) => {
+  const characters = text.split("");
+  
+  return (
+    <span style={{ display: 'inline-block' }}>
+      {characters.map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 5, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{
+            duration: 0.3,
+            delay: delay + index * speed,
+            ease: "easeOut"
+          }}
+          style={{ display: 'inline-block' }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
 };
 
 export default function HeroSection() {
   const orbitRadius = 160;
   
-  // Outer nodes data based on video
+  // Outer nodes data based on the provided image
   const outerNodes = [
-    { label: 'Leads', angle: -54 },
-    { label: 'Follow up', angle: 18 },
-    { label: 'Bookings', angle: 90 },
-    { label: 'WhatsApp', angle: 162 },
-    { label: '24/7 Calls', angle: 234 }
+    { label: 'Leads', angle: -126 },
+    { label: 'Follow-up', angle: -54 },
+    { label: 'Bookings', angle: 18 },
+    { label: 'WhatsApp', angle: 90 },
+    { label: '24/7 Calls', angle: 162 }
   ].map((node, i) => {
-    // Convert angle to radians, adjusted so -90 is top
-    const rad = (node.angle - 90) * (Math.PI / 180);
+    // Convert angle to radians
+    const rad = node.angle * (Math.PI / 180);
     return {
       ...node,
       x: Math.cos(rad) * orbitRadius,
@@ -58,10 +64,10 @@ export default function HeroSection() {
           </motion.div>
 
           <h1 style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)', lineHeight: 1.1, marginBottom: '1.5rem', fontWeight: 800, minHeight: '160px' }}>
-            <TypewriterText text="Your business is leaking revenue." />
+            <SmoothTypewriter text="Your business is leaking revenue." delay={0} speed={0.03} />
             <br />
             <span style={{ color: 'var(--text-muted)' }}>
-              <TypewriterText text="We seal it." />
+              <SmoothTypewriter text="We seal it." delay={1.2} speed={0.04} />
             </span>
             <motion.span
               animate={{ opacity: [1, 0, 1] }}
@@ -73,7 +79,8 @@ export default function HeroSection() {
                 background: 'linear-gradient(180deg, #4285F4, #9b72cb, #d96570)', // Google AI style gradient
                 marginLeft: '8px',
                 verticalAlign: 'bottom',
-                borderRadius: '2px'
+                borderRadius: '2px',
+                boxShadow: '0 0 8px rgba(155, 114, 203, 0.5)'
               }}
             />
           </h1>
@@ -106,7 +113,11 @@ export default function HeroSection() {
         <div style={{ position: 'relative', height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           
           {/* Connecting Lines / Network */}
-          <svg style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }}>
+          <motion.svg 
+            style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+          >
             <defs>
               <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="rgba(6, 182, 212, 0.1)" />
@@ -114,9 +125,39 @@ export default function HeroSection() {
               </linearGradient>
             </defs>
             <g transform="translate(50%, 50%)">
+              
+              {/* Main Circular Orbit */}
+              <circle
+                cx="0" cy="0" r={orbitRadius}
+                fill="none"
+                stroke="rgba(255,255,255,0.05)"
+                strokeWidth="1"
+                strokeDasharray="4 4"
+              />
+              
+              {/* Outer Concentric Circle */}
+              <circle
+                cx="0" cy="0" r={orbitRadius * 1.5}
+                fill="none"
+                stroke="rgba(255,255,255,0.02)"
+                strokeWidth="1"
+                strokeDasharray="2 8"
+              />
+
+              {/* Pentagon Lines Connecting Nodes */}
+              <polygon
+                points={outerNodes.map(pos => `${pos.x},${pos.y}`).join(' ')}
+                fill="none"
+                stroke="url(#lineGrad)"
+                strokeWidth="1.5"
+                strokeDasharray="6 6"
+                strokeLinejoin="round"
+              />
+
+              {/* Lines from Center to Nodes */}
               {outerNodes.map((pos, i) => (
                 <line 
-                  key={i}
+                  key={`line-${i}`}
                   x1="0" y1="0" 
                   x2={pos.x} y2={pos.y} 
                   stroke="url(#lineGrad)" 
@@ -125,7 +166,7 @@ export default function HeroSection() {
                 />
               ))}
             </g>
-          </svg>
+          </motion.svg>
 
           {/* Central Node */}
           <motion.div
@@ -217,27 +258,39 @@ export default function HeroSection() {
       </div>
 
       {/* Systems Built For Marquee */}
-      <div style={{ textAlign: 'center', borderTop: '1px solid var(--glass-border)', paddingTop: '2rem' }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 600 }}>Systems Built For</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', maxWidth: '1000px', margin: '0 auto' }}>
-          {['D2C Brands', 'Legal Firms', 'E-commerce', 'SaaS Startups', 'Real Estate', 'Clinics & Healthcare', 'Coaches & Consultants'].map((tag, i) => (
+      <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: '3rem', paddingBottom: '1rem', overflow: 'hidden', position: 'relative' }}>
+        <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', fontWeight: 600 }}>Systems Built For</p>
+        
+        {/* Fade edges */}
+        <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '150px', background: 'linear-gradient(90deg, var(--bg-dark) 0%, transparent 100%)', zIndex: 2, pointerEvents: 'none' }}></div>
+        <div style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '150px', background: 'linear-gradient(270deg, var(--bg-dark) 0%, transparent 100%)', zIndex: 2, pointerEvents: 'none' }}></div>
+
+        <motion.div 
+          style={{ display: 'flex', gap: '1rem', width: 'max-content' }}
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        >
+          {/* Duplicate list twice for seamless loop */}
+          {[...['D2C Brands', 'Legal Firms', 'E-commerce', 'SaaS Startups', 'Real Estate', 'Clinics & Healthcare', 'Coaches & Consultants'], ...['D2C Brands', 'Legal Firms', 'E-commerce', 'SaaS Startups', 'Real Estate', 'Clinics & Healthcare', 'Coaches & Consultants']].map((tag, i) => (
             <span key={i} style={{ 
-              padding: '0.5rem 1.25rem', 
-              borderRadius: '8px', 
-              background: 'rgba(255,255,255,0.03)', 
-              border: '1px solid rgba(255,255,255,0.05)', 
-              fontSize: '0.875rem',
-              color: 'var(--text-muted)',
-              transition: 'color 0.3s',
-              cursor: 'default'
+              padding: '0.75rem 1.75rem', 
+              borderRadius: '9999px', 
+              background: 'rgba(5, 10, 20, 0.6)', 
+              border: '1px solid rgba(255,255,255,0.06)', 
+              fontSize: '0.9rem',
+              color: '#8c95a6',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.2)'
             }}
-            onMouseOver={(e) => e.target.style.color = 'var(--text-main)'}
-            onMouseOut={(e) => e.target.style.color = 'var(--text-muted)'}
+            onMouseOver={(e) => { e.target.style.color = '#ffffff'; e.target.style.background = 'rgba(15, 25, 40, 0.8)'; e.target.style.borderColor = 'rgba(255,255,255,0.15)'; }}
+            onMouseOut={(e) => { e.target.style.color = '#8c95a6'; e.target.style.background = 'rgba(5, 10, 20, 0.6)'; e.target.style.borderColor = 'rgba(255,255,255,0.06)'; }}
             >
               {tag}
             </span>
           ))}
-        </div>
+        </motion.div>
       </div>
 
     </section>
