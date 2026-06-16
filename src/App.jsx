@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AnimatedBackground from './components/AnimatedBackground';
 import Navbar from './components/Navbar';
 import HeroPentagon from './components/HeroPentagon';
@@ -6,27 +7,38 @@ import ProblemCards from './components/ProblemCards';
 import Systems from './components/Systems';
 import Process from './components/Process';
 import Solutions from './components/Solutions';
+import AuditPage from './components/AuditPage';
+import Footer from './components/Footer';
+import VoiceAgentsPage from './components/VoiceAgentsPage';
+import RevenueSystemsPage from './components/RevenueSystemsPage';
+
+function HomePage() {
+  return (
+    <main style={{ position: 'relative', zIndex: 10 }}>
+      <HeroPentagon />
+      <ProblemCards />
+      <Systems />
+      <Process />
+      <Solutions />
+    </main>
+  );
+}
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <AnimatedBackground />
       <Navbar />
-      
-      <main style={{ position: 'relative', zIndex: 10 }}>
-        <HeroPentagon />
-        <ProblemCards />
-        <Systems />
-        <Process />
-        <Solutions />
-      </main>
-      
-      {/* Footer can be added later if needed */}
-      <footer style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)', borderTop: '1px solid var(--glass-border)' }}>
-        <p>© 2026 Outpero. All rights reserved.</p>
-      </footer>
-    </>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/audit" element={<AuditPage />} />
+        <Route path="/voice-agents" element={<VoiceAgentsPage />} />
+        <Route path="/revenue-systems" element={<RevenueSystemsPage />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
 export default App;
+

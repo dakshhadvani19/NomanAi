@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 
@@ -9,7 +10,6 @@ export default function Systems() {
       title: 'Revenue Capture',
       desc: 'Contact, qualify, and book leads in seconds.',
       features: ['AI Voice Agent (24/7)', 'WhatsApp & SMS Bot', 'Instant CRM Sync'],
-      more: '+ 2 more systems...',
       price: 'From ₹60,000'
     },
     {
@@ -18,7 +18,6 @@ export default function Systems() {
       title: 'Ops Efficiency',
       desc: 'Eliminate 20-40 hours of manual tasks weekly.',
       features: ['Workflow Process Mapping', '3-5 Core Automations', 'Custom n8n/Make Logic'],
-      more: '+ 2 more systems...',
       price: 'From ₹1,00,000'
     },
     {
@@ -26,7 +25,6 @@ export default function Systems() {
       title: 'Web Capture',
       desc: 'Turn passive website visitors into qualified leads.',
       features: ['High-Converting Landing Pages', 'Frictionless Lead Capture', 'Automated WhatsApp Triggers'],
-      more: '+ 2 more systems...',
       price: 'From ₹50,000'
     }
   ];
@@ -76,9 +74,15 @@ export default function Systems() {
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem' }}>
               <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>{sys.price}</span>
-              <a href="#" style={{ color: 'var(--accent-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                EXPLORE <ArrowRight size={16} />
-              </a>
+              {sys.title === 'Revenue Capture' ? (
+                <Link to="/voice-agents" style={{ color: 'var(--accent-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  EXPLORE <ArrowRight size={16} />
+                </Link>
+              ) : (
+                <a href="#" style={{ color: 'var(--accent-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  EXPLORE <ArrowRight size={16} />
+                </a>
+              )}
             </div>
           </motion.div>
         ))}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Moon, Sparkles } from 'lucide-react';
 
@@ -35,28 +36,35 @@ export default function Navbar() {
       
       {/* Links container */}
       <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-        {links.map((link, i) => (
-          <a key={i} href="#" style={{ 
-            color: link === 'Home' ? 'var(--accent-primary)' : 'var(--text-muted)', 
-            textDecoration: 'none', 
-            fontWeight: 500,
-            fontSize: '0.9rem',
-            transition: 'color 0.2s',
-            position: 'relative'
-          }}
-          onMouseOver={(e) => e.target.style.color = 'var(--text-main)'}
-          onMouseOut={(e) => e.target.style.color = link === 'Home' ? 'var(--accent-primary)' : 'var(--text-muted)'}
-          >
-            {link}
-            {link === 'AI Voice Agents' && (
-              <span style={{ 
-                position: 'absolute', top: '-10px', right: '-30px', 
-                background: 'var(--accent-secondary)', color: '#fff', 
-                fontSize: '0.6rem', padding: '2px 6px', borderRadius: '4px', fontWeight: 700 
-              }}>NEW</span>
-            )}
-          </a>
-        ))}
+        {links.map((link, i) => {
+          let to = '#';
+          if (link === 'Home') to = '/';
+          if (link === 'AI Voice Agents') to = '/voice-agents';
+          if (link === 'Revenue Systems') to = '/revenue-systems';
+          
+          return (
+            <Link key={i} to={to} style={{ 
+              color: link === 'Home' ? 'var(--accent-primary)' : 'var(--text-muted)', 
+              textDecoration: 'none', 
+              fontWeight: 500,
+              fontSize: '0.9rem',
+              transition: 'color 0.2s',
+              position: 'relative'
+            }}
+            onMouseOver={(e) => e.target.style.color = 'var(--text-main)'}
+            onMouseOut={(e) => e.target.style.color = link === 'Home' ? 'var(--accent-primary)' : 'var(--text-muted)'}
+            >
+              {link}
+              {link === 'AI Voice Agents' && (
+                <span style={{ 
+                  position: 'absolute', top: '-10px', right: '-30px', 
+                  background: 'var(--accent-secondary)', color: '#fff', 
+                  fontSize: '0.6rem', padding: '2px 6px', borderRadius: '4px', fontWeight: 700 
+                }}>NEW</span>
+              )}
+            </Link>
+          );
+        })}
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -71,9 +79,13 @@ export default function Navbar() {
         >
           <Moon size={16} />
         </button>
-        <button className="btn btn-secondary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.875rem' }}>
+        <Link
+          to="/audit"
+          className="btn btn-secondary"
+          style={{ padding: '0.5rem 1.25rem', fontSize: '0.875rem', textDecoration: 'none' }}
+        >
           Book Free Audit
-        </button>
+        </Link>
       </div>
     </motion.nav>
   );

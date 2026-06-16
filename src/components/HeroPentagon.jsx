@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight } from 'lucide-react';
 
+// Track if the animation has played in this React session. 
+// This survives navigation but resets on hard browser refresh.
+let hasTypedOnce = false;
+
 // Advanced Multi-Line Typewriter with following cursor
-const MultiLineTypewriter = ({ lines, typingSpeed = 35, linePause = 600 }) => {
-  const [visibleChars, setVisibleChars] = useState(0);
+const MultiLineTypewriter = ({ lines, typingSpeed = 35, linePause = 150 }) => {
   const totalChars = lines.reduce((acc, line) => acc + line.text.length, 0);
+  
+  const [visibleChars, setVisibleChars] = useState(() => {
+    // Check if we already typed this in the current React app session
+    if (hasTypedOnce) {
+      return totalChars;
+    }
+    return 0;
+  });
 
   useEffect(() => {
     if (visibleChars < totalChars) {
@@ -23,7 +35,13 @@ const MultiLineTypewriter = ({ lines, typingSpeed = 35, linePause = 600 }) => {
       const delay = isEndOfLine ? linePause : typingSpeed;
 
       const timeout = setTimeout(() => {
-        setVisibleChars(prev => prev + 1);
+        setVisibleChars(prev => {
+          const next = prev + 1;
+          if (next >= totalChars) {
+            hasTypedOnce = true;
+          }
+          return next;
+        });
       }, delay);
       
       return () => clearTimeout(timeout);
@@ -145,120 +163,91 @@ export default function HeroSection() {
             transition={{ delay: 3.5, duration: 0.6 }}
             style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}
           >
-            <button className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
-              Book a Free Audit
-            </button>
-            <a href="#" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'color 0.2s' }} onMouseOver={(e) => e.target.style.color = 'var(--accent-primary)'} onMouseOut={(e) => e.target.style.color = 'var(--text-main)'}>
-              See Our Systems <ArrowRight size={16} />
-            </a>
+            <Link to="/audit" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem', textDecoration: 'none' }}>
+              Book a Free Audit 
+
+              
+            </Link>
+            <motion.a 
+              href="#systems" 
+              style={{ 
+                color: 'var(--text-main)', 
+                textDecoration: 'none', 
+                fontWeight: 600, 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                padding: '0.9rem 2rem', 
+                borderRadius: '999px',
+                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'transparent'
+              }} 
+              whileHover={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 0 25px rgba(255, 255, 255, 0.1)'
+              }}
+              transition={{ duration: 0.3 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              See Our Systems
+            </motion.a>
           </motion.div>
         </div>
 
         {/* Right Column: Interactive Diagram */}
         <div style={{ position: 'relative', height: '420px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-          {/* Static SVG: lines + animated dots traveling outward */}
-          <svg
-            style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', overflow: 'visible' }}
-          >
-            <defs>
-              {/* Gradient for lines */}
-              <linearGradient id="lineGradH" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(6,182,212,0.6)" />
-                <stop offset="100%" stopColor="rgba(14,165,233,0.05)" />
-              </linearGradient>
-              {/* Glow filter for dots */}
-              <filter id="dotGlow" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+          {/* Dots: travel from edge of central circle to edge of each outer circle */}
+          {outerNodes.map((pos, i) => {
+            const dist = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
+            const ux = pos.x / dist;
+            const uy = pos.y / dist;
 
-            <g transform={`translate(50%, 50%)`}>
-              {/* Subtle orbit ring */}
-              <circle cx="0" cy="0" r={orbitRadius} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeDasharray="3 5" />
+            // Start at edge of central circle (r=60px)
+            const sx = ux * 62;
+            const sy = uy * 62;
+            // End at edge of each outer circle (node r=35px from center)
+            const ex = pos.x - ux * 37;
+            const ey = pos.y - uy * 37;
 
-              {outerNodes.map((pos, i) => {
-                const lineLen = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
-                // Path from center (0,0) to the edge of the outer node circle (shrink by 35px so dot stops at node edge)
-                const scale = (lineLen - 35) / lineLen;
-                const ex = pos.x * scale;
-                const ey = pos.y * scale;
-                const pathId = `path-${i}`;
-                const dotDuration = 1.8 + i * 0.15; // slight stagger per arm
-
-                return (
-                  <g key={i}>
-                    {/* Radial line: center → node */}
-                    <line
-                      x1="0" y1="0"
-                      x2={pos.x} y2={pos.y}
-                      stroke="rgba(6,182,212,0.18)"
-                      strokeWidth="1.5"
-                    />
-
-                    {/* Invisible path for animateMotion */}
-                    <path id={pathId} d={`M 0 0 L ${ex} ${ey}`} fill="none" stroke="none" />
-
-                    {/* PRIMARY dot — travels 0→node */}
-                    <circle r="4" fill="rgba(6,182,212,0.95)" filter="url(#dotGlow)">
-                      <animateMotion
-                        dur={`${dotDuration}s`}
-                        repeatCount="indefinite"
-                        begin={`${i * 0.36}s`}
-                        keyTimes="0;0.7;1"
-                        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                        calcMode="spline"
-                      >
-                        <mpath href={`#${pathId}`} />
-                      </animateMotion>
-                      <animate
-                        attributeName="opacity"
-                        values="0;1;1;0"
-                        keyTimes="0;0.05;0.8;1"
-                        dur={`${dotDuration}s`}
-                        repeatCount="indefinite"
-                        begin={`${i * 0.36}s`}
-                      />
-                      <animate
-                        attributeName="r"
-                        values="2;4;4;2"
-                        keyTimes="0;0.1;0.8;1"
-                        dur={`${dotDuration}s`}
-                        repeatCount="indefinite"
-                        begin={`${i * 0.36}s`}
-                      />
-                    </circle>
-
-                    {/* TRAIL dot — slightly behind primary */}
-                    <circle r="2.5" fill="rgba(14,165,233,0.5)" filter="url(#dotGlow)">
-                      <animateMotion
-                        dur={`${dotDuration}s`}
-                        repeatCount="indefinite"
-                        begin={`${i * 0.36 + 0.12}s`}
-                        keyTimes="0;0.7;1"
-                        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                        calcMode="spline"
-                      >
-                        <mpath href={`#${pathId}`} />
-                      </animateMotion>
-                      <animate
-                        attributeName="opacity"
-                        values="0;0.6;0.6;0"
-                        keyTimes="0;0.05;0.8;1"
-                        dur={`${dotDuration}s`}
-                        repeatCount="indefinite"
-                        begin={`${i * 0.36 + 0.12}s`}
-                      />
-                    </circle>
-                  </g>
-                );
-              })}
-            </g>
-          </svg>
+            return [0, 1, 2].map((d) => {
+              const size = d === 0 ? 8 : d === 1 ? 6 : 4;
+              const dur = 1.6;
+              const del = i * 0.4 + d * 0.55;
+              return (
+                <motion.div
+                  key={`dot-${i}-${d}`}
+                  style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    width: size,
+                    height: size,
+                    marginLeft: -size / 2,
+                    marginTop: -size / 2,
+                    borderRadius: '50%',
+                    background: '#0ea5e9',
+                    boxShadow: '0 0 8px 2px rgba(14,165,233,0.7)',
+                    zIndex: 6,
+                    pointerEvents: 'none',
+                  }}
+                  animate={{
+                    x: [sx, ex],
+                    y: [sy, ey],
+                    opacity: [0, 1, 1, 0],
+                    scale: [0.5, 1, 1, 0.5],
+                  }}
+                  transition={{
+                    x: { duration: dur, repeat: Infinity, delay: del, ease: 'easeInOut', repeatDelay: 0 },
+                    y: { duration: dur, repeat: Infinity, delay: del, ease: 'easeInOut', repeatDelay: 0 },
+                    opacity: { duration: dur, repeat: Infinity, delay: del, times: [0, 0.08, 0.85, 1], repeatDelay: 0 },
+                    scale: { duration: dur, repeat: Infinity, delay: del, times: [0, 0.1, 0.85, 1], repeatDelay: 0 },
+                  }}
+                />
+              );
+            });
+          })}
 
           {/* Central Node — fixed, no rotation */}
           <motion.div

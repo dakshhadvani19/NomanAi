@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
@@ -49,9 +50,15 @@ export default function Solutions() {
               <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{sol.title}</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{sol.desc}</p>
             </div>
-            <div style={{ marginTop: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', fontSize: '0.875rem', fontWeight: 600 }}>
-              View Details <ChevronRight size={16} />
-            </div>
+            {sol.title === 'Inbound AI Receptionist' ? (
+              <Link to="/voice-agents" style={{ marginTop: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
+                View Details <ChevronRight size={16} />
+              </Link>
+            ) : (
+              <div style={{ marginTop: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', fontSize: '0.875rem', fontWeight: 600 }}>
+                View Details <ChevronRight size={16} />
+              </div>
+            )}
           </motion.div>
         ))}
       </div>
