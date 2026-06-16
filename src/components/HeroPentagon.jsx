@@ -333,8 +333,8 @@ export default function HeroSection() {
         
         {/* Marquee Wrapper with True CSS Mask for Seamless Background Blending */}
         <div style={{
-          maskImage: 'linear-gradient(90deg, transparent, black 50px, black calc(100% - 50px), transparent)',
-          WebkitMaskImage: 'linear-gradient(90deg, transparent, black 50px, black calc(100% - 50px), transparent)',
+          maskImage: 'linear-gradient(90deg, transparent, black 150px, black calc(100% - 150px), transparent)',
+          WebkitMaskImage: 'linear-gradient(90deg, transparent, black 150px, black calc(100% - 150px), transparent)',
         }}>
           <motion.div 
             style={{ display: 'flex', gap: '1rem', width: 'max-content' }}
