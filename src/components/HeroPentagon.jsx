@@ -2,28 +2,85 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight } from 'lucide-react';
 
-// Smooth Typing Animation Component
-const SmoothTypewriter = ({ text, delay = 0, speed = 0.05 }) => {
-  const characters = text.split("");
-  
+// Advanced Multi-Line Typewriter with following cursor
+const MultiLineTypewriter = ({ lines, typingSpeed = 35, linePause = 600 }) => {
+  const [visibleChars, setVisibleChars] = useState(0);
+  const totalChars = lines.reduce((acc, line) => acc + line.text.length, 0);
+
+  useEffect(() => {
+    if (visibleChars < totalChars) {
+      // Check if we just finished a line
+      let isEndOfLine = false;
+      let charsSoFar = 0;
+      for (const line of lines) {
+        charsSoFar += line.text.length;
+        if (visibleChars === charsSoFar && visibleChars !== totalChars) {
+          isEndOfLine = true;
+          break;
+        }
+      }
+
+      const delay = isEndOfLine ? linePause : typingSpeed;
+
+      const timeout = setTimeout(() => {
+        setVisibleChars(prev => prev + 1);
+      }, delay);
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [visibleChars, totalChars, typingSpeed, linePause, lines]);
+
+  let charsRendered = 0;
+
   return (
-    <span style={{ display: 'inline-block' }}>
-      {characters.map((char, index) => (
-        <motion.span
-          key={index}
-          initial={{ opacity: 0, y: 5, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{
-            duration: 0.3,
-            delay: delay + index * speed,
-            ease: "easeOut"
-          }}
-          style={{ display: 'inline-block' }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
-    </span>
+    <>
+      {lines.map((line, lineIndex) => {
+        const lineStartChars = charsRendered;
+        
+        // How many characters of THIS line should be visible?
+        const visibleInThisLine = Math.max(0, Math.min(line.text.length, visibleChars - lineStartChars));
+        
+        charsRendered += line.text.length;
+
+        // Only render the <br /> if we have started rendering this line
+        const showBr = line.br && visibleChars >= lineStartChars;
+
+        return (
+          <React.Fragment key={lineIndex}>
+            {showBr && <br />}
+            <span style={{ color: line.color || 'inherit' }}>
+              {line.text.slice(0, visibleInThisLine).split('').map((char, charIndex) => (
+                <motion.span
+                  key={charIndex}
+                  initial={{ opacity: 0, y: 5, filter: 'blur(4px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  style={{ display: 'inline-block', whiteSpace: 'pre' }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+          </React.Fragment>
+        );
+      })}
+      
+      {/* The Following Cursor */}
+      <motion.span
+        animate={{ opacity: [1, 0.2, 1] }}
+        transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          display: 'inline-block',
+          width: '4px',
+          height: '0.9em',
+          background: 'linear-gradient(180deg, #4285F4, #9b72cb, #d96570)',
+          marginLeft: '4px',
+          verticalAlign: 'bottom',
+          borderRadius: '2px',
+          boxShadow: '0 0 8px rgba(155, 114, 203, 0.5)'
+        }}
+      />
+    </>
   );
 };
 
@@ -48,6 +105,12 @@ export default function HeroSection() {
     };
   });
 
+  const typewriterLines = [
+    { text: "Your business is ", br: false },
+    { text: "leaking revenue.", br: true },
+    { text: "We seal it.", br: true, color: 'var(--text-muted)' }
+  ];
+
   return (
     <section className="section-padding container" style={{ paddingTop: '120px' }}>
       
@@ -64,31 +127,13 @@ export default function HeroSection() {
           </motion.div>
 
           <h1 style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)', lineHeight: 1.1, marginBottom: '1.5rem', fontWeight: 800, minHeight: '160px' }}>
-            <SmoothTypewriter text="Your business is leaking revenue." delay={0} speed={0.03} />
-            <br />
-            <span style={{ color: 'var(--text-muted)' }}>
-              <SmoothTypewriter text="We seal it." delay={1.2} speed={0.04} />
-            </span>
-            <motion.span
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
-              style={{
-                display: 'inline-block',
-                width: '4px',
-                height: '0.9em',
-                background: 'linear-gradient(180deg, #4285F4, #9b72cb, #d96570)', // Google AI style gradient
-                marginLeft: '8px',
-                verticalAlign: 'bottom',
-                borderRadius: '2px',
-                boxShadow: '0 0 8px rgba(155, 114, 203, 0.5)'
-              }}
-            />
+            <MultiLineTypewriter lines={typewriterLines} typingSpeed={40} linePause={500} />
           </h1>
           
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2.5, duration: 0.8 }}
+            transition={{ delay: 3, duration: 0.8 }}
             style={{ fontSize: '1.125rem', color: 'var(--text-muted)', marginBottom: '3rem', maxWidth: '500px' }}
           >
             AI automations, voice agents, and web solutions — engineered around your outcomes, not our deliverables.
@@ -97,7 +142,7 @@ export default function HeroSection() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.8, duration: 0.6 }}
+            transition={{ delay: 3.5, duration: 0.6 }}
             style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}
           >
             <button className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
@@ -110,65 +155,112 @@ export default function HeroSection() {
         </div>
 
         {/* Right Column: Interactive Diagram */}
-        <div style={{ position: 'relative', height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          
-          {/* Connecting Lines / Network */}
-          <motion.svg 
-            style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+        <div style={{ position: 'relative', height: '420px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+
+          {/* Static SVG: lines + animated dots traveling outward */}
+          <svg
+            style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', overflow: 'visible' }}
           >
             <defs>
-              <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="rgba(6, 182, 212, 0.1)" />
-                <stop offset="100%" stopColor="rgba(14, 165, 233, 0.5)" />
+              {/* Gradient for lines */}
+              <linearGradient id="lineGradH" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(6,182,212,0.6)" />
+                <stop offset="100%" stopColor="rgba(14,165,233,0.05)" />
               </linearGradient>
+              {/* Glow filter for dots */}
+              <filter id="dotGlow" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
             </defs>
-            <g transform="translate(50%, 50%)">
-              
-              {/* Main Circular Orbit */}
-              <circle
-                cx="0" cy="0" r={orbitRadius}
-                fill="none"
-                stroke="rgba(255,255,255,0.05)"
-                strokeWidth="1"
-                strokeDasharray="4 4"
-              />
-              
-              {/* Outer Concentric Circle */}
-              <circle
-                cx="0" cy="0" r={orbitRadius * 1.5}
-                fill="none"
-                stroke="rgba(255,255,255,0.02)"
-                strokeWidth="1"
-                strokeDasharray="2 8"
-              />
 
-              {/* Pentagon Lines Connecting Nodes */}
-              <polygon
-                points={outerNodes.map(pos => `${pos.x},${pos.y}`).join(' ')}
-                fill="none"
-                stroke="url(#lineGrad)"
-                strokeWidth="1.5"
-                strokeDasharray="6 6"
-                strokeLinejoin="round"
-              />
+            <g transform={`translate(50%, 50%)`}>
+              {/* Subtle orbit ring */}
+              <circle cx="0" cy="0" r={orbitRadius} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeDasharray="3 5" />
 
-              {/* Lines from Center to Nodes */}
-              {outerNodes.map((pos, i) => (
-                <line 
-                  key={`line-${i}`}
-                  x1="0" y1="0" 
-                  x2={pos.x} y2={pos.y} 
-                  stroke="url(#lineGrad)" 
-                  strokeWidth="1.5" 
-                  strokeDasharray="4 4"
-                />
-              ))}
+              {outerNodes.map((pos, i) => {
+                const lineLen = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
+                // Path from center (0,0) to the edge of the outer node circle (shrink by 35px so dot stops at node edge)
+                const scale = (lineLen - 35) / lineLen;
+                const ex = pos.x * scale;
+                const ey = pos.y * scale;
+                const pathId = `path-${i}`;
+                const dotDuration = 1.8 + i * 0.15; // slight stagger per arm
+
+                return (
+                  <g key={i}>
+                    {/* Radial line: center → node */}
+                    <line
+                      x1="0" y1="0"
+                      x2={pos.x} y2={pos.y}
+                      stroke="rgba(6,182,212,0.18)"
+                      strokeWidth="1.5"
+                    />
+
+                    {/* Invisible path for animateMotion */}
+                    <path id={pathId} d={`M 0 0 L ${ex} ${ey}`} fill="none" stroke="none" />
+
+                    {/* PRIMARY dot — travels 0→node */}
+                    <circle r="4" fill="rgba(6,182,212,0.95)" filter="url(#dotGlow)">
+                      <animateMotion
+                        dur={`${dotDuration}s`}
+                        repeatCount="indefinite"
+                        begin={`${i * 0.36}s`}
+                        keyTimes="0;0.7;1"
+                        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                        calcMode="spline"
+                      >
+                        <mpath href={`#${pathId}`} />
+                      </animateMotion>
+                      <animate
+                        attributeName="opacity"
+                        values="0;1;1;0"
+                        keyTimes="0;0.05;0.8;1"
+                        dur={`${dotDuration}s`}
+                        repeatCount="indefinite"
+                        begin={`${i * 0.36}s`}
+                      />
+                      <animate
+                        attributeName="r"
+                        values="2;4;4;2"
+                        keyTimes="0;0.1;0.8;1"
+                        dur={`${dotDuration}s`}
+                        repeatCount="indefinite"
+                        begin={`${i * 0.36}s`}
+                      />
+                    </circle>
+
+                    {/* TRAIL dot — slightly behind primary */}
+                    <circle r="2.5" fill="rgba(14,165,233,0.5)" filter="url(#dotGlow)">
+                      <animateMotion
+                        dur={`${dotDuration}s`}
+                        repeatCount="indefinite"
+                        begin={`${i * 0.36 + 0.12}s`}
+                        keyTimes="0;0.7;1"
+                        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                        calcMode="spline"
+                      >
+                        <mpath href={`#${pathId}`} />
+                      </animateMotion>
+                      <animate
+                        attributeName="opacity"
+                        values="0;0.6;0.6;0"
+                        keyTimes="0;0.05;0.8;1"
+                        dur={`${dotDuration}s`}
+                        repeatCount="indefinite"
+                        begin={`${i * 0.36 + 0.12}s`}
+                      />
+                    </circle>
+                  </g>
+                );
+              })}
             </g>
-          </motion.svg>
+          </svg>
 
-          {/* Central Node */}
+          {/* Central Node — fixed, no rotation */}
           <motion.div
             style={{
               width: '120px', height: '120px',
@@ -180,80 +272,53 @@ export default function HeroSection() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              boxShadow: '0 0 30px rgba(6, 182, 212, 0.3), inset 0 0 20px rgba(6, 182, 212, 0.2)',
-              textAlign: 'center'
+              boxShadow: '0 0 30px rgba(6,182,212,0.3), inset 0 0 20px rgba(6,182,212,0.15)',
+              textAlign: 'center',
             }}
-            animate={{ boxShadow: ['0 0 30px rgba(6, 182, 212, 0.3)', '0 0 50px rgba(6, 182, 212, 0.6)', '0 0 30px rgba(6, 182, 212, 0.3)'] }}
+            animate={{ boxShadow: [
+              '0 0 30px rgba(6,182,212,0.3), inset 0 0 20px rgba(6,182,212,0.15)',
+              '0 0 55px rgba(6,182,212,0.6), inset 0 0 30px rgba(6,182,212,0.25)',
+              '0 0 30px rgba(6,182,212,0.3), inset 0 0 20px rgba(6,182,212,0.15)',
+            ]}}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <span style={{ fontSize: '0.875rem', fontWeight: 800, letterSpacing: '0.05em', lineHeight: 1.2 }}>
+            <span style={{ fontSize: '0.875rem', fontWeight: 800, letterSpacing: '0.05em', lineHeight: 1.3 }}>
               YOUR<br/>BUSINESS
             </span>
-            
-            {/* Leaking revenue indicator below center */}
-            <motion.div 
-              style={{ position: 'absolute', bottom: '-40px', color: '#ef4444', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', whiteSpace: 'nowrap' }}
-              animate={{ opacity: [0.5, 1, 0.5], y: [0, 5, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+          </motion.div>
+
+          {/* Outer Nodes — absolutely positioned, static */}
+          {outerNodes.map((pos, i) => (
+            <motion.div
+              key={i}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3 + i * 0.15, duration: 0.6, ease: 'easeOut' }}
+              style={{
+                width: '70px', height: '70px',
+                borderRadius: '50%',
+                background: 'rgba(3,7,18,0.85)',
+                border: '1px solid rgba(6,182,212,0.25)',
+                position: 'absolute',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                left: `calc(50% + ${pos.x}px - 35px)`,
+                top:  `calc(50% + ${pos.y}px - 35px)`,
+                backdropFilter: 'blur(10px)',
+                color: 'var(--text-muted)',
+                fontSize: '0.63rem',
+                fontWeight: 700,
+                textAlign: 'center',
+                letterSpacing: '0.06em',
+                boxShadow: '0 0 0 rgba(6,182,212,0)',
+                zIndex: 5,
+              }}
+              whileHover={{ scale: 1.12, boxShadow: '0 0 20px rgba(6,182,212,0.4)', color: '#ffffff' }}
             >
-              ↓ LEAKING REVENUE
+              {pos.label}
             </motion.div>
-          </motion.div>
-
-          {/* Orbiting Nodes forming pentagon structure */}
-          <motion.div
-            style={{ position: 'absolute', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-          >
-            {outerNodes.map((pos, i) => (
-              <motion.div
-                key={i}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: pos.delay, duration: 0.8 }}
-                style={{
-                  width: '70px', height: '70px',
-                  borderRadius: '50%',
-                  background: 'rgba(3, 7, 18, 0.8)',
-                  border: '1px solid var(--glass-border)',
-                  position: 'absolute',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  x: pos.x, y: pos.y,
-                  backdropFilter: 'blur(8px)',
-                  color: 'var(--text-muted)',
-                  fontSize: '0.65rem',
-                  fontWeight: 600,
-                  textAlign: 'center',
-                  letterSpacing: '0.05em'
-                }}
-              >
-                {/* Counter-rotate text so it stays upright */}
-                <motion.div animate={{ rotate: -360 }} transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}>
-                  {pos.label}
-                </motion.div>
-
-                {/* Flow particle */}
-                <motion.div
-                  style={{
-                    position: 'absolute',
-                    width: '6px', height: '6px',
-                    borderRadius: '50%',
-                    background: 'var(--accent-secondary)',
-                    boxShadow: '0 0 10px var(--accent-secondary)',
-                  }}
-                  animate={{
-                    x: [0, -pos.x * 0.8],
-                    y: [0, -pos.y * 0.8],
-                    opacity: [0, 1, 0]
-                  }}
-                  transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.5, ease: 'easeIn' }}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
+          ))}
         </div>
       </div>
 
