@@ -376,7 +376,7 @@ function BottomCTA() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
-            Explore the Solutions <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
+            Explore the Solutions
           </a>
         </motion.div>
 

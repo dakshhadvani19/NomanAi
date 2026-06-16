@@ -11,6 +11,7 @@ import AuditPage from './components/AuditPage';
 import Footer from './components/Footer';
 import VoiceAgentsPage from './components/VoiceAgentsPage';
 import RevenueSystemsPage from './components/RevenueSystemsPage';
+import SolutionsPage from './components/SolutionsPage';
 
 function HomePage() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/audit" element={<AuditPage />} />
         <Route path="/voice-agents" element={<VoiceAgentsPage />} />
         <Route path="/revenue-systems" element={<RevenueSystemsPage />} />
+        <Route path="/solutions" element={<SolutionsPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

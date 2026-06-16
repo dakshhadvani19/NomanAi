@@ -33,7 +33,7 @@ export default function Systems() {
   return (
     <section className="section-padding container">
       <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>— REVENUE SYSTEMS —</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>REVENUE SYSTEMS</p>
         <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginBottom: '1rem' }}>
           Three systems.<br />
           <span style={{ color: 'var(--text-muted)' }}>Each solves one expensive problem.</span>
@@ -81,7 +81,7 @@ export default function Systems() {
                 </Link>
               ) : (
                 <a href="#" style={{ color: 'var(--accent-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  EXPLORE <ArrowRight size={16} />
+                  EXPLORE 
                 </a>
               )}
             </div>

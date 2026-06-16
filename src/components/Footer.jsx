@@ -162,7 +162,7 @@ export default function Footer() {
                 color: '#fff', textDecoration: 'none',
                 fontWeight: 700, fontSize: '0.85rem',
                 boxShadow: '0 0 20px rgba(99,102,241,0.35)',
-                transition: 'box-shadow 0.3s',
+                transition: 'box-shadow 0.9s',
               }}
               onMouseOver={e => e.currentTarget.style.boxShadow = '0 0 35px rgba(99,102,241,0.55)'}
               onMouseOut={e => e.currentTarget.style.boxShadow = '0 0 20px rgba(99,102,241,0.35)'}

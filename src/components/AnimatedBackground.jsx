@@ -37,15 +37,51 @@ export default function AnimatedBackground() {
           }}
         />
       ))}
-      {/* Dynamic Grid Overlay */}
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0, width: '100%', height: '100%',
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-        backgroundSize: '4rem 4rem',
-        maskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%)',
-        WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%)',
-      }}></div>
+      {/* Premium Glowing Grid Overlay */}
+      <motion.div
+        animate={{
+          backgroundPosition: ['0px 0px', '4rem 4rem'],
+        }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: 'linear'
+        }}
+        style={{
+          position: 'absolute',
+          top: '-10%', left: '-10%', width: '120%', height: '120%',
+          backgroundImage: `
+            linear-gradient(rgba(14, 165, 233, 0.06) 1px, transparent 1px), 
+            linear-gradient(90deg, rgba(14, 165, 233, 0.06) 1px, transparent 1px)
+          `,
+          backgroundSize: '4rem 4rem',
+          maskImage: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%)',
+        }}
+      />
+      {/* Breathing Glow layer for the Grid */}
+      <motion.div
+        animate={{
+          backgroundPosition: ['0px 0px', '4rem 4rem'],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          backgroundPosition: { duration: 30, repeat: Infinity, ease: 'linear' },
+          opacity: { duration: 4, repeat: Infinity, ease: 'easeInOut' }
+        }}
+        style={{
+          position: 'absolute',
+          top: '-10%', left: '-10%', width: '120%', height: '120%',
+          backgroundImage: `
+            linear-gradient(rgba(6, 182, 212, 0.15) 2px, transparent 2px), 
+            linear-gradient(90deg, rgba(6, 182, 212, 0.15) 2px, transparent 2px)
+          `,
+          backgroundSize: '4rem 4rem',
+          filter: 'blur(6px)',
+          maskImage: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%)',
+        }}
+      />
     </div>
   );
 }

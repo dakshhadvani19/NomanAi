@@ -16,17 +16,13 @@ export default function Solutions() {
     <section className="section-padding container">
       <div style={{ marginBottom: '4rem' }}>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          — INDIVIDUAL SOLUTIONS <span style={{ flexGrow: 1, height: '1px', background: 'var(--glass-border)' }}></span>
+          INDIVIDUAL SOLUTIONS 
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '2rem' }}>
           <h2 style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)' }}>
             Not ready for a full system?<br />
             <span style={{ color: 'var(--text-muted)' }}>Start with one solution.</span>
           </h2>
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <button style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'transparent', border: '1px solid var(--glass-border)', color: 'var(--text-main)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>&lt;</button>
-            <button style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'transparent', border: '1px solid var(--glass-border)', color: 'var(--text-main)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>&gt;</button>
-          </div>
         </div>
         <p style={{ color: 'var(--text-muted)', maxWidth: '600px', marginTop: '1.5rem' }}>
           Not everything needs a full system. Start with what hurts most. Explore our catalogue of 19 pre-built solutions. Starting from ₹14,999.
@@ -53,11 +49,11 @@ export default function Solutions() {
             </div>
             {sol.title === 'Inbound AI Receptionist' ? (
               <Link to="/voice-agents" style={{ marginTop: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
-                View Details <ChevronRight size={16} />
+                View Details
               </Link>
             ) : (
               <div style={{ marginTop: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', fontSize: '0.875rem', fontWeight: 600 }}>
-                View Details <ChevronRight size={16} />
+                View Details
               </div>
             )}
           </HoverCloudCard>

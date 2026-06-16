@@ -213,7 +213,7 @@ function HowItWorks() {
         <div style={{ display: 'grid', gridTemplateColumns: '45% 55%', gap: '3rem', alignItems: 'center' }}>
           {/* Steps */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', position: 'relative' }}>
-            <div style={{ position: 'absolute', left: 23, top: 24, bottom: 24, width: 2, background: 'rgba(255,255,255,0.05)', zIndex: 0 }} />
+
             {HOW_STEPS.map((step, i) => (
               <motion.button key={i} onClick={() => setActiveStep(i)} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', padding: '1rem', borderRadius: 16, border: `1px solid ${activeStep === i ? 'rgba(14,165,233,0.4)' : 'transparent'}`, background: activeStep === i ? 'rgba(14,165,233,0.1)' : 'transparent', cursor: 'pointer', textAlign: 'left', transition: 'all 0.3s', position: 'relative', zIndex: 1, transform: activeStep === i ? 'scale(1.02)' : 'scale(1)' }}>
@@ -228,31 +228,124 @@ function HowItWorks() {
             ))}
           </div>
 
-          {/* Mock UI card */}
-          <motion.div key={activeStep} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
+          {/* Mock UI card container */}
+          <div
             style={{ background: 'rgba(10,13,28,1)', borderRadius: 28, border: '1px solid rgba(255,255,255,0.09)', height: 400, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', boxShadow: '0 20px 80px rgba(0,0,0,0.5)' }}>
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14,165,233,0.08) 0%, transparent 60%)', pointerEvents: 'none' }} />
-            {/* Facebook lead card mock */}
-            <div style={{ background: '#fff', borderRadius: 16, padding: '1.25rem', width: 280, boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#1877f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: '1.1rem' }}>f</div>
-                <div>
-                  <div style={{ fontWeight: 700, color: '#111', fontSize: '0.85rem' }}>Facebook Lead Ad</div>
-                  <div style={{ color: '#888', fontSize: '0.72rem' }}>Just now · {HOW_TABS[activeTab]}</div>
-                </div>
-              </div>
-              <div style={{ background: '#f0f9ff', borderRadius: 10, border: '1px solid #bae6fd', padding: '0.75rem', marginBottom: '0.75rem' }}>
-                <div style={{ fontWeight: 700, color: '#0369a1', fontSize: '0.8rem', marginBottom: '0.4rem' }}>✓ New Lead Received!</div>
-                <div style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: '#0284c7', lineHeight: 1.8 }}>
-                  Name: Rahul S.<br />Phone: +91 98*** ****<br />City: Hyderabad
-                </div>
-              </div>
-              <motion.div animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0.75rem', borderRadius: 8, background: '#f0fdf4', border: '1px solid #bbf7d0' }}>
-                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
-                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#166534' }}>AI Agent calling in 3s...</span>
+            
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeStep}
+                initial={{ opacity: 0, y: 15, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -15, scale: 0.96 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                style={{ position: 'relative', zIndex: 2 }}
+              >
+                {activeStep === 0 && (
+                  <div style={{ background: '#fff', borderRadius: 16, padding: '1.25rem', width: 280, boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                      <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#1877f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: '1.1rem' }}>f</div>
+                      <div>
+                        <div style={{ fontWeight: 700, color: '#111', fontSize: '0.85rem' }}>Facebook Lead Ad</div>
+                        <div style={{ color: '#888', fontSize: '0.72rem' }}>Just now · {HOW_TABS[activeTab]}</div>
+                      </div>
+                    </div>
+                    <div style={{ background: '#f0f9ff', borderRadius: 10, border: '1px solid #bae6fd', padding: '0.75rem', marginBottom: '0.75rem' }}>
+                      <div style={{ fontWeight: 700, color: '#0369a1', fontSize: '0.8rem', marginBottom: '0.4rem' }}>✓ New Lead Received!</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: '#0284c7', lineHeight: 1.8 }}>
+                        Name: Rahul S.<br />Phone: +91 98*** ****<br />City: Hyderabad
+                      </div>
+                    </div>
+                    <motion.div animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0.75rem', borderRadius: 8, background: '#f0fdf4', border: '1px solid #bbf7d0' }}>
+                      <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#166534' }}>AI Agent calling in 3s...</span>
+                    </motion.div>
+                  </div>
+                )}
+
+                {activeStep === 1 && (
+                  <div style={{ background: '#09090b', borderRadius: 32, padding: '1.5rem', width: 260, height: 340, border: '6px solid #27272a', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.5)', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#a1a1aa', marginTop: '1rem' }}>Incoming Call...</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff', marginBottom: '2.5rem' }}>Outpero AI Agent</div>
+                    
+                    <div style={{ position: 'relative', marginBottom: 'auto' }}>
+                      <motion.div animate={{ scale: [1, 1.5, 2.2], opacity: [0.8, 0.3, 0] }} transition={{ duration: 2, repeat: Infinity }} style={{ position: 'absolute', inset: -10, borderRadius: '50%', background: '#0ea5e9' }} />
+                      <motion.div animate={{ scale: [1, 1.2, 1.8], opacity: [0.8, 0.5, 0] }} transition={{ duration: 2, delay: 0.5, repeat: Infinity }} style={{ position: 'absolute', inset: -10, borderRadius: '50%', background: '#0ea5e9' }} />
+                      <div style={{ width: 80, height: 80, borderRadius: '50%', background: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', position: 'relative', zIndex: 2, border: '2px solid #38bdf8' }}>
+                         <Target size={32} />
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'flex', gap: '2.5rem', width: '100%', justifyContent: 'center', paddingBottom: '1rem' }}>
+                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                          <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', cursor: 'pointer' }}>
+                             <Phone style={{ transform: 'rotate(135deg)' }} size={24} />
+                          </div>
+                       </div>
+                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                          <motion.div animate={{ y: [0, -5, 0] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 56, height: 56, borderRadius: '50%', background: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', cursor: 'pointer', boxShadow: '0 0 25px rgba(34,197,94,0.5)' }}>
+                             <Phone size={24} />
+                          </motion.div>
+                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeStep === 2 && (
+                  <div style={{ background: '#fff', borderRadius: 16, padding: '1.25rem', width: 320, boxShadow: '0 8px 40px rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                     <div style={{ borderBottom: '1px solid #e5e7eb', paddingBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }} />
+                        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#374151', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Live Call Transcript</span>
+                     </div>
+                     
+                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} style={{ display: 'flex', gap: '0.75rem' }}>
+                        <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#f3f4f6', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', color: '#6b7280', fontWeight: 700 }}>R</div>
+                        <div style={{ background: '#f3f4f6', padding: '0.75rem', borderRadius: '0 12px 12px 12px', fontSize: '0.8rem', color: '#374151', lineHeight: 1.5, boxShadow: '0 2px 5px rgba(0,0,0,0.02)' }}>
+                           Hello? Are you a real person or a bot?
+                        </div>
+                     </motion.div>
+                     
+                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }} style={{ display: 'flex', gap: '0.75rem', flexDirection: 'row-reverse' }}>
+                        <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#e0f2fe', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0ea5e9' }}>
+                           <Target size={14} />
+                        </div>
+                        <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #38bdf8)', padding: '0.75rem', borderRadius: '12px 0 12px 12px', fontSize: '0.8rem', color: '#fff', lineHeight: 1.5, boxShadow: '0 4px 15px rgba(14,165,233,0.3)' }}>
+                           I'm a live AI from Outpero! I saw you just filled our form. Were you looking to automate your lead follow-ups?
+                        </div>
+                     </motion.div>
+                  </div>
+                )}
+
+                {activeStep === 3 && (
+                  <div style={{ background: '#fff', borderRadius: 16, padding: '1.25rem', width: 320, boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
+                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                        <div style={{ fontWeight: 800, color: '#111827', fontSize: '0.9rem' }}>Call Completed</div>
+                        <div style={{ background: '#dcfce7', color: '#166534', border: '1px solid #bbf7d0', fontSize: '0.65rem', fontWeight: 800, padding: '0.25rem 0.6rem', borderRadius: 999, textTransform: 'uppercase' }}>Meeting Booked</div>
+                     </div>
+                     
+                     <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+                        <div style={{ flex: 1, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, padding: '0.75rem' }}>
+                           <div style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.25rem' }}>Intent Score</div>
+                           <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0ea5e9' }}>95%</div>
+                           <motion.div initial={{ width: 0 }} animate={{ width: '95%' }} transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }} style={{ height: 6, background: 'linear-gradient(90deg, #38bdf8, #0ea5e9)', borderRadius: 3, marginTop: '0.5rem' }} />
+                        </div>
+                        <div style={{ flex: 1, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, padding: '0.75rem' }}>
+                           <div style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.25rem' }}>Duration</div>
+                           <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#334155' }}>2m 14s</div>
+                           <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }} style={{ height: 6, background: '#cbd5e1', borderRadius: 3, marginTop: '0.5rem' }} />
+                        </div>
+                     </div>
+                     
+                     <div style={{ background: '#f1f5f9', borderRadius: 12, padding: '1rem', border: '1px solid #e2e8f0' }}>
+                        <div style={{ fontSize: '0.65rem', color: '#475569', fontWeight: 800, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem', textTransform: 'uppercase' }}><CheckCircle size={14} color="#0ea5e9" /> AI Summary</div>
+                        <p style={{ fontSize: '0.8rem', color: '#334155', lineHeight: 1.6, fontWeight: 500 }}>Prospect is highly qualified. Wants to deploy AI voice agents for real estate leads. Scheduled zoom call for tomorrow at 2 PM.</p>
+                     </div>
+                  </div>
+                )}
               </motion.div>
-            </div>
-          </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>

@@ -263,6 +263,10 @@ export default function HeroSection() {
               alignItems: 'center',
               boxShadow: '0 0 30px rgba(6,182,212,0.3), inset 0 0 20px rgba(6,182,212,0.15)',
               textAlign: 'center',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              transform: 'translateZ(0)',
+              cursor: 'pointer'
             }}
             animate={{ boxShadow: [
               '0 0 30px rgba(6,182,212,0.3), inset 0 0 20px rgba(6,182,212,0.15)',
@@ -270,8 +274,9 @@ export default function HeroSection() {
               '0 0 30px rgba(6,182,212,0.3), inset 0 0 20px rgba(6,182,212,0.15)',
             ]}}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.05, transition: { duration: 0.2, repeat: 0 } }}
           >
-            <span style={{ fontSize: '0.875rem', fontWeight: 800, letterSpacing: '0.05em', lineHeight: 1.3 }}>
+            <span style={{ fontSize: '0.875rem', fontWeight: 800, letterSpacing: '0.05em', lineHeight: 1.3, position: 'relative', zIndex: 2 }}>
               YOUR<br/>BUSINESS
             </span>
           </motion.div>
@@ -281,8 +286,7 @@ export default function HeroSection() {
             <motion.div
               key={i}
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.3 + i * 0.15, duration: 0.6, ease: 'easeOut' }}
+              animate={{ scale: 1, opacity: 1, transition: { delay: 0.3 + i * 0.15, duration: 0.6, ease: 'easeOut' } }}
               style={{
                 width: '70px', height: '70px',
                 borderRadius: '50%',
@@ -295,6 +299,7 @@ export default function HeroSection() {
                 left: `calc(50% + ${pos.x}px - 35px)`,
                 top:  `calc(50% + ${pos.y}px - 35px)`,
                 backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
                 color: 'var(--text-muted)',
                 userSelect: 'none',
                 fontSize: '0.63rem',
@@ -303,28 +308,39 @@ export default function HeroSection() {
                 letterSpacing: '0.06em',
                 boxShadow: '0 0 0 rgba(6,182,212,0)',
                 zIndex: 5,
+                cursor: 'pointer',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+                transform: 'translateZ(0)',
               }}
-              whileHover={{ scale: 1.12, boxShadow: '0 0 20px rgba(6,182,212,0.4)', color: '#ffffff' }}
+              whileHover={{ 
+                scale: 1.15, 
+                boxShadow: '0 0 20px rgba(6,182,212,0.6)', 
+                color: '#ffffff',
+                borderColor: 'rgba(6,182,212,0.8)',
+                transition: { duration: 0.2, delay: 0 } 
+              }}
             >
-              {pos.label}
+              <span style={{ position: 'relative', zIndex: 2 }}>{pos.label}</span>
             </motion.div>
           ))}
         </div>
       </div>
 
       {/* Systems Built For Marquee */}
-      <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: '3rem', paddingBottom: '1rem', overflow: 'hidden', position: 'relative' }}>
+      <div style={{ paddingTop: '3rem', paddingBottom: '1rem', overflow: 'hidden', position: 'relative' }}>
         <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', fontWeight: 600 }}>Systems Built For</p>
         
-        {/* Fade edges */}
-        <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '150px', background: 'linear-gradient(90deg, var(--bg-dark) 0%, transparent 100%)', zIndex: 2, pointerEvents: 'none' }}></div>
-        <div style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '150px', background: 'linear-gradient(270deg, var(--bg-dark) 0%, transparent 100%)', zIndex: 2, pointerEvents: 'none' }}></div>
-
-        <motion.div 
-          style={{ display: 'flex', gap: '1rem', width: 'max-content' }}
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-        >
+        {/* Marquee Wrapper with True CSS Mask for Seamless Background Blending */}
+        <div style={{
+          maskImage: 'linear-gradient(90deg, transparent, black 50px, black calc(100% - 50px), transparent)',
+          WebkitMaskImage: 'linear-gradient(90deg, transparent, black 50px, black calc(100% - 50px), transparent)',
+        }}>
+          <motion.div 
+            style={{ display: 'flex', gap: '1rem', width: 'max-content' }}
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+          >
           {/* Duplicate list twice for seamless loop */}
           {[...['D2C Brands', 'Legal Firms', 'E-commerce', 'SaaS Startups', 'Real Estate', 'Clinics & Healthcare', 'Coaches & Consultants'], ...['D2C Brands', 'Legal Firms', 'E-commerce', 'SaaS Startups', 'Real Estate', 'Clinics & Healthcare', 'Coaches & Consultants']].map((tag, i) => (
             <span key={i} style={{ 
@@ -345,7 +361,8 @@ export default function HeroSection() {
               {tag}
             </span>
           ))}
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
 
     </section>
