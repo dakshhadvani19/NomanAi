@@ -51,7 +51,7 @@ function HeroSection() {
 
         <motion.h1
           {...fadeUp(0.15)}
-          style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '1.5rem', color: '#fff' }}
+          style={{ fontSize: 'clamp(2.5rem, 8vw, 5.5rem)', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '1.5rem', color: '#fff' }}
         >
           The Big Three
         </motion.h1>
@@ -135,7 +135,7 @@ const SYSTEMS_DATA = [
 
 function SystemsSection() {
   return (
-    <section style={{ padding: '6rem 2rem', background: 'transparent', position: 'relative' }}>
+    <section className="section-padding container" style={{ background: 'transparent', position: 'relative' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
         {SYSTEMS_DATA.map((sys, i) => (
           <motion.div
@@ -147,6 +147,7 @@ function SystemsSection() {
             style={{ position: 'relative' }}
           >
             <HoverCloudCard
+              className="glass-panel"
               whileHover={{ scale: 1.015, borderColor: 'rgba(6,182,212,0.5)' }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               style={{
@@ -166,21 +167,21 @@ function SystemsSection() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', position: 'relative', zIndex: 10 }}>
                 {/* Top header row */}
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
                     <span style={{ fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#22d3ee' }}>System {sys.num}</span>
                     {sys.badge && (
                       <span style={{ padding: '0.2rem 0.6rem', borderRadius: 999, background: 'rgba(6,182,212,0.2)', border: '1px solid rgba(6,182,212,0.4)', color: '#67e8f9', fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{sys.badge}</span>
                     )}
                   </div>
-                  <h3 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#fff', marginBottom: '0.5rem' }}>{sys.title}</h3>
-                  <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.8)', fontWeight: 600, marginBottom: '1.5rem' }}>{sys.desc}</p>
+                  <h3 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 900, color: '#fff', marginBottom: '0.5rem' }}>{sys.title}</h3>
+                  <p style={{ fontSize: 'clamp(1rem, 3vw, 1.2rem)', color: 'rgba(255,255,255,0.8)', fontWeight: 600, marginBottom: '1.5rem' }}>{sys.desc}</p>
                   <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, maxWidth: 600 }}>{sys.longDesc}</p>
                 </div>
 
                 {/* Features grid */}
                 <div>
                   <h4 style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '1.5rem' }}>What's Included</h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     {sys.features.map((feat, j) => (
                       <motion.div
                         key={j}
@@ -200,7 +201,7 @@ function SystemsSection() {
                 {/* Footer / Pricing */}
                 <div style={{ marginTop: '1rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem' }}>
                   <div>
-                    <div style={{ fontSize: '1.75rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem' }}>{sys.price}</div>
+                    <div style={{ fontSize: 'clamp(1.4rem, 4vw, 1.75rem)', fontWeight: 900, color: '#fff', marginBottom: '0.25rem' }}>{sys.price}</div>
                     <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)' }}>{sys.subprice}</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -225,7 +226,7 @@ function SystemsSection() {
 /* ─── SECTION 3: BANNER CTA ─── */
 function BannerCTA() {
   return (
-    <section style={{ padding: '0 2rem 6rem', background: 'transparent' }}>
+    <section className="section-padding container" style={{ background: 'transparent' }}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -234,6 +235,7 @@ function BannerCTA() {
         style={{ maxWidth: 1000, margin: '0 auto' }}
       >
         <motion.div
+          className="glass-panel"
           animate={{ y: [-5, 5, -5] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           style={{
@@ -255,7 +257,7 @@ function BannerCTA() {
 
           <div style={{ maxWidth: 500, position: 'relative', zIndex: 10 }}>
             <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#22d3ee', marginBottom: '0.75rem', display: 'block' }}>INDIVIDUAL SOLUTIONS</span>
-            <h3 style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', marginBottom: '1rem' }}>Not ready for a full system?</h3>
+            <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 900, color: '#fff', marginBottom: '1rem' }}>Not ready for a full system?</h3>
             <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>Don't wait to fix what hurts most. Explore our library of 19 standalone solutions designed to solve specific bottlenecks instantly.</p>
           </div>
 
@@ -298,8 +300,7 @@ function BannerCTA() {
 /* ─── SECTION 4: BOTTOM CTA ─── */
 function BottomCTA() {
   return (
-    <section style={{
-      padding: '8rem 2rem',
+    <section className="section-padding container" style={{
       background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
@@ -312,7 +313,7 @@ function BottomCTA() {
       <div style={{ maxWidth: 800, margin: '0 auto', position: 'relative', zIndex: 10 }}>
         <motion.h2
           {...fadeUp(0)}
-          style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, color: '#fff', lineHeight: 1.1, marginBottom: '1.5rem' }}
+          style={{ fontSize: 'clamp(1.5rem, 6vw, 4rem)', fontWeight: 900, color: '#fff', lineHeight: 1.2, marginBottom: '1.5rem', wordWrap: 'break-word', overflowWrap: 'break-word', maxWidth: '100%' }}
         >
           Your revenue leak has a fix.<br />
           Let's find it.

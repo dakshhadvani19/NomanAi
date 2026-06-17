@@ -175,15 +175,17 @@ h1, h2, h3, h4 {
   .mobile-col { flex-direction: column !important; }
   .grid-3 { grid-template-columns: 1fr !important; }
   
-  .section-padding { padding: 4rem 0; }
-  .section-title { font-size: clamp(1.8rem, 6vw, 2.2rem) !important; }
+  .container { padding: 0 var(--spacing-md) !important; }
+  .section-padding { padding: 3rem 0; }
+  .section-title { font-size: clamp(1.6rem, 5vw, 2.2rem) !important; }
   
   .hero-layout, .audit-layout {
     grid-template-columns: 1fr !important;
-    gap: 3rem !important;
+    gap: 2rem !important;
   }
   
-  h1 { font-size: clamp(2.2rem, 8vw, 3rem) !important; min-height: auto !important; }
+  h1 { font-size: clamp(1.8rem, 6vw, 2.5rem) !important; min-height: auto !important; }
+  h2, h3 { font-size: clamp(1.2rem, 5vw, 1.6rem) !important; }
   
   .nav-container {
     padding: 0.5rem 1rem !important;
@@ -191,18 +193,47 @@ h1, h2, h3, h4 {
   }
   
   .hero-diagram {
-    transform: scale(0.7);
-    height: 320px !important;
+    transform: scale(0.65);
+    height: 300px !important;
+  }
+  
+  /* Force all glass panels to have smaller padding on mobile */
+  .glass-panel, [style*="padding: 2rem"], [style*="padding: 3rem"], [style*="padding: 4rem"] {
+    padding: 1.25rem !important;
+  }
+  
+  /* Push entire page content below the navbar on mobile */
+  .mobile-page-wrapper {
+    padding-top: 80px;
+  }
+  
+  /* Prevent anything from causing horizontal scroll */
+  img, canvas, video, svg, .glass-panel {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
 @media (max-width: 480px) {
+  .container { padding: 0 var(--spacing-sm) !important; }
+  .section-padding { padding: 2.5rem 0; }
+  
   .hero-diagram {
-    transform: scale(0.5);
-    height: 250px !important;
+    transform: scale(0.45);
+    height: 220px !important;
   }
+  
   .nav-container {
     flex-wrap: wrap;
     justify-content: center !important;
   }
+  
+  /* Scale down any explicitly sized large elements */
+  .glass-panel {
+    padding: 1rem !important;
+    border-radius: 16px !important;
+  }
+  
+  h1 { font-size: clamp(1.6rem, 6vw, 2rem) !important; }
+  .section-title { font-size: clamp(1.4rem, 5vw, 1.8rem) !important; }
 }

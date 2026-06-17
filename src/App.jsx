@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AnimatedBackground from './components/AnimatedBackground';
+import GlobalCursorAurora from './components/GlobalCursorAurora';
 import Navbar from './components/Navbar';
 import HeroPentagon from './components/HeroPentagon';
 import ProblemCards from './components/ProblemCards';
@@ -28,15 +29,18 @@ function HomePage() {
 function App() {
   return (
     <BrowserRouter>
+      <GlobalCursorAurora />
       <AnimatedBackground />
       <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/audit" element={<AuditPage />} />
-        <Route path="/voice-agents" element={<VoiceAgentsPage />} />
-        <Route path="/revenue-systems" element={<RevenueSystemsPage />} />
-        <Route path="/solutions" element={<SolutionsPage />} />
-      </Routes>
+      <div className="mobile-page-wrapper">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/audit" element={<AuditPage />} />
+          <Route path="/voice-agents" element={<VoiceAgentsPage />} />
+          <Route path="/revenue-systems" element={<RevenueSystemsPage />} />
+          <Route path="/solutions" element={<SolutionsPage />} />
+        </Routes>
+      </div>
       <Footer />
     </BrowserRouter>
   );

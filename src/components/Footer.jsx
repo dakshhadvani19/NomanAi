@@ -33,6 +33,7 @@ function Particle({ style }) {
 
 export default function Footer() {
   const [isHovered, setIsHovered] = useState(false);
+
   const particles = Array.from({ length: 12 }, (_, i) => ({
     left: `${8 + i * 8}%`,
     top: `${20 + (i % 3) * 25}%`,
@@ -42,8 +43,6 @@ export default function Footer() {
     <motion.footer
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      animate={isHovered ? { y: [0, -6, 0] } : { y: 0 }}
-      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       style={{
         position: 'relative',
         background: 'rgba(3,7,18,0.97)',
@@ -53,55 +52,6 @@ export default function Footer() {
         paddingBottom: '10px'
       }}
     >
-      {/* Cloud Blobs that appear and move on hover */}
-      <motion.div
-        animate={{ 
-          opacity: isHovered ? 0.6 : 0,
-          x: isHovered ? [0, 80, -40, 0] : 0,
-          y: isHovered ? [0, -20, 10, 0] : 0
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-        style={{
-          position: 'absolute', top: '5%', left: '10%',
-          width: '500px', height: '350px', borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(255,255,255,0.06) 0%, transparent 60%)',
-          filter: 'blur(45px)',
-          pointerEvents: 'none',
-          zIndex: 1
-        }}
-      />
-      <motion.div
-        animate={{ 
-          opacity: isHovered ? 0.5 : 0,
-          x: isHovered ? [0, -70, 50, 0] : 0,
-          y: isHovered ? [0, 30, -15, 0] : 0
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-        style={{
-          position: 'absolute', bottom: '-10%', right: '10%',
-          width: '600px', height: '400px', borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(99,102,241,0.07) 0%, transparent 60%)',
-          filter: 'blur(50px)',
-          pointerEvents: 'none',
-          zIndex: 1
-        }}
-      />
-      <motion.div
-        animate={{ 
-          opacity: isHovered ? 0.5 : 0,
-          x: isHovered ? [0, 50, -60, 0] : 0,
-          y: isHovered ? [0, 15, -25, 0] : 0
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-        style={{
-          position: 'absolute', top: '30%', left: '40%',
-          width: '550px', height: '300px', borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(14,165,233,0.06) 0%, transparent 60%)',
-          filter: 'blur(40px)',
-          pointerEvents: 'none',
-          zIndex: 1
-        }}
-      />
       {/* Glowing top divider line */}
       <div style={{
         position: 'absolute', top: 0, left: '20%', right: '20%', height: '1px',

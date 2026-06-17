@@ -3,34 +3,16 @@ import { motion } from 'framer-motion';
 
 const IsometricNumber = ({ num, i }) => {
   const baseDelay = i * 0.15;
-  const layers = 6;
+  const layers = 3; // Reduced from 6 to 3 for a 50% performance boost
   
   return (
-    <motion.div 
-      style={{ position: 'relative', height: '6rem', marginBottom: '3rem', marginLeft: '0.5rem' }}
-      animate={{ y: [0, -8, 0] }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
-    >
-      {/* Liquid Aura Background */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          top: '30%',
-          left: '10%',
-          width: '4rem',
-          height: '4rem',
-          background: 'linear-gradient(45deg, #FF1361, #FF9A9E)',
-          filter: 'blur(20px)',
-          borderRadius: '50%',
-          zIndex: 0
-        }}
-        initial={{ opacity: 0, scale: 0.5 }}
-        whileInView={{ opacity: 0.5, scale: 1.5 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: baseDelay }}
-      />
-      
-      {/* 3D Trail Layers */}
+    <div style={{ position: 'relative', height: 'clamp(4rem, 10vw, 6rem)', marginBottom: '3rem' }}>
+      <motion.div 
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+        style={{ position: 'relative' }}
+      >
+        {/* 3D Trail Layers */}
       {[...Array(layers)].map((_, index) => {
         const isFront = index === 0;
         const opacity = 1 - (index * 0.18);
@@ -40,7 +22,7 @@ const IsometricNumber = ({ num, i }) => {
             style={{
               position: 'absolute',
               top: 0, left: 0,
-              fontSize: '5.5rem',
+              fontSize: 'clamp(3.5rem, 12vw, 5.5rem)', /* Responsive font size */
               fontWeight: 900,
               lineHeight: 1,
               color: isFront ? 'transparent' : `rgba(255, 19, 97, ${opacity})`,
@@ -52,7 +34,7 @@ const IsometricNumber = ({ num, i }) => {
               WebkitTextStroke: isFront ? 'none' : `1px rgba(255, 19, 97, ${opacity + 0.2})`
             }}
             initial={{ x: 0, y: 0, opacity: 0 }}
-            whileInView={{ x: -index * 5, y: index * 5, opacity: 1 }}
+            whileInView={{ x: index * 8, y: index * 8, opacity: 1 }} /* Extrude down-right to avoid left border collision */
             viewport={{ once: true }}
             transition={{
               duration: 0.8,
@@ -66,7 +48,8 @@ const IsometricNumber = ({ num, i }) => {
           </motion.div>
         );
       })}
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
@@ -100,7 +83,7 @@ export default function Process() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem', marginBottom: '6rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginBottom: '6rem' }}>
         {steps.map((step, i) => (
           <motion.div 
             key={i}
