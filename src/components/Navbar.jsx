@@ -1,20 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, ArrowRight, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const location = useLocation();
-  const [hoveredLink, setHoveredLink] = useState(null);
+  const [hoveredPath, setHoveredPath] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Refs used to measure link positions *within this navbar only*.
+  // The sliding indicator's position/width is always derived from these
+  // measurements, so it can never animate from anywhere outside this row.
+  const linksContainerRef = useRef(null);
+  const linkRefs = useRef({});
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 });
 
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Revenue Systems', path: '/revenue-systems' },
-    { name: 'AI Voice Agents', path: '/voice-agents'},
+    { name: 'AI Voice Agents', path: '/voice-agents' },
     { name: 'Solutions', path: '/solutions' },
     { name: 'Contact', path: '/audit' }
   ];
+
+  const activePath = navItems.some((item) => item.path === location.pathname)
+    ? location.pathname
+    : null;
+  const targetPath = hoveredPath || activePath;
+  const isTargetActive = !hoveredPath && !!activePath;
+
+  const measureIndicator = useCallback(() => {
+    const container = linksContainerRef.current;
+    const target = targetPath ? linkRefs.current[targetPath] : null;
+
+    if (container && target) {
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      setIndicator({
+        left: targetRect.left - containerRect.left,
+        width: targetRect.width,
+        opacity: 1
+      });
+    } else {
+      setIndicator((prev) => ({ ...prev, opacity: 0 }));
+    }
+  }, [targetPath]);
+
+  // Recompute whenever the active/hovered link changes.
+  useLayoutEffect(() => {
+    measureIndicator();
+  }, [measureIndicator]);
+
+  // Recompute on window resize and on any size change of the links row
+  // itself (e.g. bold-text reflow), so the indicator never drifts.
+  useLayoutEffect(() => {
+    const container = linksContainerRef.current;
+    if (!container) return;
+
+    window.addEventListener('resize', measureIndicator);
+    const ro = new ResizeObserver(() => measureIndicator());
+    ro.observe(container);
+
+    return () => {
+      window.removeEventListener('resize', measureIndicator);
+      ro.disconnect();
+    };
+  }, [measureIndicator]);
 
   return (
     <>
@@ -24,7 +75,7 @@ export default function Navbar() {
           .mobile-only { display: flex !important; }
         }
       `}</style>
-      <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 100, paddingTop: '1.5rem', pointerEvents: 'none' }}>
+      <motion.div style={{ position: 'fixed', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 100, paddingTop: '1.5rem', pointerEvents: 'none' }}>
         <motion.nav 
         className="nav-container"
         initial={{ y: -40, opacity: 0 }}
@@ -54,18 +105,42 @@ export default function Navbar() {
         {/* Links container */}
         <div 
           className="desktop-only"
-          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-          onMouseLeave={() => setHoveredLink(null)}
+          ref={linksContainerRef}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', position: 'relative' }}
+          onMouseLeave={() => setHoveredPath(null)}
         >
+          {/* Single sliding indicator. Its left/width are measured purely
+              from links inside THIS container, so it is structurally
+              confined to moving horizontally within this row. */}
+          <motion.div
+            animate={{
+              left: indicator.left,
+              width: indicator.width,
+              opacity: indicator.opacity
+            }}
+            transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              borderRadius: '999px',
+              zIndex: 1,
+              pointerEvents: 'none',
+              background: isTargetActive ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)',
+              boxShadow: isTargetActive ? 'inset 0 0 0 1px rgba(255,255,255,0.15)' : 'none'
+            }}
+          />
+
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
-            const isHovered = hoveredLink === item.path;
+            const isHovered = hoveredPath === item.path;
 
             return (
               <Link 
                 key={item.path} 
                 to={item.path} 
-                onMouseEnter={() => setHoveredLink(item.path)}
+                ref={(el) => { linkRefs.current[item.path] = el; }}
+                onMouseEnter={() => setHoveredPath(item.path)}
                 style={{ 
                   position: 'relative',
                   padding: '0.5rem 1.1rem',
@@ -75,7 +150,8 @@ export default function Navbar() {
                   transition: 'color 0.2s',
                   display: 'flex',
                   alignItems: 'center',
-                  outline: 'none'
+                  outline: 'none',
+                  zIndex: 2
                 }}
               >
                 {/* Liquid Text Stretch Effect */}
@@ -100,38 +176,6 @@ export default function Navbar() {
                   }}>
                     {item.badge}
                   </span>
-                )}
-
-                {/* Hover Indicator */}
-                {isHovered && !isActive && (
-                  <motion.div
-                    layoutId="navbar-hover"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ type: 'spring', stiffness: 250, damping: 20 }}
-                    style={{
-                      position: 'absolute', inset: 0,
-                      background: 'rgba(255,255,255,0.06)',
-                      borderRadius: '999px',
-                      zIndex: 1
-                    }}
-                  />
-                )}
-
-                {/* Active Indicator (Liquid Pill) */}
-                {isActive && (
-                  <motion.div
-                    layoutId="navbar-active"
-                    transition={{ type: 'spring', stiffness: 250, damping: 22 }}
-                    style={{
-                      position: 'absolute', inset: 0,
-                      background: 'rgba(255,255,255,0.1)',
-                      boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.15)',
-                      borderRadius: '999px',
-                      zIndex: 1
-                    }}
-                  />
                 )}
               </Link>
             );
