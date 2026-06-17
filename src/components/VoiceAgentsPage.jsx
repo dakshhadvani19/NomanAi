@@ -39,7 +39,7 @@ function HeroSection() {
       {/* bg glow */}
       <motion.div animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.18, 0.08] }} transition={{ duration: 8, repeat: Infinity }} style={{ position: 'absolute', top: '-20%', right: '-10%', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(56,189,248,0.3) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 2rem', display: 'grid', gridTemplateColumns: '55% 45%', alignItems: 'center', gap: '3rem', width: '100%' }}>
+      <div className="hero-layout container" style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '55% 45%', alignItems: 'center', gap: '3rem', width: '100%' }}>
         {/* Left */}
         <div>
           {/* Badge */}
@@ -163,10 +163,10 @@ function IndustryTicker() {
 function ProblemSection() {
   const problems = ['delayed follow-ups', 'missed calls', 'overloaded teams', 'slow response handling'];
   return (
-    <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(5,7,18,0.95)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '6rem 2rem', textAlign: 'center' }}>
-      <div style={{ maxWidth: 900 }}>
+    <section className="section-padding container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(5,7,18,0.95)', borderBottom: '1px solid rgba(255,255,255,0.06)', textAlign: 'center' }}>
+      <div style={{ maxWidth: 900, margin: '0 auto' }}>
         <motion.p {...fadeUp(0)} style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '2rem' }}>The Human Bottleneck</motion.p>
-        <motion.div {...fadeUp(0.1)} style={{ fontSize: 'clamp(2rem, 4.5vw, 3.75rem)', fontWeight: 900, lineHeight: 1.25, color: '#fff', marginBottom: '3rem' }}>
+        <motion.div {...fadeUp(0.1)} style={{ fontSize: 'clamp(1.5rem, 5vw, 3.75rem)', fontWeight: 900, lineHeight: 1.25, color: '#fff', marginBottom: '3rem' }}>
           Businesses lose leads because of{' '}
           {problems.map((p, i) => (
             <span key={i}>
@@ -197,9 +197,9 @@ function HowItWorks() {
   const [activeTab, setActiveTab] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   return (
-    <section id="how-it-works" style={{ padding: '6rem 2rem', background: 'rgba(5,8,20,1)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+    <section id="how-it-works" className="section-padding container" style={{ background: 'rgba(5,8,20,1)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <motion.h2 {...fadeUp(0)} style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', fontWeight: 900, textAlign: 'center', marginBottom: '2.5rem' }}>How It Actually Works</motion.h2>
+        <motion.h2 {...fadeUp(0)} style={{ fontSize: 'clamp(1.5rem, 4vw, 3.25rem)', fontWeight: 900, textAlign: 'center', marginBottom: '2.5rem' }}>How It Actually Works</motion.h2>
 
         {/* Tab pills */}
         <motion.div {...fadeUp(0.1)} style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '3.5rem', flexWrap: 'wrap' }}>
@@ -210,7 +210,7 @@ function HowItWorks() {
           ))}
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '45% 55%', gap: '3rem', alignItems: 'center' }}>
+        <div className="hero-layout" style={{ display: 'grid', gridTemplateColumns: '45% 55%', gap: '3rem', alignItems: 'center' }}>
           {/* Steps */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', position: 'relative' }}>
 
@@ -362,8 +362,8 @@ const WHY_FEATURES = [
 
 function WhyOutpero() {
   return (
-    <section style={{ padding: '6rem 2rem', background: 'var(--bg-dark, #03070f)' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '4rem', alignItems: 'start' }}>
+    <section className="section-padding container" style={{ background: 'var(--bg-dark, #03070f)' }}>
+      <div className="hero-layout" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '4rem', alignItems: 'start' }}>
         <div style={{ position: 'sticky', top: 120 }}>
           <motion.h2 {...fadeUp(0)} style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 900, lineHeight: 1.1, marginBottom: '1rem' }}>Why<br />Outpero.</motion.h2>
           <motion.p {...fadeUp(0.1)} style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.1rem', lineHeight: 1.6 }}>We build operational efficiency, not conversational toys.</motion.p>
@@ -393,16 +393,16 @@ const VOICES = [
 function VoiceCards() {
   const [playing, setPlaying] = useState(null);
   return (
-    <section id="listen-voices" style={{ padding: '6rem 0', background: 'rgba(5,8,20,1)', borderTop: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
+    <section id="listen-voices" className="section-padding container" style={{ background: 'rgba(5,8,20,1)', borderTop: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
       <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.04, 0.09, 0.04] }} transition={{ duration: 8, repeat: Infinity }} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(14,165,233,0.3), transparent 70%)', pointerEvents: 'none' }} />
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 2rem' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem' }}>Hear the AI in Action</h2>
+          <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem' }}>Hear the AI in Action</h2>
           <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '1.05rem' }}>Choose from the Outpero Voice Library featuring <span style={{ color: '#38bdf8', fontWeight: 700 }}>10+ native Telugu voices</span>.</p>
         </motion.div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
           {VOICES.map((v, i) => (
-            <HoverCloudCard key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ y: -6 }}
+            <HoverCloudCard key={i} className="glass-panel" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ y: -6 }}
               style={{ background: 'rgba(10,13,28,0.6)', backdropFilter: 'blur(16px)', borderRadius: 24, padding: '2rem', border: `1px solid rgba(255,255,255,0.07)`, position: 'relative', transition: 'border-color 0.3s', cursor: 'default' }}>
               <div style={{ position: 'absolute', top: 0, right: 0, width: 120, height: 120, borderRadius: '50%', background: `radial-gradient(circle, ${v.color}22 0%, transparent 70%)`, pointerEvents: 'none' }} />
               {/* top row */}
@@ -442,19 +442,19 @@ function VoiceCards() {
 /* ─── SECTION 7: PRICING ─── */
 function Pricing() {
   return (
-    <section style={{ padding: '6rem 2rem', background: 'var(--bg-dark, #03070f)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <section className="section-padding container" style={{ background: 'var(--bg-dark, #03070f)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem' }}>Simple, Transparent Pricing</h2>
+          <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem' }}>Simple, Transparent Pricing</h2>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1rem' }}>Start with setup — scale on usage.</p>
         </motion.div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
           {[
             { label: 'Setup & Deployment', price: '₹75,000', sub: 'One-time', highlight: true, features: ['Custom voice persona', 'Telugu NLP tuning', '1,000 test minutes', 'CRM integration', 'Outpero Voice Hub access'] },
             { label: 'Growth Usage', price: '₹6/min', sub: '1,000 – 10,000 mins', features: ['Inbound + Outbound', 'Real-time transcription', 'Intent scoring', 'WhatsApp handoff'] },
             { label: 'Scale Usage', price: '₹5/min', sub: '10,000 – 30,000 mins', features: ['Everything in Growth', 'Priority queue', 'Dedicated call routing', 'Custom analytics'] },
           ].map((p, i) => (
-            <HoverCloudCard key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }} whileHover={{ y: -8, boxShadow: p.highlight ? '0 0 60px rgba(14,165,233,0.4)' : '0 8px 40px rgba(0,0,0,0.4)' }}
+            <HoverCloudCard key={i} className="glass-panel" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }} whileHover={{ y: -8, boxShadow: p.highlight ? '0 0 60px rgba(14,165,233,0.4)' : '0 8px 40px rgba(0,0,0,0.4)' }}
               style={{ background: p.highlight ? 'linear-gradient(145deg, rgba(14,165,233,0.15), rgba(14,165,233,0.05))' : 'rgba(10,13,28,0.6)', backdropFilter: 'blur(16px)', borderRadius: 24, padding: '2rem', border: `1px solid ${p.highlight ? 'rgba(14,165,233,0.5)' : 'rgba(255,255,255,0.07)'}`, position: 'relative', transition: 'all 0.35s', boxShadow: p.highlight ? '0 0 40px rgba(14,165,233,0.2)' : 'none' }}>
               {p.highlight && <div style={{ position: 'absolute', top: '0.5rem', right: '0.25rem', padding: '0.25rem 0.75rem', borderRadius: 999, background: '#0ea5e9', fontSize: '0.65rem',  fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#fff' }}>Most Popular</div>}
               <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: '0.75rem' }}>{p.label}</p>
@@ -482,17 +482,17 @@ function Pricing() {
 function DeployForm() {
   const [form, setForm] = useState({ name: '', business: '', phone: '' });
   return (
-    <section id="deploy-form" style={{ padding: '6rem 2rem', background: 'rgba(5,8,20,1)', borderTop: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
+    <section id="deploy-form" className="section-padding container" style={{ background: 'rgba(5,8,20,1)', borderTop: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
       <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 10, repeat: Infinity }} style={{ position: 'absolute', top: '-30%', left: '30%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(14,165,233,0.12), transparent 70%)', pointerEvents: 'none' }} />
       <div style={{ maxWidth: 640, margin: '0 auto', position: 'relative', zIndex: 2 }}>
         <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: 999, background: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.3)', color: '#38bdf8', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
             <Zap size={13} /> Ready to Deploy
           </span>
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 900, marginBottom: '1rem' }}>Deploy Your AI Voice Agent</h2>
+          <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)', fontWeight: 900, marginBottom: '1rem' }}>Deploy Your AI Voice Agent</h2>
           <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '1rem', lineHeight: 1.7 }}>Fill in the form and we'll get your Telugu AI Voice Agent live in 72 hours.</p>
         </motion.div>
-        <motion.div {...fadeUp(0.15)} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 24, padding: '2.5rem', backdropFilter: 'blur(16px)', boxShadow: '0 8px 60px rgba(0,0,0,0.4)', position: 'relative', overflow: 'hidden' }}>
+        <motion.div className="glass-panel" {...fadeUp(0.15)} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 24, padding: '2.5rem', backdropFilter: 'blur(16px)', boxShadow: '0 8px 60px rgba(0,0,0,0.4)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: 0, left: '15%', right: '15%', height: 1, background: 'linear-gradient(90deg, transparent, rgba(14,165,233,0.6), transparent)' }} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {[{ name: 'name', label: 'Full Name', placeholder: 'Your name' }, { name: 'business', label: 'Business Name', placeholder: 'Your company' }, { name: 'phone', label: 'WhatsApp Number', placeholder: '+91 98765 43210' }].map(f => (
@@ -525,9 +525,9 @@ const FAQS = [
 function FAQ() {
   const [open, setOpen] = useState(null);
   return (
-    <section id="faq" style={{ padding: '6rem 2rem', background: 'var(--bg-dark, #03070f)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <section id="faq" className="section-padding container" style={{ background: 'var(--bg-dark, #03070f)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
-        <motion.h2 {...fadeUp(0)} style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, textAlign: 'center', marginBottom: '3rem' }}>Frequently Asked</motion.h2>
+        <motion.h2 {...fadeUp(0)} style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 900, textAlign: 'center', marginBottom: '3rem' }}>Frequently Asked</motion.h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {FAQS.map((faq, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}

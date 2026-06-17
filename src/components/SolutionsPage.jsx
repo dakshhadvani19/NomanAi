@@ -47,7 +47,7 @@ export default function SolutionsPage() {
     <div style={{ background: '#030712', minHeight: '100vh', color: '#fff', overflowX: 'hidden' }}>
       
       {/* ─── HERO SECTION ─── */}
-      <section style={{ paddingTop: '10rem', paddingBottom: '6rem', position: 'relative', textAlign: 'center' }}>
+      <section className="section-padding container" style={{ position: 'relative', textAlign: 'center' }}>
         {/* Glow Orbs */}
         <motion.div animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 8, repeat: Infinity }} style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(14,165,233,0.3) 0%, transparent 70%)', pointerEvents: 'none' }} />
         
@@ -56,7 +56,7 @@ export default function SolutionsPage() {
             <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#38bdf8' }}>SOLUTIONS</span>
           </motion.div>
           
-          <motion.h1 {...fadeUp(0.15)} style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '1.5rem', color: '#fff' }}>
+          <motion.h1 {...fadeUp(0.15)} style={{ fontSize: 'clamp(1.75rem, 5vw, 4.5rem)', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '1.5rem', color: '#fff' }}>
             Drop-in solutions for<br />
             <span style={{ background: 'linear-gradient(135deg, #fff 0%, #38bdf8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>immediate ROI.</span>
           </motion.h1>
@@ -76,7 +76,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* ─── SOLUTIONS GRID SECTION ─── */}
-      <section style={{ padding: '2rem 2rem 8rem 2rem', position: 'relative', zIndex: 10 }}>
+      <section className="section-padding container" style={{ position: 'relative', zIndex: 10 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           
           {/* Tabs */}
@@ -104,7 +104,7 @@ export default function SolutionsPage() {
           </motion.div>
 
           {/* Grid */}
-          <motion.div layout style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          <motion.div layout style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1.5rem' }}>
             <AnimatePresence mode="popLayout">
               {filteredSolutions.map((sol, idx) => (
                 <motion.div
@@ -115,8 +115,7 @@ export default function SolutionsPage() {
                   exit={{ opacity: 0, scale: 0.9, y: 20 }}
                   transition={{ duration: 0.4, type: 'spring', bounce: 0.2 }}
                 >
-                  <HoverCloudCard style={{ 
-                    padding: '2rem', 
+                  <HoverCloudCard className="glass-panel" style={{ 
                     background: 'rgba(10,13,28,0.6)', 
                     backdropFilter: 'blur(16px)', 
                     borderRadius: 24, 
@@ -149,12 +148,11 @@ export default function SolutionsPage() {
       </section>
 
       {/* ─── BOTTOM CALL TO ACTION ─── */}
-      <section style={{ padding: '0 2rem 6rem 2rem' }}>
+      <section className="section-padding container">
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <HoverCloudCard style={{ 
+          <HoverCloudCard className="glass-panel" style={{ 
             background: 'linear-gradient(135deg, rgba(14,165,233,0.1) 0%, rgba(3,7,18,0.8) 100%)', 
             borderRadius: 32, 
-            padding: '3rem 4rem', 
             border: '1px solid rgba(14,165,233,0.2)',
             display: 'flex',
             alignItems: 'center',
@@ -168,7 +166,7 @@ export default function SolutionsPage() {
             
             <div style={{ position: 'relative', zIndex: 1, maxWidth: 500 }}>
               <div style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#38bdf8', marginBottom: '1rem' }}>REVENUE SYSTEMS</div>
-              <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', marginBottom: '1rem' }}>Need a complete transformation?</h2>
+              <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 900, color: '#fff', marginBottom: '1rem' }}>Need a complete transformation?</h2>
               <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>Stop stitching tools together. We offer fully integrated, end-to-end systems that eliminate operational bottlenecks and scale seamlessly.</p>
             </div>
             
