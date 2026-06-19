@@ -132,13 +132,12 @@ function CustomDropdown({ value, options, placeholder, onChange, name, required 
               top: 'calc(100% + 8px)',
               left: 0,
               right: 0,
-              background: 'rgba(15,23,42,0.95)',
-              border: '1px solid rgba(6,182,212,0.2)',
+              background: '#0b1121',
+              border: '1px solid rgba(6,182,212,0.3)',
               borderRadius: '12px',
               padding: '6px',
               zIndex: 100,
-              boxShadow: '0 10px 40px -10px rgba(0,0,0,0.5), 0 0 20px rgba(6,182,212,0.1)',
-              backdropFilter: 'blur(12px)',
+              boxShadow: '0 10px 40px -10px rgba(0,0,0,0.8), 0 0 20px rgba(6,182,212,0.15)',
               maxHeight: '220px',
               overflowY: 'auto'
             }}
@@ -147,6 +146,7 @@ function CustomDropdown({ value, options, placeholder, onChange, name, required 
               <motion.div
                 key={opt}
                 whileHover={{ background: 'rgba(6,182,212,0.15)', paddingLeft: '18px' }}
+                transition={{ duration: 0.05 }}
                 onClick={() => {
                   onChange({ target: { name, value: opt } });
                   setIsOpen(false);
@@ -155,12 +155,11 @@ function CustomDropdown({ value, options, placeholder, onChange, name, required 
                   padding: '10px 14px',
                   borderRadius: '8px',
                   cursor: 'pointer',
-                  color: value === opt ? '#0ea5e9' : '#e2e8f0',
-                  fontSize: '0.9rem',
+                  color: value === opt ? '#0ea5e9' : '#ffffff',
+                  fontSize: '0.95rem',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  transition: 'padding 0.2s ease, background 0.2s ease',
                   fontWeight: value === opt ? 600 : 400
                 }}
               >
