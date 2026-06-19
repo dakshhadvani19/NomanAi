@@ -16,13 +16,36 @@ import VoiceAgentsPage from './components/VoiceAgentsPage';
 import RevenueSystemsPage from './components/RevenueSystemsPage';
 import SolutionsPage from './components/SolutionsPage';
 
+const homeSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'AI Voice Agents & Revenue Systems',
+  provider: {
+    '@type': 'Organization',
+    name: 'Noman ai',
+    url: 'https://nomanai.vercel.app',
+  },
+  serviceType: 'AI Automation',
+  areaServed: { '@type': 'Country', name: 'India' },
+  description:
+    'Noman ai deploys Telugu-first AI Voice Agents and fully automated Revenue Systems that call leads in seconds, handle objections, qualify intent and close deals — 24/7, without a human team.',
+  offers: {
+    '@type': 'Offer',
+    price: '75000',
+    priceCurrency: 'INR',
+    availability: 'https://schema.org/InStock',
+  },
+};
+
 function HomePage() {
   return (
     <main style={{ position: 'relative', zIndex: 10 }}>
-      <SEO 
-        title="Noman ai | AI Voice Agents & Revenue Systems" 
-        description="Stop stitching tools together. Noman ai provides fully integrated, end-to-end AI Voice Agents and Revenue Systems to eliminate operational bottlenecks and scale your business."
+      <SEO
+        title="Noman ai | AI Voice Agents & Revenue Systems for Indian Businesses"
+        description="Telugu-first AI Voice Agents that call leads in 3 seconds, qualify and close — 24/7. Noman ai automates your entire revenue pipeline: WhatsApp, calls, CRM and more."
         url="https://nomanai.vercel.app/"
+        keywords="AI voice agent India, Telugu AI calling agent, automated lead follow-up India, AI revenue system, WhatsApp automation India, business automation Hyderabad, lead conversion AI, AI for real estate India, AI calling software, sales automation India, Noman ai"
+        schema={homeSchema}
       />
       <HeroPentagon />
       <ProblemCards />
@@ -32,6 +55,7 @@ function HomePage() {
     </main>
   );
 }
+
 
 function App() {
   return (

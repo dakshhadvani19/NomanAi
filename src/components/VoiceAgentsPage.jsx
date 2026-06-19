@@ -559,7 +559,31 @@ function FAQ() {
 export default function VoiceAgentsPage() {
   return (
     <main style={{ position: 'relative', zIndex: 10, background: '#050712', color: '#fff', minHeight: '100vh' }}>
-      <SEO title="Native AI Voice Agents | Noman ai" description="Deploy Telugu-First AI Voice Agents built for operational speed. Instant lead response. Scalable communication." url="https://nomanai.vercel.app/voice-agents" />
+      <SEO
+        title="Telugu AI Voice Agents for Lead Automation | Noman ai"
+        description="Deploy a Telugu-first AI Voice Agent that calls new leads in 3 seconds, handles objections in natural Telugu, qualifies intent and hands off to WhatsApp — automatically. Serving real estate, FMCG and education businesses across India."
+        url="https://nomanai.vercel.app/voice-agents"
+        keywords="Telugu AI voice agent, AI calling agent India, automated lead calling, AI for real estate India, Telugu AI calling software, instant lead follow-up AI, voice bot India, AI inbound outbound calls, lead qualification AI, Noman ai voice agent"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: 'Noman ai Telugu Voice Agent',
+          description: 'A Telugu-first AI voice agent that calls leads in under 3 seconds, qualifies intent and handles objections 24/7 — built for Indian businesses.',
+          brand: { '@type': 'Brand', name: 'Noman ai' },
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'INR',
+            price: '75000',
+            availability: 'https://schema.org/InStock',
+            seller: { '@type': 'Organization', name: 'Noman ai' },
+          },
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: '4.9',
+            reviewCount: '38',
+          },
+        }}
+      />
       <HeroSection />
       <IndustryTicker />
       <ProblemSection />

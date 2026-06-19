@@ -137,7 +137,38 @@ export default function AuditPage() {
 
   return (
     <>
-      <SEO title="Free Automation Audit | Noman ai" description="Book a free 1-on-1 automation audit with our experts to discover exactly where you are losing revenue." url="https://nomanai.vercel.app/audit" />
+      <SEO
+        title="Free AI Automation Audit for Indian Businesses | Noman ai"
+        description="Book a free 30-minute business automation audit with Noman ai. Discover exactly where you're losing leads and revenue — and get a custom AI roadmap to fix it. No cost, no obligation."
+        url="https://nomanai.vercel.app/audit"
+        keywords="free automation audit India, business automation consultation, AI audit free, lead automation audit, revenue system audit, AI for business India free consultation, Noman ai audit"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'LocalBusiness',
+          name: 'Noman ai',
+          image: 'https://nomanai.vercel.app/Logo_website.png',
+          url: 'https://nomanai.vercel.app',
+          telephone: '+91-6362852526',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Hyderabad',
+            addressRegion: 'Telangana',
+            addressCountry: 'IN',
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: 17.385,
+            longitude: 78.4867,
+          },
+          openingHoursSpecification: {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+            opens: '09:00',
+            closes: '20:00',
+          },
+          priceRange: '₹₹',
+        }}
+      />
       <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', paddingTop: '100px', paddingBottom: '80px' }}>
 
       {/* Animated background orbs */}

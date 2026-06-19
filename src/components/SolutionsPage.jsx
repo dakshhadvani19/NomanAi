@@ -46,7 +46,24 @@ export default function SolutionsPage() {
 
   return (
     <div style={{ background: '#030712', minHeight: '100vh', color: '#fff', overflowX: 'hidden' }}>
-      <SEO title="Our Solutions | Noman ai" description="Explore our full suite of AI solutions ranging from WhatsApp automation to high-converting Landing Pages." url="https://nomanai.vercel.app/solutions" />
+      <SEO
+        title="AI Automation Solutions for Indian Businesses | Noman ai"
+        description="Explore Noman ai's full suite: WhatsApp automation, AI Voice Agents, high-converting landing pages, CRM pipelines and more — all designed to eliminate bottlenecks and scale your business fast."
+        url="https://nomanai.vercel.app/solutions"
+        keywords="AI solutions India, WhatsApp automation business, high converting landing page India, AI business tools, automation solutions Hyderabad, digital automation India, AI web development, Noman ai solutions"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'Noman ai AI Solutions',
+          description: 'Full suite of AI-powered business automation solutions for Indian companies',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'WhatsApp Automation' },
+            { '@type': 'ListItem', position: 2, name: 'AI Voice Agents' },
+            { '@type': 'ListItem', position: 3, name: 'Revenue Systems' },
+            { '@type': 'ListItem', position: 4, name: 'High-Converting Landing Pages' },
+          ],
+        }}
+      />
       
       {/* ─── HERO SECTION ─── */}
       <section className="section-padding container" style={{ position: 'relative', textAlign: 'center' }}>

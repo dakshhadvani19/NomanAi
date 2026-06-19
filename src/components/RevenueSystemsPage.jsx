@@ -400,7 +400,21 @@ export default function RevenueSystemsPage() {
 
   return (
     <div style={{ background: 'transparent', color: '#fff', minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
-      <SEO title="Automated Revenue Systems | Noman ai" description="End-to-end operational pipelines designed to catch every lead, qualify intent, and convert with zero human bottleneck." url="https://nomanai.vercel.app/revenue-systems" />
+      <SEO
+        title="AI Revenue Systems & Sales Automation for India | Noman ai"
+        description="End-to-end AI Revenue Systems that catch every lead, qualify intent and convert — with zero human bottleneck. WhatsApp automation, CRM integration, AI calling and retargeting pipelines built for Indian businesses."
+        url="https://nomanai.vercel.app/revenue-systems"
+        keywords="AI revenue system India, sales automation India, automated sales pipeline, AI CRM integration, WhatsApp automation for business, lead management AI, revenue automation Hyderabad, AI for business growth India, Noman ai revenue system"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'Automated Revenue Systems',
+          provider: { '@type': 'Organization', name: 'Noman ai', url: 'https://nomanai.vercel.app' },
+          serviceType: 'Sales & Revenue Automation',
+          description: 'End-to-end operational pipelines designed to catch every lead, qualify intent, and convert with zero human bottleneck.',
+          areaServed: { '@type': 'Country', name: 'India' },
+        }}
+      />
       <HeroSection />
       <SystemsSection />
       <BannerCTA />
