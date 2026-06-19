@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from './SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, Clock, Mail, Phone, ArrowRight, Sparkles, Send } from 'lucide-react';
 import VoiceAgentBanner from './VoiceAgentBanner';
@@ -135,7 +136,9 @@ export default function AuditPage() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', paddingTop: '100px', paddingBottom: '80px' }}>
+    <>
+      <SEO title="Free Automation Audit | Noman ai" description="Book a free 1-on-1 automation audit with our experts to discover exactly where you are losing revenue." url="https://nomanai.vercel.app/audit" />
+      <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', paddingTop: '100px', paddingBottom: '80px' }}>
 
       {/* Animated background orbs */}
       <motion.div
@@ -233,7 +236,7 @@ export default function AuditPage() {
             <motion.div {...fadeUp(0.55)} style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               {[
                 { icon: <Clock size={15} />, text: 'We respond within 24 hours' },
-                { icon: <Mail size={15} />, text: 'hello@outpero.com' },
+                { icon: <Mail size={15} />, text: 'hello@nomanai.com' },
                 { icon: <Phone size={15} />, text: 'Tharun Naik (Founder): +91 6362852526' },
                 { icon: <Phone size={15} />, text: 'Daksh Hadvani (Founder): +91 96646 96850' },
               ].map(({ icon, text }, i) => (
@@ -395,5 +398,6 @@ export default function AuditPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

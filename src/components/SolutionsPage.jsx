@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from './SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -45,6 +46,7 @@ export default function SolutionsPage() {
 
   return (
     <div style={{ background: '#030712', minHeight: '100vh', color: '#fff', overflowX: 'hidden' }}>
+      <SEO title="Our Solutions | Noman ai" description="Explore our full suite of AI solutions ranging from WhatsApp automation to high-converting Landing Pages." url="https://nomanai.vercel.app/solutions" />
       
       {/* ─── HERO SECTION ─── */}
       <section className="section-padding container" style={{ position: 'relative', textAlign: 'center' }}>

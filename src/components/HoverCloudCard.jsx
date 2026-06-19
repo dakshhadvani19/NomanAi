@@ -90,7 +90,7 @@ export default function HoverCloudCard({ children, style, className, onClick, ..
             }}
           />
           
-          {/* Cloud Blob 2: Cyan (Outpero Brand Color) */}
+          {/* Cloud Blob 2: Cyan (Noman ai Brand Color) */}
           <motion.div
             animate={{ rotate: -360 }}
             transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}

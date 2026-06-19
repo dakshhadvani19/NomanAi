@@ -99,7 +99,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.2rem', letterSpacing: '0.05em', textDecoration: 'none', color: '#fff' }}>
           <Sparkles className="text-gradient" size={20} />
-          <span>OUTPERO</span>
+          <span>NOMAN AI</span>
         </Link>
 
         {/* Links container */}

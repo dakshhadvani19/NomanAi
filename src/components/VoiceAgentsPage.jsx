@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from './SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -190,7 +191,7 @@ const HOW_STEPS = [
   { icon: <UserPlus size={20} />, title: '1. Lead Captured', desc: "A prospect sees your ad and fills a lead form. They are interested but haven't spoken to anyone yet." },
   { icon: <PhoneCall size={20} />, title: '2. The 3-Second Call', desc: 'Before they close their browser, our AI agent calls them in fluent Telugu, engaging instantly.' },
   { icon: <MessageSquare size={20} />, title: '3. Qualifies & Objections', desc: 'The AI acts as your best salesperson — answers questions, handles pricing, qualifies intent.' },
-  { icon: <BarChart3 size={20} />, title: '4. Outpero Voice Hub', desc: 'Access full call recordings, real-time intent scores, and extracted lead details in your dashboard.' },
+  { icon: <BarChart3 size={20} />, title: '4. Noman ai Voice Hub', desc: 'Access full call recordings, real-time intent scores, and extracted lead details in your dashboard.' },
 ];
 
 function HowItWorks() {
@@ -267,7 +268,7 @@ function HowItWorks() {
                 {activeStep === 1 && (
                   <div style={{ background: '#09090b', borderRadius: 32, padding: '1.5rem', width: 260, height: 340, border: '6px solid #27272a', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.5)', position: 'relative', overflow: 'hidden' }}>
                     <div style={{ fontSize: '0.75rem', color: '#a1a1aa', marginTop: '1rem' }}>Incoming Call...</div>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff', marginBottom: '2.5rem' }}>Outpero AI Agent</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff', marginBottom: '2.5rem' }}>Noman ai Agent</div>
                     
                     <div style={{ position: 'relative', marginBottom: 'auto' }}>
                       <motion.div animate={{ scale: [1, 1.5, 2.2], opacity: [0.8, 0.3, 0] }} transition={{ duration: 2, repeat: Infinity }} style={{ position: 'absolute', inset: -10, borderRadius: '50%', background: '#0ea5e9' }} />
@@ -311,7 +312,7 @@ function HowItWorks() {
                            <Target size={14} />
                         </div>
                         <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #38bdf8)', padding: '0.75rem', borderRadius: '12px 0 12px 12px', fontSize: '0.8rem', color: '#fff', lineHeight: 1.5, boxShadow: '0 4px 15px rgba(14,165,233,0.3)' }}>
-                           I'm a live AI from Outpero! I saw you just filled our form. Were you looking to automate your lead follow-ups?
+                           I'm a live AI from Noman ai! I saw you just filled our form. Were you looking to automate your lead follow-ups?
                         </div>
                      </motion.div>
                   </div>
@@ -352,7 +353,7 @@ function HowItWorks() {
   );
 }
 
-/* ─── SECTION 5: WHY OUTPERO ─── */
+/* ─── SECTION 5: WHY NOMAN AI ─── */
 const WHY_FEATURES = [
   { num: '01', title: 'Telugu-first conversational tuning', desc: 'Built specifically to understand native dialects, interruptions, and Tanglish mixed contexts natively.' },
   { num: '02', title: 'Instant lead response', desc: 'Seconds matter. React to incoming leads instantly before they bounce to a competitor.' },
@@ -360,12 +361,12 @@ const WHY_FEATURES = [
   { num: '04', title: 'Operational dashboard visibility', desc: 'Track every single interaction, outcome, and metric in real-time from your Voice Hub.' },
 ];
 
-function WhyOutpero() {
+function WhyNomanai() {
   return (
     <section className="section-padding container" style={{ background: 'var(--bg-dark, #03070f)' }}>
       <div className="hero-layout" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '4rem', alignItems: 'start' }}>
         <div style={{ position: 'sticky', top: 120 }}>
-          <motion.h2 {...fadeUp(0)} style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 900, lineHeight: 1.1, marginBottom: '1rem' }}>Why<br />Outpero.</motion.h2>
+          <motion.h2 {...fadeUp(0)} style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 900, lineHeight: 1.1, marginBottom: '1rem' }}>Why<br />Noman ai.</motion.h2>
           <motion.p {...fadeUp(0.1)} style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.1rem', lineHeight: 1.6 }}>We build operational efficiency, not conversational toys.</motion.p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
@@ -398,7 +399,7 @@ function VoiceCards() {
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
           <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem' }}>Hear the AI in Action</h2>
-          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '1.05rem' }}>Choose from the Outpero Voice Library featuring <span style={{ color: '#38bdf8', fontWeight: 700 }}>10+ native Telugu voices</span>.</p>
+          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '1.05rem' }}>Choose from the Noman ai Voice Library featuring <span style={{ color: '#38bdf8', fontWeight: 700 }}>10+ native Telugu voices</span>.</p>
         </motion.div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
           {VOICES.map((v, i) => (
@@ -450,7 +451,7 @@ function Pricing() {
         </motion.div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
           {[
-            { label: 'Setup & Deployment', price: '₹75,000', sub: 'One-time', highlight: true, features: ['Custom voice persona', 'Telugu NLP tuning', '1,000 test minutes', 'CRM integration', 'Outpero Voice Hub access'] },
+            { label: 'Setup & Deployment', price: '₹75,000', sub: 'One-time', highlight: true, features: ['Custom voice persona', 'Telugu NLP tuning', '1,000 test minutes', 'CRM integration', 'Noman ai Voice Hub access'] },
             { label: 'Growth Usage', price: '₹6/min', sub: '1,000 – 10,000 mins', features: ['Inbound + Outbound', 'Real-time transcription', 'Intent scoring', 'WhatsApp handoff'] },
             { label: 'Scale Usage', price: '₹5/min', sub: '10,000 – 30,000 mins', features: ['Everything in Growth', 'Priority queue', 'Dedicated call routing', 'Custom analytics'] },
           ].map((p, i) => (
@@ -504,7 +505,7 @@ function DeployForm() {
                   onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'} />
               </div>
             ))}
-            <motion.a href={`https://wa.me/910000000000?text=Hi Outpero, I'm ready to deploy the Telugu AI Voice Agent. Name: ${form.name}`} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(37,211,102,0.5)' }} whileTap={{ scale: 0.97 }}
+            <motion.a href={`https://wa.me/910000000000?text=Hi Noman ai, I'm ready to deploy the Telugu AI Voice Agent. Name: ${form.name}`} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(37,211,102,0.5)' }} whileTap={{ scale: 0.97 }}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', marginTop: '0.5rem', padding: '1rem', borderRadius: 999, background: 'linear-gradient(135deg, #25d366, #128c7e)', color: '#fff', fontWeight: 800, fontSize: '1rem', textDecoration: 'none', boxShadow: '0 0 25px rgba(37,211,102,0.35)' }}>
               <Phone size={18} /> Deploy via WhatsApp
             </motion.a>
@@ -517,7 +518,7 @@ function DeployForm() {
 
 /* ─── SECTION 9: FAQ ─── */
 const FAQS = [
-  { q: 'What is the Outpero Telugu AI Voice Agent?', a: 'Outpero provides high-speed AI voice systems built specifically for scalable lead handling and natural Telugu conversational flow. It eliminates delayed follow-ups and missed calls, engaging prospects instantly.' },
+  { q: 'What is the Noman ai Telugu Voice Agent?', a: 'Noman ai provides high-speed AI voice systems built specifically for scalable lead handling and natural Telugu conversational flow. It eliminates delayed follow-ups and missed calls, engaging prospects instantly.' },
   { q: 'How much does the setup cost?', a: 'The initial AI Voice Agent Setup & Deployment is ₹75,000. Testing is initially performed using 1,000 talk-time minutes to optimize conversational quality and tune the voice persona.' },
   { q: 'What is the per-minute usage pricing?', a: 'Usage pricing is ₹6/min for 1,000 to 10,000 minutes, and drops to ₹5/min for 10,000 to 30,000 minutes. Custom pricing is available for 30,000+ minutes per month.' },
 ];
@@ -557,16 +558,17 @@ function FAQ() {
 /* ─── PAGE ROOT ─── */
 export default function VoiceAgentsPage() {
   return (
-    <div style={{ background: '#03070f', color: '#fff', minHeight: '100vh' }}>
+    <main style={{ position: 'relative', zIndex: 10, background: '#050712', color: '#fff', minHeight: '100vh' }}>
+      <SEO title="Native AI Voice Agents | Noman ai" description="Deploy Telugu-First AI Voice Agents built for operational speed. Instant lead response. Scalable communication." url="https://nomanai.vercel.app/voice-agents" />
       <HeroSection />
       <IndustryTicker />
       <ProblemSection />
       <HowItWorks />
-      <WhyOutpero />
+      <WhyNomanai />
       <VoiceCards />
       <Pricing />
       <DeployForm />
       <FAQ />
-    </div>
+    </main>
   );
 }

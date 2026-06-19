@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from './SEO';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -399,6 +400,7 @@ export default function RevenueSystemsPage() {
 
   return (
     <div style={{ background: 'transparent', color: '#fff', minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
+      <SEO title="Automated Revenue Systems | Noman ai" description="End-to-end operational pipelines designed to catch every lead, qualify intent, and convert with zero human bottleneck." url="https://nomanai.vercel.app/revenue-systems" />
       <HeroSection />
       <SystemsSection />
       <BannerCTA />
