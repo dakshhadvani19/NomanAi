@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SEO from './SEO';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, Clock, Mail, Phone, ArrowRight, Sparkles, Send } from 'lucide-react';
+import { CheckCircle, Clock, Mail, Phone, ArrowRight, Sparkles, Send, ChevronDown } from 'lucide-react';
 import VoiceAgentBanner from './VoiceAgentBanner';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -76,27 +76,106 @@ function FocusTextarea({ ...props }) {
   );
 }
 
-function FocusSelect({ children, ...props }) {
-  const [focused, setFocused] = useState(false);
+function CustomDropdown({ value, options, placeholder, onChange, name, required }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <select
-      {...props}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      style={{
-        ...inputStyle,
-        cursor: 'pointer',
-        appearance: 'none',
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'right 14px center',
-        borderColor: focused ? 'rgba(6,182,212,0.6)' : 'rgba(255,255,255,0.08)',
-        boxShadow: focused ? '0 0 0 3px rgba(6,182,212,0.12)' : 'none',
-        background: focused ? 'rgba(6,182,212,0.07)' : 'rgba(6,182,212,0.04)',
-      }}
-    >
-      {children}
-    </select>
+    <div style={{ position: 'relative' }}>
+      {isOpen && (
+        <div 
+          style={{ position: 'fixed', inset: 0, zIndex: 99 }} 
+          onClick={() => setIsOpen(false)} 
+        />
+      )}
+      
+      <input
+        type="text"
+        name={name}
+        value={value}
+        required={required}
+        readOnly
+        style={{ position: 'absolute', opacity: 0, width: '1px', height: '1px', top: '50%', left: '50%', pointerEvents: 'none' }}
+        tabIndex={-1}
+      />
+
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        style={{
+          ...inputStyle,
+          cursor: 'pointer',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          borderColor: isOpen ? 'rgba(6,182,212,0.6)' : 'rgba(255,255,255,0.08)',
+          boxShadow: isOpen ? '0 0 0 3px rgba(6,182,212,0.12), inset 0 0 20px rgba(6,182,212,0.04)' : 'none',
+          background: isOpen ? 'rgba(6,182,212,0.07)' : 'rgba(6,182,212,0.04)',
+          color: value ? 'var(--text-main)' : 'rgba(255,255,255,0.5)',
+          position: 'relative',
+          zIndex: isOpen ? 100 : 1
+        }}
+      >
+        <span>{value || placeholder}</span>
+        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+          <ChevronDown size={16} color="rgba(255,255,255,0.4)" />
+        </motion.div>
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            style={{
+              position: 'absolute',
+              top: 'calc(100% + 8px)',
+              left: 0,
+              right: 0,
+              background: 'rgba(15,23,42,0.95)',
+              border: '1px solid rgba(6,182,212,0.2)',
+              borderRadius: '12px',
+              padding: '6px',
+              zIndex: 100,
+              boxShadow: '0 10px 40px -10px rgba(0,0,0,0.5), 0 0 20px rgba(6,182,212,0.1)',
+              backdropFilter: 'blur(12px)',
+              maxHeight: '220px',
+              overflowY: 'auto'
+            }}
+          >
+            {options.map((opt) => (
+              <motion.div
+                key={opt}
+                whileHover={{ background: 'rgba(6,182,212,0.15)', paddingLeft: '18px' }}
+                onClick={() => {
+                  onChange({ target: { name, value: opt } });
+                  setIsOpen(false);
+                }}
+                style={{
+                  padding: '10px 14px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  color: value === opt ? '#0ea5e9' : '#e2e8f0',
+                  fontSize: '0.9rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  transition: 'padding 0.2s ease, background 0.2s ease',
+                  fontWeight: value === opt ? 600 : 400
+                }}
+              >
+                {opt}
+                {value === opt && (
+                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                    <CheckCircle size={15} color="#0ea5e9" />
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -321,17 +400,25 @@ export default function AuditPage() {
 
                   <div className="mobile-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     <FormField label="Business Type *" delay={0.35}>
-                      <FocusSelect name="businessType" required value={form.businessType} onChange={handleChange}>
-                        <option value="" style={{ background: '#0d1117' }}>Select type</option>
-                        {BUSINESS_TYPES.map(t => <option key={t} value={t} style={{ background: '#0d1117' }}>{t}</option>)}
-                      </FocusSelect>
+                      <CustomDropdown
+                        name="businessType"
+                        value={form.businessType}
+                        options={BUSINESS_TYPES}
+                        placeholder="Select type"
+                        required
+                        onChange={handleChange}
+                      />
                     </FormField>
 
                     <FormField label="Business Size *" delay={0.4}>
-                      <FocusSelect name="businessSize" required value={form.businessSize} onChange={handleChange}>
-                        <option value="" style={{ background: '#0d1117' }}>Select size</option>
-                        {BUSINESS_SIZES.map(s => <option key={s} value={s} style={{ background: '#0d1117' }}>{s}</option>)}
-                      </FocusSelect>
+                      <CustomDropdown
+                        name="businessSize"
+                        value={form.businessSize}
+                        options={BUSINESS_SIZES}
+                        placeholder="Select size"
+                        required
+                        onChange={handleChange}
+                      />
                     </FormField>
                   </div>
 
