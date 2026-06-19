@@ -23,7 +23,7 @@ const homeSchema = {
   provider: {
     '@type': 'Organization',
     name: 'Noman ai',
-    url: 'https://nomanai.vercel.app',
+    url: 'https://nomanaivercel.vercel.app',
   },
   serviceType: 'AI Automation',
   areaServed: { '@type': 'Country', name: 'India' },
@@ -43,7 +43,7 @@ function HomePage() {
       <SEO
         title="Noman ai | AI Voice Agents & Revenue Systems for Indian Businesses"
         description="Telugu-first AI Voice Agents that call leads in 3 seconds, qualify and close — 24/7. Noman ai automates your entire revenue pipeline: WhatsApp, calls, CRM and more."
-        url="https://nomanai.vercel.app/"
+        url="https://nomanaivercel.vercel.app/"
         keywords="AI voice agent India, Telugu AI calling agent, automated lead follow-up India, AI revenue system, WhatsApp automation India, business automation Hyderabad, lead conversion AI, AI for real estate India, AI calling software, sales automation India, Noman ai"
         schema={homeSchema}
       />

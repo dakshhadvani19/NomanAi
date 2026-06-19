@@ -49,7 +49,7 @@ export default function SolutionsPage() {
       <SEO
         title="AI Automation Solutions for Indian Businesses | Noman ai"
         description="Explore Noman ai's full suite: WhatsApp automation, AI Voice Agents, high-converting landing pages, CRM pipelines and more — all designed to eliminate bottlenecks and scale your business fast."
-        url="https://nomanai.vercel.app/solutions"
+        url="https://nomanaivercel.vercel.app/solutions"
         keywords="AI solutions India, WhatsApp automation business, high converting landing page India, AI business tools, automation solutions Hyderabad, digital automation India, AI web development, Noman ai solutions"
         schema={{
           '@context': 'https://schema.org',

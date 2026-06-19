@@ -140,14 +140,14 @@ export default function AuditPage() {
       <SEO
         title="Free AI Automation Audit for Indian Businesses | Noman ai"
         description="Book a free 30-minute business automation audit with Noman ai. Discover exactly where you're losing leads and revenue — and get a custom AI roadmap to fix it. No cost, no obligation."
-        url="https://nomanai.vercel.app/audit"
+        url="https://nomanaivercel.vercel.app/audit"
         keywords="free automation audit India, business automation consultation, AI audit free, lead automation audit, revenue system audit, AI for business India free consultation, Noman ai audit"
         schema={{
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
           name: 'Noman ai',
-          image: 'https://nomanai.vercel.app/Logo_website.png',
-          url: 'https://nomanai.vercel.app',
+          image: 'https://nomanaivercel.vercel.app/Logo_website.png',
+          url: 'https://nomanaivercel.vercel.app',
           telephone: '+91-6362852526',
           address: {
             '@type': 'PostalAddress',

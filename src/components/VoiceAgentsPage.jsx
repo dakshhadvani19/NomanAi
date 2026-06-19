@@ -562,7 +562,7 @@ export default function VoiceAgentsPage() {
       <SEO
         title="Telugu AI Voice Agents for Lead Automation | Noman ai"
         description="Deploy a Telugu-first AI Voice Agent that calls new leads in 3 seconds, handles objections in natural Telugu, qualifies intent and hands off to WhatsApp — automatically. Serving real estate, FMCG and education businesses across India."
-        url="https://nomanai.vercel.app/voice-agents"
+        url="https://nomanaivercel.vercel.app/voice-agents"
         keywords="Telugu AI voice agent, AI calling agent India, automated lead calling, AI for real estate India, Telugu AI calling software, instant lead follow-up AI, voice bot India, AI inbound outbound calls, lead qualification AI, Noman ai voice agent"
         schema={{
           '@context': 'https://schema.org',

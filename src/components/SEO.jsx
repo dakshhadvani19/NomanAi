@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet-async';
 export default function SEO({
   title,
   description,
-  url = 'https://nomanai.vercel.app',
+  url = 'https://nomanaivercel.vercel.app',
   keywords = '',
-  ogImage = 'https://nomanai.vercel.app/og-image.png',
+  ogImage = 'https://nomanaivercel.vercel.app/og-image.png',
   schema = null,
 }) {
   const defaultKeywords =
