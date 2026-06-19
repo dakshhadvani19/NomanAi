@@ -115,7 +115,11 @@ function CustomDropdown({ value, options, placeholder, onChange, name, required 
         }}
       >
         <span>{value || placeholder}</span>
-        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+        <motion.div 
+          animate={{ rotate: isOpen ? 180 : 0 }} 
+          transition={{ duration: 0.2 }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', transformOrigin: 'center' }}
+        >
           <ChevronDown size={16} color="rgba(255,255,255,0.4)" />
         </motion.div>
       </div>
