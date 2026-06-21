@@ -244,9 +244,10 @@ function SmoothSlider({ min, max, step = 1, value, onChange, label, format, allo
               ref={inputRef} type="number" value={tempVal}
               onChange={e => setTempVal(e.target.value)} onBlur={handleBlur} onKeyDown={handleKeyDown} autoFocus
               style={{
-                background: 'rgba(6,182,212,0.1)', border: '1px solid #22d3ee', borderRadius: '6px',
-                color: '#22d3ee', fontSize: '0.95rem', fontWeight: 800, width: '90px',
-                textAlign: 'right', outline: 'none', padding: '2px 6px', fontFamily: 'inherit'
+                background: 'rgba(6,182,212,0.18)', border: '1px solid #22d3ee', borderRadius: '6px',
+                color: '#ffffff', fontSize: '0.95rem', fontWeight: 800, width: '90px',
+                textAlign: 'right', outline: 'none', padding: '2px 6px', fontFamily: 'inherit',
+                caretColor: '#facc15'
               }}
             />
           ) : (

@@ -238,3 +238,13 @@ h1, h2, h3, h4 {
   h1 { font-size: clamp(1.6rem, 6vw, 2rem) !important; }
   .section-title { font-size: clamp(1.4rem, 5vw, 1.8rem) !important; }
 }
+
+/* Hide number input spin buttons globally */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
