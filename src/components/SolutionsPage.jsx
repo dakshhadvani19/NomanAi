@@ -159,10 +159,6 @@ export default function SolutionsPage() {
             </AnimatePresence>
           </motion.div>
           
-          <div style={{ textAlign: 'center', marginTop: '4rem', fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>
-            All fees cover build and management. Platforms (Meta API, hosting, voice infra) billed separately at cost. Full estimate provided before any project starts.
-          </div>
-
         </div>
       </section>
 

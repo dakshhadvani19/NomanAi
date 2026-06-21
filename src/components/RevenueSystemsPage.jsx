@@ -10,6 +10,7 @@ import {
   Zap
 } from 'lucide-react';
 import HoverCloudCard from './HoverCloudCard';
+import RevenueCalculator from './RevenueCalculator';
 
 /* ─── HELPERS ─── */
 const fadeUp = (delay = 0) => ({
@@ -216,9 +217,6 @@ function SystemsSection() {
           </motion.div>
         ))}
 
-        <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem', fontStyle: 'italic', marginTop: '2rem' }}>
-          All fees cover build and management. Platforms (Meta API, hosting, voice infra) billed separately at cost. Full estimate provided before any project starts.
-        </p>
       </div>
     </section>
   );
@@ -417,6 +415,7 @@ export default function RevenueSystemsPage() {
       />
       <HeroSection />
       <SystemsSection />
+      <RevenueCalculator />
       <BannerCTA />
       <BottomCTA />
     </div>
