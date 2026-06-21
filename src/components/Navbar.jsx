@@ -75,7 +75,7 @@ export default function Navbar() {
           .mobile-only { display: flex !important; }
         }
       `}</style>
-      <motion.div style={{ position: 'fixed', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 100, paddingTop: '1.5rem', pointerEvents: 'none' }}>
+      <motion.div className="nav-outer-wrapper" style={{ position: 'fixed', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 100, paddingTop: '1.5rem', pointerEvents: 'none' }}>
         <motion.nav 
         className="nav-container"
         initial={{ y: -40, opacity: 0 }}

@@ -448,7 +448,7 @@ function PricingSection() {
     <section id="pricing" className="section-padding container" style={{ background: 'transparent' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
         <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '1.5rem', marginTop: '0.9rem' }}>
             <Activity size={13} /> Transparent Pricing
           </span>
           <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.1 }}>One System. <br /><span style={{ color: 'rgba(255,255,255,0.4)' }}>Infinite Scale.</span></h2>
