@@ -205,19 +205,28 @@ function SystemsSection() {
                 </div>
 
                 {/* Footer / Pricing */}
-                <div style={{ marginTop: '1rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem' }}>
-                  <div>
-                    <div style={{ fontSize: 'clamp(1.4rem, 4vw, 1.75rem)', fontWeight: 900, color: '#fff', marginBottom: '0.25rem' }}>
+                <div style={{ marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f9fafb', lineHeight: 1.2 }}>
                       From {formatPrice(sys.priceUsd, { decimalsOverride: 0 })}
-                    </div>
-                    <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)' }}>
+                    </span>
+                    <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>
                       {sys.subpriceUsd ? `${formatPrice(sys.subpriceUsd, { decimalsOverride: 0 })}${sys.subpriceText}` : sys.subprice}
-                    </div>
+                    </span>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                    <button style={{ 
+                      display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', 
+                      fontSize: '0.75rem', fontWeight: 500, borderRadius: '6px', 
+                      background: 'rgba(6,182,212,0.1)', color: '#22d3ee', 
+                      border: '1px solid rgba(6,182,212,0.2)', cursor: 'pointer', outline: 'none'
+                    }}>
+                      <BarChart size={14} />
+                      View Example Scenario
+                    </button>
+                    <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>
                       Best for: {sys.bestFor}
-                    </div>
+                    </span>
                   </div>
                 </div>
               </div>
