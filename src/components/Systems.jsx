@@ -47,48 +47,48 @@ export default function Systems() {
 
       <div className="grid-3">
         {systems.map((sys, i) => (
-          <HoverCloudCard 
-            key={i}
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            whileHover="hover"
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ delay: i * 0.2, duration: 0.6 }}
-            className="glass-panel"
-            style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}
-          >
-            <div style={{ marginBottom: '2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem', letterSpacing: '0.05em' }}>{sys.label}</span>
-                {sys.badge && <span className="badge" style={{ fontSize: '0.7rem', padding: '0.15rem 0.5rem' }}>{sys.badge}</span>}
+          <Link key={i} to={sys.link} style={{ display: 'block', textDecoration: 'none', height: '100%', outline: 'none' }}>
+            <HoverCloudCard 
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              whileHover="hover"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.2, duration: 0.6 }}
+              className="glass-panel"
+              style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', height: '100%', color: 'inherit' }}
+            >
+              <div style={{ marginBottom: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem', letterSpacing: '0.05em' }}>{sys.label}</span>
+                  {sys.badge && <span className="badge" style={{ fontSize: '0.7rem', padding: '0.15rem 0.5rem' }}>{sys.badge}</span>}
+                </div>
+                <h3 style={{ fontSize: '2rem', marginBottom: '0.75rem', color: '#fff' }}>{sys.title}</h3>
+                <p style={{ color: 'var(--text-muted)' }}>{sys.desc}</p>
               </div>
-              <h3 style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>{sys.title}</h3>
-              <p style={{ color: 'var(--text-muted)' }}>{sys.desc}</p>
-            </div>
 
-            <div style={{ flexGrow: 1, marginBottom: '2rem' }}>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem', fontWeight: 600 }}>KEY FEATURES</p>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {sys.features.map((feat, j) => (
-                  <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)' }}>
-                    <CheckCircle2 size={16} className="text-gradient" />
-                    <span>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-              <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.875rem', fontStyle: 'italic', marginTop: '1rem' }}>{sys.more}</p>
-            </div>
+              <div style={{ flexGrow: 1, marginBottom: '2rem' }}>
+                <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem', fontWeight: 600 }}>KEY FEATURES</p>
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {sys.features.map((feat, j) => (
+                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)' }}>
+                      <CheckCircle2 size={16} className="text-gradient" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem' }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>{sys.price}</span>
-              <Link to={sys.link} style={{ color: 'var(--accent-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                EXPLORE 
-                <motion.span variants={{ hover: { x: 5 } }} transition={{ duration: 0.2, ease: "easeInOut" }} style={{ display: 'flex' }}>
-                  <ArrowRight size={16} />
-                </motion.span>
-              </Link>
-            </div>
-          </HoverCloudCard>
+              <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem' }}>
+                <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>{sys.price}</span>
+                <div style={{ color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  EXPLORE 
+                  <motion.span variants={{ hover: { x: 5 } }} transition={{ duration: 0.2, ease: "easeInOut" }} style={{ display: 'flex' }}>
+                    <ArrowRight size={16} />
+                  </motion.span>
+                </div>
+              </div>
+            </HoverCloudCard>
+          </Link>
         ))}
       </div>
     </section>
