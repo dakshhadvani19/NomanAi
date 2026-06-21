@@ -355,10 +355,10 @@ export default function RevenueCalculator() {
       };
 
       sec('📞 AI Voice Agent Stack');
-      row(`LLM – Gemini 2.5 Flash  ($${VOICE_COSTS.llm.usd}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS.llm.usd * mins));
-      row(`STT – Deepgram Nova-3  ($${VOICE_COSTS.stt.usd}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS.stt.usd * mins));
-      row(`TTS – ${ttsQ === 'prem' ? 'ElevenLabs Flash' : 'Google Cloud'}  ($${VOICE_COSTS[ttsKey].usd}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS[ttsKey].usd * mins));
-      row(`Telephony – Twilio ${callDir}  ($${VOICE_COSTS[telKey].usd}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS[telKey].usd * mins));
+      row(`LLM – Gemini 2.5 Flash  (${formatPrice(VOICE_COSTS.llm.usd, { decimalsOverride: 4 })}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS.llm.usd * mins));
+      row(`STT – Deepgram Nova-3  (${formatPrice(VOICE_COSTS.stt.usd, { decimalsOverride: 4 })}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS.stt.usd * mins));
+      row(`TTS – ${ttsQ === 'prem' ? 'ElevenLabs Flash' : 'Google Cloud'}  (${formatPrice(VOICE_COSTS[ttsKey].usd, { decimalsOverride: 4 })}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS[ttsKey].usd * mins));
+      row(`Telephony – Twilio ${callDir}  (${formatPrice(VOICE_COSTS[telKey].usd, { decimalsOverride: 4 })}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS[telKey].usd * mins));
       row('Phone Number Rental (flat)', fmt(flat));
       doc.setDrawColor(50, 70, 100); doc.setLineWidth(0.1); doc.line(pad, y, W - pad, y); y += 4;
       row('Voice Subtotal', fmt(voiceTotal), true); y += 3;
