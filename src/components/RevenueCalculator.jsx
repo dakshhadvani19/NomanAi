@@ -7,6 +7,7 @@ import {
   Globe, TrendingUp
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { WORLD_CURRENCIES } from '../utils/currencies';
 
 /* ─── CONSTANTS ─── */
 const VOICE_COSTS = {
@@ -59,45 +60,13 @@ const KNOWN_AUTOMATIONS = [
   { name: 'SendGrid Email', usdPerMonth: 20 },
 ];
 
-const CURRENCIES = [
-  { code: 'INR', name: 'Indian Rupee',        country: 'India',           flag: '🇮🇳', sym: '₹',   rate: 83.5  },
-  { code: 'USD', name: 'US Dollar',            country: 'United States',   flag: '🇺🇸', sym: '$',   rate: 1.0   },
-  { code: 'EUR', name: 'Euro',                 country: 'European Union',  flag: '🇪🇺', sym: '€',   rate: 0.92  },
-  { code: 'GBP', name: 'British Pound',        country: 'United Kingdom',  flag: '🇬🇧', sym: '£',   rate: 0.79  },
-  { code: 'AED', name: 'UAE Dirham',           country: 'UAE',             flag: '🇦🇪', sym: 'د.إ', rate: 3.67  },
-  { code: 'SGD', name: 'Singapore Dollar',     country: 'Singapore',       flag: '🇸🇬', sym: 'S$',  rate: 1.35  },
-  { code: 'AUD', name: 'Australian Dollar',    country: 'Australia',       flag: '🇦🇺', sym: 'A$',  rate: 1.53  },
-  { code: 'CAD', name: 'Canadian Dollar',      country: 'Canada',          flag: '🇨🇦', sym: 'C$',  rate: 1.36  },
-  { code: 'JPY', name: 'Japanese Yen',         country: 'Japan',           flag: '🇯🇵', sym: '¥',   rate: 149.5 },
-  { code: 'CNY', name: 'Chinese Yuan',         country: 'China',           flag: '🇨🇳', sym: '¥',   rate: 7.24  },
-  { code: 'BRL', name: 'Brazilian Real',       country: 'Brazil',          flag: '🇧🇷', sym: 'R$',  rate: 4.97  },
-  { code: 'ZAR', name: 'South African Rand',   country: 'South Africa',    flag: '🇿🇦', sym: 'R',   rate: 18.63 },
-  { code: 'MYR', name: 'Malaysian Ringgit',    country: 'Malaysia',        flag: '🇲🇾', sym: 'RM',  rate: 4.71  },
-  { code: 'IDR', name: 'Indonesian Rupiah',    country: 'Indonesia',       flag: '🇮🇩', sym: 'Rp',  rate: 15875 },
-  { code: 'THB', name: 'Thai Baht',            country: 'Thailand',        flag: '🇹🇭', sym: '฿',   rate: 35.1  },
-  { code: 'PHP', name: 'Philippine Peso',      country: 'Philippines',     flag: '🇵🇭', sym: '₱',   rate: 56.5  },
-  { code: 'SAR', name: 'Saudi Riyal',          country: 'Saudi Arabia',    flag: '🇸🇦', sym: 'SAR', rate: 3.75  },
-  { code: 'KWD', name: 'Kuwaiti Dinar',        country: 'Kuwait',          flag: '🇰🇼', sym: 'KD',  rate: 0.31  },
-  { code: 'QAR', name: 'Qatari Riyal',         country: 'Qatar',           flag: '🇶🇦', sym: 'QR',  rate: 3.64  },
-  { code: 'NGN', name: 'Nigerian Naira',       country: 'Nigeria',         flag: '🇳🇬', sym: '₦',   rate: 1550  },
-  { code: 'PKR', name: 'Pakistani Rupee',      country: 'Pakistan',        flag: '🇵🇰', sym: '₨',   rate: 278   },
-  { code: 'BDT', name: 'Bangladeshi Taka',     country: 'Bangladesh',      flag: '🇧🇩', sym: '৳',   rate: 110   },
-  { code: 'LKR', name: 'Sri Lankan Rupee',     country: 'Sri Lanka',       flag: '🇱🇰', sym: '₨',   rate: 320   },
-  { code: 'NPR', name: 'Nepali Rupee',         country: 'Nepal',           flag: '🇳🇵', sym: '₨',   rate: 133   },
-  { code: 'CHF', name: 'Swiss Franc',          country: 'Switzerland',     flag: '🇨🇭', sym: 'CHF', rate: 0.90  },
-  { code: 'SEK', name: 'Swedish Krona',        country: 'Sweden',          flag: '🇸🇪', sym: 'kr',  rate: 10.4  },
-  { code: 'NOK', name: 'Norwegian Krone',      country: 'Norway',          flag: '🇳🇴', sym: 'kr',  rate: 10.6  },
-  { code: 'MXN', name: 'Mexican Peso',         country: 'Mexico',          flag: '🇲🇽', sym: '$',   rate: 17.2  },
-  { code: 'NZD', name: 'New Zealand Dollar',   country: 'New Zealand',     flag: '🇳🇿', sym: 'NZ$', rate: 1.63  },
-  { code: 'KES', name: 'Kenyan Shilling',      country: 'Kenya',           flag: '🇰🇪', sym: 'KSh', rate: 129   },
-];
-
 /* ─── HELPERS ─── */
-function useFmt(currCode) {
-  const curr = CURRENCIES.find(c => c.code === currCode) || CURRENCIES[0];
+function useFmt(currCode, liveRates = {}) {
+  const curr = WORLD_CURRENCIES.find(c => c.code === currCode) || WORLD_CURRENCIES[0];
   return (usd) => {
-    const val = usd * curr.rate;
-    const isLarge = ['IDR', 'NGN', 'INR', 'JPY', 'PKR'].includes(curr.code);
+    const rate = liveRates[curr.code] || curr.rate;
+    const val = usd * rate;
+    const isLarge = ['IDR', 'NGN', 'INR', 'JPY', 'PKR', 'KRW', 'VND', 'COP', 'CLP'].includes(curr.code);
     const decimals = isLarge ? 0 : val < 10 ? 2 : (val < 1000 ? 1 : 0);
     return `${curr.sym}${val.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}${!['₹','$','€','£','¥','₦','₱','฿','R$','৳'].includes(curr.sym) ? ` ${curr.code}` : ''}`;
   };
@@ -108,9 +77,9 @@ function CurrencyDropdown({ selected, onSelect }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const inputRef = useRef(null);
-  const curr = CURRENCIES.find(c => c.code === selected) || CURRENCIES[0];
+  const curr = WORLD_CURRENCIES.find(c => c.code === selected) || WORLD_CURRENCIES[0];
 
-  const filtered = CURRENCIES.filter(c =>
+  const filtered = WORLD_CURRENCIES.filter(c =>
     c.code.toLowerCase().includes(search.toLowerCase()) ||
     c.name.toLowerCase().includes(search.toLowerCase()) ||
     c.country.toLowerCase().includes(search.toLowerCase())
@@ -318,11 +287,20 @@ export default function RevenueCalculator() {
   const [customAddons, setCustomAddons] = useState([]);
   const [currency, setCurrency] = useState('INR');
   const [bizOpen, setBizOpen] = useState(false);
+  const [liveRates, setLiveRates] = useState({});
+
+  useEffect(() => {
+    fetch('https://open.er-api.com/v6/latest/USD')
+      .then(r => r.json())
+      .then(d => { if (d && d.rates) setLiveRates(d.rates); })
+      .catch(e => console.log('Failed to fetch live rates', e));
+  }, []);
 
   useEffect(() => { setDur(BUSINESS_DURATIONS[bizType] || 3); }, [bizType]);
 
-  const fmt = useFmt(currency);
-  const curr = CURRENCIES.find(c => c.code === currency) || CURRENCIES[0];
+  const fmt = useFmt(currency, liveRates);
+  const curr = WORLD_CURRENCIES.find(c => c.code === currency) || WORLD_CURRENCIES[0];
+  const currentRate = liveRates[curr.code] || curr.rate;
 
   // Calculations
   const mins = calls * dur;
@@ -340,8 +318,8 @@ export default function RevenueCalculator() {
   const toggleAddon = id => setAddons(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
 
   const fmtDisp = (usd) => {
-    const val = usd * curr.rate;
-    const big = ['IDR','NGN','INR','JPY','PKR','BDT','LKR','NPR'].includes(curr.code);
+    const val = usd * currentRate;
+    const big = ['IDR','NGN','INR','JPY','PKR','BDT','LKR','NPR','KRW','VND','COP','CLP'].includes(curr.code);
     return `${curr.sym}${val.toLocaleString(undefined, { maximumFractionDigits: big ? 0 : val < 10 ? 2 : 1 })}`;
   };
 
