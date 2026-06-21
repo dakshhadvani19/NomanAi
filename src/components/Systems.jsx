@@ -58,12 +58,12 @@ export default function Systems() {
               style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', height: '100%', color: 'inherit' }}
             >
               <div style={{ marginBottom: '2rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', minHeight: '24px' }}>
                   <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem', letterSpacing: '0.05em' }}>{sys.label}</span>
                   {sys.badge && <span className="badge" style={{ fontSize: '0.7rem', padding: '0.15rem 0.5rem' }}>{sys.badge}</span>}
                 </div>
                 <h3 style={{ fontSize: '2rem', marginBottom: '0.75rem', color: '#fff' }}>{sys.title}</h3>
-                <p style={{ color: 'var(--text-muted)' }}>{sys.desc}</p>
+                <p style={{ color: 'var(--text-muted)', minHeight: '48px' }}>{sys.desc}</p>
               </div>
 
               <div style={{ flexGrow: 1, marginBottom: '2rem' }}>
