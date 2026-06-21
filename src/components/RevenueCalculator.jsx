@@ -201,7 +201,6 @@ function CurrencyDropdown({ selected, onSelect }) {
                           <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.7rem' }}>{c.country}</div>
                         </div>
                         {c.code === selected && <Check size={13} color="#22d3ee" />}
-                        {rankingMap[c.code] > 0 && <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', fontWeight: 600 }}>{rankingMap[c.code]} uses</div>}
                       </div>
                     ))
                   }
