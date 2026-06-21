@@ -13,7 +13,7 @@ export default function Systems() {
       title: 'Revenue Capture',
       desc: 'Contact, qualify, and book leads in seconds.',
       features: ['AI Voice Agent (24/7)', 'WhatsApp & SMS Bot', 'Instant CRM Sync'],
-      price: `From ${formatPrice(60000 / 83.5, { decimalsOverride: 0 })}`,
+      price: `From ${formatPrice(0, { inrBase: 60000, decimalsOverride: 0 })}`,
       link: '/voice-agents'
     },
     {
@@ -22,7 +22,7 @@ export default function Systems() {
       title: 'Ops Efficiency',
       desc: 'Eliminate 20-40 hours of manual tasks weekly.',
       features: ['Workflow Process Mapping', '3-5 Core Automations', 'Custom n8n/Make Logic'],
-      price: `From ${formatPrice(100000 / 83.5, { decimalsOverride: 0 })}`,
+      price: `From ${formatPrice(0, { inrBase: 100000, decimalsOverride: 0 })}`,
       link: '/solutions'
     },
     {
@@ -30,7 +30,7 @@ export default function Systems() {
       title: 'Web Capture',
       desc: 'Turn passive website visitors into qualified leads.',
       features: ['High-Converting Landing Pages', 'Frictionless Lead Capture', 'Automated WhatsApp Triggers'],
-      price: `From ${formatPrice(50000 / 83.5, { decimalsOverride: 0 })}`,
+      price: `From ${formatPrice(0, { inrBase: 50000, decimalsOverride: 0 })}`,
       link: '/revenue-systems'
     }
   ];

@@ -106,8 +106,8 @@ const SYSTEMS_DATA = [
     desc: "Contact, qualify, and book leads in seconds.",
     longDesc: "Every minute matters. This system calls and texts every new inbound lead within 60 seconds, 24/7. It asks the right qualifying questions and books highly interested prospects directly onto your calendar.",
     features: ["AI Voice Agent (24/7)", "WhatsApp Bot", "Instant CRM Sync", "Automated Follow-ups", "Live Analytics Dashboard"],
-    priceUsd: 60000 / 83.5,
-    subpriceUsd: 15000 / 83.5,
+    priceInr: 60000,
+    subpriceInr: 15000,
     subpriceText: "/mo management (optional)",
     bestFor: "Real Estate, Clinics, Service Businesses",
     icon: <Zap size={24} />
@@ -119,7 +119,7 @@ const SYSTEMS_DATA = [
     desc: "Eliminate 20–40 hours of manual tasks weekly.",
     longDesc: "We audit your workflows and automate the repetitive tasks—like client onboarding, data entry, and CRM updates—so your team can focus on high-value work.",
     features: ["Workflow Process Mapping", "3–5 Core Automations", "Custom n8n/Make Logic", "Team Onboarding & Training", "30-Day Check-in"],
-    priceUsd: 100000 / 83.5,
+    priceInr: 100000,
     subprice: "Custom scoped after discovery",
     bestFor: "Agencies, Legal, B2B Services",
     icon: <Activity size={24} />
@@ -130,8 +130,8 @@ const SYSTEMS_DATA = [
     desc: "Turn passive website visitors into qualified leads.",
     longDesc: "We replace outdated websites with landing systems built to capture intent. Connect forms directly to WhatsApp and your CRM to drive immediate bookings.",
     features: ["High-Converting Landing Pages", "Frictionless Lead Capture", "Automated WhatsApp Triggers", "Instant Auto Follow-ups", "Full CRM Integration"],
-    priceUsd: 50000 / 83.5,
-    subpriceUsd: 8000 / 83.5,
+    priceInr: 50000,
+    subpriceInr: 8000,
     subpriceText: "/mo management (optional)",
     bestFor: "Outdated sites, Low-conversion pages",
     icon: <BarChart size={24} />
@@ -208,10 +208,10 @@ function SystemsSection() {
                 <div style={{ marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '12px' }}>
                     <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f9fafb', lineHeight: 1.2 }}>
-                      From {formatPrice(sys.priceUsd, { decimalsOverride: 0 })}
+                      From {formatPrice(0, { inrBase: sys.priceInr, decimalsOverride: 0 })}
                     </span>
                     <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>
-                      {sys.subpriceUsd ? `${formatPrice(sys.subpriceUsd, { decimalsOverride: 0 })}${sys.subpriceText}` : sys.subprice}
+                      {sys.subpriceInr ? `${formatPrice(0, { inrBase: sys.subpriceInr, decimalsOverride: 0 })}${sys.subpriceText}` : sys.subprice}
                     </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>

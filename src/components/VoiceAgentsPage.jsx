@@ -456,7 +456,7 @@ function PricingSection() {
         </motion.div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
           {[
-            { label: 'Setup & Deployment', price: formatPrice(75000 / 83.5, { decimalsOverride: 0 }), sub: 'One-time', highlight: true, features: ['Custom voice persona', 'Telugu NLP tuning', '1,000 test minutes', 'CRM integration', 'Noman ai Voice Hub access'] },
+            { label: 'Setup & Deployment', price: formatPrice(0, { inrBase: 75000, decimalsOverride: 0 }), sub: 'One-time', highlight: true, features: ['Custom voice persona', 'Telugu NLP tuning', '1,000 test minutes', 'CRM integration', 'Noman ai Voice Hub access'] },
             { label: 'Growth Usage', price: `${formatPrice(6 / 83.5)}/min`, sub: '1,000 – 10,000 mins', features: ['Inbound + Outbound', 'Real-time transcription', 'Intent scoring', 'WhatsApp handoff'] },
             { label: 'Scale Usage', price: `${formatPrice(5 / 83.5)}/min`, sub: '10,000 – 30,000 mins', features: ['Everything in Growth', 'Priority queue', 'Dedicated call routing', 'Custom analytics'] },
           ].map((p, i) => (
@@ -528,7 +528,7 @@ function FAQ() {
 
   const FAQS = [
     { q: 'What is the Noman ai Telugu Voice Agent?', a: 'Noman ai provides high-speed AI voice systems built specifically for scalable lead handling and natural Telugu conversational flow. It eliminates delayed follow-ups and missed calls, engaging prospects instantly.' },
-    { q: 'How much does the setup cost?', a: `The initial AI Voice Agent Setup & Deployment is ${formatPrice(75000 / 83.5, { decimalsOverride: 0 })}. Testing is initially performed using 1,000 talk-time minutes to optimize conversational quality and tune the voice persona.` },
+    { q: 'How much does the setup cost?', a: `The initial AI Voice Agent Setup & Deployment is ${formatPrice(0, { inrBase: 75000, decimalsOverride: 0 })}. Testing is initially performed using 1,000 talk-time minutes to optimize conversational quality and tune the voice persona.` },
     { q: 'What is the per-minute usage pricing?', a: `Usage pricing is ${formatPrice(6 / 83.5)}/min for 1,000 to 10,000 minutes, and drops to ${formatPrice(5 / 83.5)}/min for 10,000 to 30,000 minutes. Custom pricing is available for 30,000+ minutes per month.` },
   ];
 

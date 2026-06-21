@@ -15,10 +15,17 @@ export function CurrencyProvider({ children }) {
   }, []);
 
   const formatPrice = useCallback((usdBase, options = {}) => {
-    const { decimalsOverride, pdfMode } = options;
+    const { decimalsOverride, pdfMode, inrBase } = options;
     const curr = WORLD_CURRENCIES.find(c => c.code === currency) || WORLD_CURRENCIES[0];
     const rate = liveRates[curr.code] || curr.rate;
-    const val = usdBase * rate;
+    
+    let val;
+    if (inrBase !== undefined) {
+      const inrRate = liveRates['INR'] || 83.5;
+      val = (inrBase / inrRate) * rate;
+    } else {
+      val = usdBase * rate;
+    }
     
     const isLarge = ['IDR', 'NGN', 'INR', 'JPY', 'PKR', 'KRW', 'VND', 'COP', 'CLP'].includes(curr.code);
     let decimals = isLarge ? 0 : val < 10 ? 2 : (val < 1000 ? 1 : 0);

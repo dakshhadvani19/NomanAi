@@ -83,7 +83,7 @@ export default function SolutionsPage() {
           </motion.h1>
           
           <motion.p {...fadeUp(0.3)} style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, maxWidth: 600, margin: '0 auto 3rem' }}>
-            19 standalone solutions. Each one targets one specific problem and fixes it completely. Starting from {formatPrice(14999 / 83.5, { decimalsOverride: 0 })}.
+            19 standalone solutions. Each one targets one specific problem and fixes it completely. Starting from {formatPrice(0, { inrBase: 14999, decimalsOverride: 0 })}.
           </motion.p>
           
           <motion.div {...fadeUp(0.4)} style={{ display: 'flex', justifyContent: 'center' }}>

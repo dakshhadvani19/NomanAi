@@ -27,7 +27,7 @@ export default function Solutions() {
           </h2>
         </div>
         <p style={{ color: 'var(--text-muted)', maxWidth: '600px', marginTop: '1.5rem' }}>
-          Not everything needs a full system. Start with what hurts most. Explore our catalogue of 19 pre-built solutions. Starting from {formatPrice(14999 / 83.5, { decimalsOverride: 0 })}.
+          Not everything needs a full system. Start with what hurts most. Explore our catalogue of 19 pre-built solutions. Starting from {formatPrice(0, { inrBase: 14999, decimalsOverride: 0 })}.
         </p>
       </div>
 
