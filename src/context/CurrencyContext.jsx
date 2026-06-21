@@ -15,7 +15,7 @@ export function CurrencyProvider({ children }) {
   }, []);
 
   const formatPrice = useCallback((usdBase, options = {}) => {
-    const { decimalsOverride } = options;
+    const { decimalsOverride, pdfMode } = options;
     const curr = WORLD_CURRENCIES.find(c => c.code === currency) || WORLD_CURRENCIES[0];
     const rate = liveRates[curr.code] || curr.rate;
     const val = usdBase * rate;
@@ -31,6 +31,10 @@ export function CurrencyProvider({ children }) {
       minimumFractionDigits: decimals, 
       maximumFractionDigits: decimals 
     });
+    
+    if (pdfMode) {
+      return `${curr.code} ${formattedVal}`;
+    }
     
     const needsCode = !['₹','$','€','£','¥','₦','₱','฿','R$','৳'].includes(curr.sym);
     

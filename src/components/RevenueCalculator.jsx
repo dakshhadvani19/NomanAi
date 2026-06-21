@@ -308,6 +308,7 @@ export default function RevenueCalculator() {
 
   /* PDF */
   const downloadPDF = useCallback(async () => {
+    const pdfFmt = (usd) => formatPrice(usd, { pdfMode: true });
     try {
       const { default: jsPDF } = await import('jspdf');
       const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
@@ -326,7 +327,7 @@ export default function RevenueCalculator() {
       doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.setTextColor(255, 255, 255);
       doc.text('Cost Estimate Quotation', W / 2, 20, { align: 'center' });
       doc.setFontSize(8); doc.setTextColor(120, 140, 160); doc.setFont('helvetica', 'normal');
-      doc.text(`Generated: ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}`, W / 2, 27, { align: 'center' });
+      doc.text(`Generated: ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}`, W - pad, 28, { align: 'right' });
 
       doc.setDrawColor(6, 182, 212, 0.4); doc.setLineWidth(0.25); doc.line(pad, 33, W - pad, 33);
 
@@ -351,24 +352,24 @@ export default function RevenueCalculator() {
         doc.setTextColor(bold ? 220 : 175, bold ? 230 : 195, bold ? 240 : 215);
         doc.text(l, pad + 4, y);
         doc.setTextColor(bold ? 34 : 140, bold ? 211 : 190, bold ? 238 : 215);
-        doc.text(v, W - pad - 4, y, { align: 'right' }); y += 7;
+        doc.text(v, W - pad - 8, y, { align: 'right' }); y += 7;
       };
 
-      sec('📞 AI Voice Agent Stack');
-      row(`LLM – Gemini 2.5 Flash  (${formatPrice(VOICE_COSTS.llm.usd, { decimalsOverride: 4 })}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS.llm.usd * mins));
-      row(`STT – Deepgram Nova-3  (${formatPrice(VOICE_COSTS.stt.usd, { decimalsOverride: 4 })}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS.stt.usd * mins));
-      row(`TTS – ${ttsQ === 'prem' ? 'ElevenLabs Flash' : 'Google Cloud'}  (${formatPrice(VOICE_COSTS[ttsKey].usd, { decimalsOverride: 4 })}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS[ttsKey].usd * mins));
-      row(`Telephony – Twilio ${callDir}  (${formatPrice(VOICE_COSTS[telKey].usd, { decimalsOverride: 4 })}/min × ${mins.toLocaleString()} min)`, fmt(VOICE_COSTS[telKey].usd * mins));
-      row('Phone Number Rental (flat)', fmt(flat));
+      sec('AI Voice Agent Stack');
+      row(`LLM – Gemini 2.5 Flash  (${formatPrice(VOICE_COSTS.llm.usd, { decimalsOverride: 4, pdfMode: true })}/min × ${mins.toLocaleString()} min)`, pdfFmt(VOICE_COSTS.llm.usd * mins));
+      row(`STT – Deepgram Nova-3  (${formatPrice(VOICE_COSTS.stt.usd, { decimalsOverride: 4, pdfMode: true })}/min × ${mins.toLocaleString()} min)`, pdfFmt(VOICE_COSTS.stt.usd * mins));
+      row(`TTS – ${ttsQ === 'prem' ? 'ElevenLabs Flash' : 'Google Cloud'}  (${formatPrice(VOICE_COSTS[ttsKey].usd, { decimalsOverride: 4, pdfMode: true })}/min × ${mins.toLocaleString()} min)`, pdfFmt(VOICE_COSTS[ttsKey].usd * mins));
+      row(`Telephony – Twilio ${callDir}  (${formatPrice(VOICE_COSTS[telKey].usd, { decimalsOverride: 4, pdfMode: true })}/min × ${mins.toLocaleString()} min)`, pdfFmt(VOICE_COSTS[telKey].usd * mins));
+      row('Phone Number Rental (flat)', pdfFmt(flat));
       doc.setDrawColor(50, 70, 100); doc.setLineWidth(0.1); doc.line(pad, y, W - pad, y); y += 4;
-      row('Voice Subtotal', fmt(voiceTotal), true); y += 3;
+      row('Voice Subtotal', pdfFmt(voiceTotal), true); y += 3;
 
       if (addonTotal > 0) {
-        sec('🤖 Automation Add-ons');
-        AUTOMATION_OPTIONS.filter(a => addons.includes(a.id)).forEach(a => row(a.label, a.usdPerMonth === 0 ? '% per txn' : fmt(a.usdPerMonth)));
-        customAddons.forEach(a => row(`${a.label} (Custom)`, a.usdPerMonth === 0 ? 'Variable' : fmt(a.usdPerMonth)));
+        sec('Automation Add-ons');
+        AUTOMATION_OPTIONS.filter(a => addons.includes(a.id)).forEach(a => row(a.label, a.usdPerMonth === 0 ? '% per txn' : pdfFmt(a.usdPerMonth)));
+        customAddons.forEach(a => row(`${a.label} (Custom)`, a.usdPerMonth === 0 ? 'Variable' : pdfFmt(a.usdPerMonth)));
         doc.setDrawColor(50, 70, 100); doc.setLineWidth(0.1); doc.line(pad, y, W - pad, y); y += 4;
-        row('Automation Subtotal', fmt(addonTotal), true); y += 3;
+        row('Automation Subtotal', pdfFmt(addonTotal), true); y += 3;
       }
 
       // Total box
@@ -377,11 +378,11 @@ export default function RevenueCalculator() {
       doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(255, 255, 255);
       doc.text('TOTAL MONTHLY INFRASTRUCTURE COST', pad + 7, y + 11);
       doc.setTextColor(34, 211, 238); doc.setFontSize(13);
-      doc.text(fmt(grandTotal), W - pad - 7, y + 11, { align: 'right' });
+      doc.text(pdfFmt(grandTotal), W - pad - 12, y + 11, { align: 'right' });
       y += 25;
 
       doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(100, 130, 160);
-      doc.text(`Cost per call: ${fmt(perCall)}  ·  Cost per minute: ${fmt(perMin)}  ·  Total minutes: ${mins.toLocaleString()}`, pad, y); y += 14;
+      doc.text(`Cost per call: ${pdfFmt(perCall)}  ·  Cost per minute: ${pdfFmt(perMin)}  ·  Total minutes: ${mins.toLocaleString()}`, pad, y); y += 14;
 
       // Disclaimer
       doc.setFillColor(99, 102, 241, 0.07); doc.roundedRect(pad, y, cW, 24, 2, 2, 'F');
