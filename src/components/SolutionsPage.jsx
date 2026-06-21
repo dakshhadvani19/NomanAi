@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HoverCloudCard from './HoverCloudCard';
-import FAQ from './FAQ';
 import { useCurrency } from '../context/CurrencyContext';
 
 /* ─── HELPERS ─── */
