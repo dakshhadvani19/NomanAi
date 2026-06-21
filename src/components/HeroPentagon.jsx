@@ -84,20 +84,22 @@ const MultiLineTypewriter = ({ lines, typingSpeed = 35, linePause = 150 }) => {
       })}
       
       {/* The Following Cursor */}
-      <motion.span
-        animate={{ opacity: [1, 0.2, 1] }}
-        transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut' }}
-        style={{
-          display: 'inline-block',
-          width: '4px',
-          height: '0.9em',
-          background: 'linear-gradient(180deg, #4285F4, #9b72cb, #d96570)',
-          marginLeft: '4px',
-          verticalAlign: 'bottom',
-          borderRadius: '2px',
-          boxShadow: '0 0 8px rgba(155, 114, 203, 0.5)'
-        }}
-      />
+      {visibleChars < totalChars && (
+        <motion.span
+          animate={{ opacity: [1, 0.2, 1] }}
+          transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            display: 'inline-block',
+            width: '4px',
+            height: '0.9em',
+            background: 'linear-gradient(180deg, #4285F4, #9b72cb, #d96570)',
+            marginLeft: '4px',
+            verticalAlign: 'bottom',
+            borderRadius: '2px',
+            boxShadow: '0 0 8px rgba(155, 114, 203, 0.5)'
+          }}
+        />
+      )}
     </>
   );
 };
