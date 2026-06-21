@@ -597,7 +597,7 @@ export default function VoiceAgentsPage() {
       <HowItWorks />
       <WhyNomanai />
       <VoiceCards />
-      <Pricing />
+      <PricingSection />
       <DeployForm />
       <FAQ />
     </main>
