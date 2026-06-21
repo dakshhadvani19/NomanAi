@@ -66,7 +66,6 @@ function App() {
       <CurrencyProvider>
         <BrowserRouter>
         <GlobalCursorAurora />
-        <AnimatedBackground />
         <DottedSurface style={{ position: 'fixed', zIndex: -1, opacity: 0.65 }} />
         <Navbar />
         <div className="mobile-page-wrapper">
