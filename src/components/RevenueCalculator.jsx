@@ -9,6 +9,8 @@ import {
 import { Link } from 'react-router-dom';
 import { WORLD_CURRENCIES } from '../utils/currencies';
 import { useCurrency } from '../context/CurrencyContext';
+import { doc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore';
+import { db } from '../firebase';
 
 /* ─── CONSTANTS ─── */
 const VOICE_COSTS = {
@@ -62,6 +64,27 @@ const KNOWN_AUTOMATIONS = [
 ];
 
 /* ─── HELPERS ─── */
+function ProgressiveLoader() {
+  const [textIdx, setTextIdx] = useState(0);
+  const texts = ['Organising currency...', 'Fetching currencies...', 'Ranking them...'];
+  useEffect(() => {
+    const int = setInterval(() => setTextIdx(i => (i + 1) % texts.length), 600);
+    return () => clearInterval(int);
+  }, []);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 10px', gap: '16px' }}>
+      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} style={{ width: '24px', height: '24px', border: '2.5px solid rgba(6,182,212,0.2)', borderTopColor: '#22d3ee', borderRadius: '50%' }} />
+      <div style={{ height: '20px', display: 'flex', alignItems: 'center' }}>
+        <AnimatePresence mode="wait">
+          <motion.div key={textIdx} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }} style={{ fontSize: '0.82rem', color: '#22d3ee', fontWeight: 600, letterSpacing: '0.04em', textAlign: 'center' }}>
+            {texts[textIdx]}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
 /* ─── CURRENCY DROPDOWN ─── */
 function CurrencyDropdown({ selected, onSelect }) {
   const [open, setOpen] = useState(false);
@@ -69,13 +92,42 @@ function CurrencyDropdown({ selected, onSelect }) {
   const inputRef = useRef(null);
   const curr = WORLD_CURRENCIES.find(c => c.code === selected) || WORLD_CURRENCIES[0];
 
+  const [rankingMap, setRankingMap] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
+
+  useEffect(() => {
+    if (open && !hasFetched) {
+      setIsLoading(true);
+      Promise.all([
+        getDoc(doc(db, 'currencyStats', 'global')).catch(() => null),
+        new Promise(r => setTimeout(r, 1200)) // Force delay to show loader as requested
+      ]).then(([snap]) => {
+        if (snap && snap.exists()) setRankingMap(snap.data());
+        setHasFetched(true);
+        setIsLoading(false);
+      });
+    }
+  }, [open, hasFetched]);
+
+  const handleSelect = async (code) => {
+    onSelect(code);
+    setOpen(false);
+    setSearch('');
+    try {
+      await setDoc(doc(db, 'currencyStats', 'global'), { [code]: increment(1) }, { merge: true });
+    } catch (e) {
+      console.log('Failed to increment ranking', e);
+    }
+  };
+
   const filtered = WORLD_CURRENCIES.filter(c =>
     c.code.toLowerCase().includes(search.toLowerCase()) ||
     c.name.toLowerCase().includes(search.toLowerCase()) ||
     c.country.toLowerCase().includes(search.toLowerCase())
-  );
+  ).sort((a, b) => (rankingMap[b.code] || 0) - (rankingMap[a.code] || 0));
 
-  useEffect(() => { if (open && inputRef.current) inputRef.current.focus(); }, [open]);
+  useEffect(() => { if (open && !isLoading && inputRef.current) inputRef.current.focus(); }, [open, isLoading]);
 
   return (
     <div style={{ position: 'relative', zIndex: 200 }}>
@@ -114,38 +166,48 @@ function CurrencyDropdown({ selected, onSelect }) {
               maxHeight: '340px', display: 'flex', flexDirection: 'column',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '8px 12px', marginBottom: '8px', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <Search size={13} color="rgba(255,255,255,0.35)" />
-              <input
-                ref={inputRef}
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="Search currency or country..."
-                style={{ background: 'none', border: 'none', outline: 'none', color: '#fff', fontSize: '0.82rem', width: '100%', fontFamily: 'inherit' }}
-              />
-              {search && <X size={12} color="rgba(255,255,255,0.35)" style={{ cursor: 'pointer' }} onClick={() => setSearch('')} />}
-            </div>
-            <div style={{ overflowY: 'auto', flex: 1, scrollbarWidth: 'thin', scrollbarColor: 'rgba(6,182,212,0.3) transparent' }}>
-              {filtered.length === 0
-                ? <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.82rem', textAlign: 'center', padding: '16px' }}>No results</div>
-                : filtered.map(c => (
-                  <div
-                    key={c.code}
-                    onClick={() => { onSelect(c.code); setOpen(false); setSearch(''); }}
+            {isLoading ? (
+              <ProgressiveLoader />
+            ) : (
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '8px 12px', marginBottom: '8px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <Search size={13} color="rgba(255,255,255,0.35)" />
+                  <input
+                    ref={inputRef}
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    placeholder="Search currency or country..."
+                    style={{ background: 'none', border: 'none', outline: 'none', color: '#fff', fontSize: '0.82rem', width: '100%', fontFamily: 'inherit' }}
+                  />
+                  {search && <X size={12} color="rgba(255,255,255,0.35)" style={{ cursor: 'pointer' }} onClick={() => setSearch('')} />}
+                </div>
+                <div style={{ overflowY: 'auto', flex: 1, scrollbarWidth: 'thin', scrollbarColor: 'rgba(6,182,212,0.3) transparent' }}>
+                  {filtered.length === 0
+                    ? <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.82rem', textAlign: 'center', padding: '16px' }}>No results</div>
+                    : filtered.map(c => (
+                      <div
+                        key={c.code}
+                        onClick={() => handleSelect(c.code)}
                     style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 10px', borderRadius: '9px', cursor: 'pointer', background: c.code === selected ? 'rgba(6,182,212,0.12)' : 'transparent', transition: 'background 0.08s' }}
                     onMouseEnter={e => { if (c.code !== selected) e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
                     onMouseLeave={e => { e.currentTarget.style.background = c.code === selected ? 'rgba(6,182,212,0.12)' : 'transparent'; }}
-                  >
-                    <span style={{ fontSize: '1.05rem', width: '22px', textAlign: 'center' }}>{c.flag}</span>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 700, color: c.code === selected ? '#22d3ee' : '#e2e8f0', fontSize: '0.82rem' }}>{c.code} <span style={{ fontWeight: 400, color: 'rgba(255,255,255,0.5)' }}>– {c.name}</span></div>
-                      <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.7rem' }}>{c.country}</div>
-                    </div>
-                    {c.code === selected && <Check size={13} color="#22d3ee" />}
-                  </div>
-                ))
-              }
-            </div>
+                        style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 10px', borderRadius: '9px', cursor: 'pointer', background: c.code === selected ? 'rgba(6,182,212,0.12)' : 'transparent', transition: 'background 0.08s' }}
+                        onMouseEnter={e => { if (c.code !== selected) e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = c.code === selected ? 'rgba(6,182,212,0.12)' : 'transparent'; }}
+                      >
+                        <span style={{ fontSize: '1.05rem', width: '22px', textAlign: 'center' }}>{c.flag}</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: 700, color: c.code === selected ? '#22d3ee' : '#e2e8f0', fontSize: '0.82rem' }}>{c.code} <span style={{ fontWeight: 400, color: 'rgba(255,255,255,0.5)' }}>– {c.name}</span></div>
+                          <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.7rem' }}>{c.country}</div>
+                        </div>
+                        {c.code === selected && <Check size={13} color="#22d3ee" />}
+                        {rankingMap[c.code] > 0 && <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', fontWeight: 600 }}>{rankingMap[c.code]} uses</div>}
+                      </div>
+                    ))
+                  }
+                </div>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
