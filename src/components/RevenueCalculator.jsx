@@ -216,19 +216,57 @@ function CurrencyDropdown({ selected, onSelect }) {
 }
 
 /* ─── SMOOTH SLIDER ─── */
-function SmoothSlider({ min, max, step = 1, value, onChange, label, format }) {
-  const pct = ((value - min) / (max - min)) * 100;
+function SmoothSlider({ min, max, step = 1, value, onChange, label, format, allowInput = true }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempVal, setTempVal] = useState(value);
+  const inputRef = useRef(null);
+
+  const pct = Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    const parsed = parseFloat(tempVal);
+    if (!isNaN(parsed) && parsed > 0) onChange(parsed);
+    else setTempVal(value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') inputRef.current?.blur();
+  };
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
         <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.45)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em' }}>{label}</span>
-        <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#22d3ee' }}>{format ? format(value) : value}</span>
+        {allowInput ? (
+          isEditing ? (
+            <input
+              ref={inputRef} type="number" value={tempVal}
+              onChange={e => setTempVal(e.target.value)} onBlur={handleBlur} onKeyDown={handleKeyDown} autoFocus
+              style={{
+                background: 'rgba(6,182,212,0.1)', border: '1px solid #22d3ee', borderRadius: '6px',
+                color: '#22d3ee', fontSize: '0.95rem', fontWeight: 800, width: '90px',
+                textAlign: 'right', outline: 'none', padding: '2px 6px', fontFamily: 'inherit'
+              }}
+            />
+          ) : (
+            <span
+              onClick={() => { setIsEditing(true); setTempVal(value); }}
+              style={{ fontSize: '1.05rem', fontWeight: 800, color: '#22d3ee', cursor: 'pointer', borderBottom: '1px dashed rgba(34,211,238,0.4)', paddingBottom: '1px' }}
+              title="Click to enter custom value"
+            >
+              {format ? format(value) : value}
+            </span>
+          )
+        ) : (
+          <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#22d3ee' }}>{format ? format(value) : value}</span>
+        )}
       </div>
       <div style={{ position: 'relative', height: '40px', display: 'flex', alignItems: 'center' }}>
         <div style={{ position: 'absolute', left: 0, right: 0, height: '5px', borderRadius: '999px', background: 'rgba(255,255,255,0.07)' }} />
         <div style={{ position: 'absolute', left: 0, width: `${pct}%`, height: '5px', borderRadius: '999px', background: 'linear-gradient(90deg, #0ea5e9, #6366f1)' }} />
         <input
-          type="range" min={min} max={max} step={step} value={value}
+          type="range" min={min} max={max} step={step} value={value <= max ? value : max}
           onChange={e => onChange(Number(e.target.value))}
           style={{ position: 'absolute', left: 0, right: 0, width: '100%', height: '40px', opacity: 0, cursor: 'pointer', margin: 0, zIndex: 2 }}
         />
@@ -684,9 +722,9 @@ export default function RevenueCalculator() {
 
               {/* Grand total */}
               <div style={{ marginTop: '1.25rem', borderRadius: '14px', background: 'linear-gradient(135deg, rgba(6,182,212,0.1), rgba(99,102,241,0.07))', border: '1px solid rgba(6,182,212,0.18)', padding: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}>Total Monthly Infra Cost</span>
-                  <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.75rem)', fontWeight: 900, color: '#22d3ee', letterSpacing: '-0.02em' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '12px' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total Monthly Infra Cost</span>
+                  <span style={{ fontSize: 'clamp(1.4rem, 4vw, 1.9rem)', fontWeight: 900, color: '#22d3ee', letterSpacing: '-0.02em', wordBreak: 'break-word' }}>
                     {fmtDisp(grandTotal)}
                   </span>
                 </div>
