@@ -8,10 +8,10 @@ import { useCurrency } from '../context/CurrencyContext';
 export default function Solutions() {
   const { formatPrice } = useCurrency();
   const solutions = [
-    { tag: 'AI & AUTOMATION', title: 'Instant Lead Follow-Up', desc: 'When a lead submits a form, they instantly receive personalized WhatsApp and Email engagements.' },
-    { tag: 'AI VOICE', title: 'Inbound AI Receptionist', desc: 'Human-like AI answers every inbound call immediately, routes requests, and schedules meetings 24/7.' },
-    { tag: 'WEB', title: 'High-Converting Landing Pages', desc: 'A lightning-fast, single-page funnel precision-built to capture leads and book calls.' },
-    { tag: 'AI & AUTOMATION', title: 'Appointment Booking Bot', desc: 'Let prospects book themselves automatically across WhatsApp or web — zero manual work.' }
+    { tag: 'AI & AUTOMATION', title: 'Instant Lead Follow-Up', desc: 'When a lead submits a form, they instantly receive personalized WhatsApp and Email engagements.', link: '/solutions' },
+    { tag: 'AI VOICE', title: 'Inbound AI Receptionist', desc: 'Human-like AI answers every inbound call immediately, routes requests, and schedules meetings 24/7.', link: '/voice-agents' },
+    { tag: 'WEB', title: 'High-Converting Landing Pages', desc: 'A lightning-fast, single-page funnel precision-built to capture leads and book calls.', link: '/revenue-systems' },
+    { tag: 'AI & AUTOMATION', title: 'Appointment Booking Bot', desc: 'Let prospects book themselves automatically across WhatsApp or web — zero manual work.', link: '/solutions' }
   ];
 
   return (
@@ -33,32 +33,27 @@ export default function Solutions() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
         {solutions.map((sol, i) => (
-          <HoverCloudCard 
-            key={i}
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.15, duration: 0.5 }}
-            className="glass-panel"
-            style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer', transition: 'border-color 0.3s' }}
-            onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--accent-primary)'}
-            onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--glass-border)'}
-          >
-            <div style={{ flexGrow: 1 }}>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem', display: 'block' }}>{sol.tag}</span>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{sol.title}</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{sol.desc}</p>
-            </div>
-            {sol.title === 'Inbound AI Receptionist' ? (
-              <Link to="/voice-agents" style={{ marginTop: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
-                View Details
-              </Link>
-            ) : (
+          <Link key={i} to={sol.link} style={{ display: 'block', textDecoration: 'none', height: '100%', outline: 'none' }}>
+            <HoverCloudCard 
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.15, duration: 0.5 }}
+              className="glass-panel"
+              style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer', transition: 'border-color 0.3s' }}
+              onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--accent-primary)'}
+              onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--glass-border)'}
+            >
+              <div style={{ flexGrow: 1 }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem', display: 'block' }}>{sol.tag}</span>
+                <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#fff' }}>{sol.title}</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{sol.desc}</p>
+              </div>
               <div style={{ marginTop: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', fontSize: '0.875rem', fontWeight: 600 }}>
                 View Details
               </div>
-            )}
-          </HoverCloudCard>
+            </HoverCloudCard>
+          </Link>
         ))}
       </div>
     </section>
