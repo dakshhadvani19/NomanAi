@@ -356,7 +356,7 @@ function HowItWorks() {
 
 /* ─── SECTION 5: WHY NOMAN AI ─── */
 const WHY_FEATURES = [
-  { num: '01', title: 'Telugu-first conversational tuning', desc: 'Built specifically to understand native dialects, interruptions, and Tanglish mixed contexts natively.' },
+  { num: '01', title: 'India-first conversational tuning', desc: 'Built specifically to understand native dialects, interruptions, and mixed contexts natively.' },
   { num: '02', title: 'Instant lead response', desc: 'Seconds matter. React to incoming leads instantly before they bounce to a competitor.' },
   { num: '03', title: 'Scalable communication workflows', desc: 'Scale your outbound dialing from 10 to 10,000 parallel calls seamlessly without extra staff.' },
   { num: '04', title: 'Operational dashboard visibility', desc: 'Track every single interaction, outcome, and metric in real-time from your Voice Hub.' },
