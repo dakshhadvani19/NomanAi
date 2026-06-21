@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SEO from './SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HoverCloudCard from './HoverCloudCard';
+import FAQ from './FAQ';
+import { useCurrency } from '../context/CurrencyContext';
 
 /* ─── HELPERS ─── */
 const fadeUp = (delay = 0) => ({
@@ -38,6 +40,7 @@ const SOLUTIONS = [
 ];
 
 export default function SolutionsPage() {
+  const { formatPrice } = useCurrency();
   const [activeTab, setActiveTab] = useState('All');
 
   const filteredSolutions = activeTab === 'All' 
@@ -81,7 +84,7 @@ export default function SolutionsPage() {
           </motion.h1>
           
           <motion.p {...fadeUp(0.3)} style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, maxWidth: 600, margin: '0 auto 3rem' }}>
-            19 standalone solutions. Each one targets one specific problem and fixes it completely. Starting from ₹14,999.
+            19 standalone solutions. Each one targets one specific problem and fixes it completely. Starting from {formatPrice(14999 / 83.5, { decimalsOverride: 0 })}.
           </motion.p>
           
           <motion.div {...fadeUp(0.4)} style={{ display: 'flex', justifyContent: 'center' }}>

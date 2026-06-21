@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import HoverCloudCard from './HoverCloudCard';
 import RevenueCalculator from './RevenueCalculator';
+import { useCurrency } from '../context/CurrencyContext';
 
 /* ─── HELPERS ─── */
 const fadeUp = (delay = 0) => ({
@@ -105,8 +106,9 @@ const SYSTEMS_DATA = [
     desc: "Contact, qualify, and book leads in seconds.",
     longDesc: "Every minute matters. This system calls and texts every new inbound lead within 60 seconds, 24/7. It asks the right qualifying questions and books highly interested prospects directly onto your calendar.",
     features: ["AI Voice Agent (24/7)", "WhatsApp Bot", "Instant CRM Sync", "Automated Follow-ups", "Live Analytics Dashboard"],
-    price: "From ₹60,000",
-    subprice: "₹15,000/mo management (optional)",
+    priceUsd: 60000 / 83.5,
+    subpriceUsd: 15000 / 83.5,
+    subpriceText: "/mo management (optional)",
     bestFor: "Real Estate, Clinics, Service Businesses",
     icon: <Zap size={24} />
   },
@@ -117,7 +119,7 @@ const SYSTEMS_DATA = [
     desc: "Eliminate 20–40 hours of manual tasks weekly.",
     longDesc: "We audit your workflows and automate the repetitive tasks—like client onboarding, data entry, and CRM updates—so your team can focus on high-value work.",
     features: ["Workflow Process Mapping", "3–5 Core Automations", "Custom n8n/Make Logic", "Team Onboarding & Training", "30-Day Check-in"],
-    price: "From ₹1,00,000",
+    priceUsd: 100000 / 83.5,
     subprice: "Custom scoped after discovery",
     bestFor: "Agencies, Legal, B2B Services",
     icon: <Activity size={24} />
@@ -128,14 +130,16 @@ const SYSTEMS_DATA = [
     desc: "Turn passive website visitors into qualified leads.",
     longDesc: "We replace outdated websites with landing systems built to capture intent. Connect forms directly to WhatsApp and your CRM to drive immediate bookings.",
     features: ["High-Converting Landing Pages", "Frictionless Lead Capture", "Automated WhatsApp Triggers", "Instant Auto Follow-ups", "Full CRM Integration"],
-    price: "From ₹50,000",
-    subprice: "₹8,000/mo management (optional)",
+    priceUsd: 50000 / 83.5,
+    subpriceUsd: 8000 / 83.5,
+    subpriceText: "/mo management (optional)",
     bestFor: "Outdated sites, Low-conversion pages",
     icon: <BarChart size={24} />
   }
 ];
 
 function SystemsSection() {
+  const { formatPrice } = useCurrency();
   return (
     <section className="section-padding container" style={{ background: 'transparent', position: 'relative' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
@@ -203,8 +207,12 @@ function SystemsSection() {
                 {/* Footer / Pricing */}
                 <div style={{ marginTop: '1rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem' }}>
                   <div>
-                    <div style={{ fontSize: 'clamp(1.4rem, 4vw, 1.75rem)', fontWeight: 900, color: '#fff', marginBottom: '0.25rem' }}>{sys.price}</div>
-                    <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)' }}>{sys.subprice}</div>
+                    <div style={{ fontSize: 'clamp(1.4rem, 4vw, 1.75rem)', fontWeight: 900, color: '#fff', marginBottom: '0.25rem' }}>
+                      From {formatPrice(sys.priceUsd, { decimalsOverride: 0 })}
+                    </div>
+                    <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)' }}>
+                      {sys.subpriceUsd ? `${formatPrice(sys.subpriceUsd, { decimalsOverride: 0 })}${sys.subpriceText}` : sys.subprice}
+                    </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>

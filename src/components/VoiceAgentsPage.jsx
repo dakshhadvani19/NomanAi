@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import {
   Phone, Zap, BarChart3, MessageSquare, UserPlus, PhoneCall,
   Play, Volume2, ChevronDown, Building2, GraduationCap,
-  Stethoscope, Car, Headset, TrendingUp, CheckCircle, ArrowRight, Target, ShieldCheck
+  Stethoscope, Car, Headset, TrendingUp, CheckCircle, ArrowRight, Target, Activity
 } from 'lucide-react';
 import HoverCloudCard from './HoverCloudCard';
+import { useCurrency } from '../context/CurrencyContext';
 
 /* ─── helpers ─── */
 const fadeUp = (delay = 0) => ({
@@ -441,19 +442,23 @@ function VoiceCards() {
 }
 
 /* ─── SECTION 7: PRICING ─── */
-function Pricing() {
+function PricingSection() {
+  const { formatPrice } = useCurrency();
   return (
-    <section className="section-padding container" style={{ background: 'var(--bg-dark, #03070f)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-        <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem' }}>Simple, Transparent Pricing</h2>
+    <section id="pricing" className="section-padding container" style={{ background: 'transparent' }}>
+      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
+            <Activity size={13} /> Transparent Pricing
+          </span>
+          <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.1 }}>One System. <br /><span style={{ color: 'rgba(255,255,255,0.4)' }}>Infinite Scale.</span></h2>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1rem' }}>Start with setup — scale on usage.</p>
         </motion.div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
           {[
-            { label: 'Setup & Deployment', price: '₹75,000', sub: 'One-time', highlight: true, features: ['Custom voice persona', 'Telugu NLP tuning', '1,000 test minutes', 'CRM integration', 'Noman ai Voice Hub access'] },
-            { label: 'Growth Usage', price: '₹6/min', sub: '1,000 – 10,000 mins', features: ['Inbound + Outbound', 'Real-time transcription', 'Intent scoring', 'WhatsApp handoff'] },
-            { label: 'Scale Usage', price: '₹5/min', sub: '10,000 – 30,000 mins', features: ['Everything in Growth', 'Priority queue', 'Dedicated call routing', 'Custom analytics'] },
+            { label: 'Setup & Deployment', price: formatPrice(75000 / 83.5, { decimalsOverride: 0 }), sub: 'One-time', highlight: true, features: ['Custom voice persona', 'Telugu NLP tuning', '1,000 test minutes', 'CRM integration', 'Noman ai Voice Hub access'] },
+            { label: 'Growth Usage', price: `${formatPrice(6 / 83.5)}/min`, sub: '1,000 – 10,000 mins', features: ['Inbound + Outbound', 'Real-time transcription', 'Intent scoring', 'WhatsApp handoff'] },
+            { label: 'Scale Usage', price: `${formatPrice(5 / 83.5)}/min`, sub: '10,000 – 30,000 mins', features: ['Everything in Growth', 'Priority queue', 'Dedicated call routing', 'Custom analytics'] },
           ].map((p, i) => (
             <HoverCloudCard key={i} className="glass-panel" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }} whileHover={{ y: -8, boxShadow: p.highlight ? '0 0 60px rgba(14,165,233,0.4)' : '0 8px 40px rgba(0,0,0,0.4)' }}
               style={{ background: p.highlight ? 'linear-gradient(145deg, rgba(14,165,233,0.15), rgba(14,165,233,0.05))' : 'rgba(10,13,28,0.6)', backdropFilter: 'blur(16px)', borderRadius: 24, padding: '2rem', border: `1px solid ${p.highlight ? 'rgba(14,165,233,0.5)' : 'rgba(255,255,255,0.07)'}`, position: 'relative', transition: 'all 0.35s', boxShadow: p.highlight ? '0 0 40px rgba(14,165,233,0.2)' : 'none' }}>
@@ -517,14 +522,16 @@ function DeployForm() {
 }
 
 /* ─── SECTION 9: FAQ ─── */
-const FAQS = [
-  { q: 'What is the Noman ai Telugu Voice Agent?', a: 'Noman ai provides high-speed AI voice systems built specifically for scalable lead handling and natural Telugu conversational flow. It eliminates delayed follow-ups and missed calls, engaging prospects instantly.' },
-  { q: 'How much does the setup cost?', a: 'The initial AI Voice Agent Setup & Deployment is ₹75,000. Testing is initially performed using 1,000 talk-time minutes to optimize conversational quality and tune the voice persona.' },
-  { q: 'What is the per-minute usage pricing?', a: 'Usage pricing is ₹6/min for 1,000 to 10,000 minutes, and drops to ₹5/min for 10,000 to 30,000 minutes. Custom pricing is available for 30,000+ minutes per month.' },
-];
-
 function FAQ() {
   const [open, setOpen] = useState(null);
+  const { formatPrice } = useCurrency();
+
+  const FAQS = [
+    { q: 'What is the Noman ai Telugu Voice Agent?', a: 'Noman ai provides high-speed AI voice systems built specifically for scalable lead handling and natural Telugu conversational flow. It eliminates delayed follow-ups and missed calls, engaging prospects instantly.' },
+    { q: 'How much does the setup cost?', a: `The initial AI Voice Agent Setup & Deployment is ${formatPrice(75000 / 83.5, { decimalsOverride: 0 })}. Testing is initially performed using 1,000 talk-time minutes to optimize conversational quality and tune the voice persona.` },
+    { q: 'What is the per-minute usage pricing?', a: `Usage pricing is ${formatPrice(6 / 83.5)}/min for 1,000 to 10,000 minutes, and drops to ${formatPrice(5 / 83.5)}/min for 10,000 to 30,000 minutes. Custom pricing is available for 30,000+ minutes per month.` },
+  ];
+
   return (
     <section id="faq" className="section-padding container" style={{ background: 'var(--bg-dark, #03070f)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       <div style={{ maxWidth: 800, margin: '0 auto' }}>

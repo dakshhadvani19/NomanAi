@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Analytics } from "@vercel/analytics/react";
+import { CurrencyProvider } from './context/CurrencyContext';
 import SEO from './components/SEO';
 import AnimatedBackground from './components/AnimatedBackground';
 import GlobalCursorAurora from './components/GlobalCursorAurora';
@@ -61,7 +62,8 @@ function HomePage() {
 function App() {
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <CurrencyProvider>
+        <BrowserRouter>
         <GlobalCursorAurora />
         <AnimatedBackground />
         <Navbar />
@@ -75,8 +77,9 @@ function App() {
           </Routes>
         </div>
         <Footer />
-      </BrowserRouter>
-      <Analytics />
+        </BrowserRouter>
+        <Analytics />
+      </CurrencyProvider>
     </HelmetProvider>
   );
 }

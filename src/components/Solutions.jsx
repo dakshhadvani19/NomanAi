@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import HoverCloudCard from './HoverCloudCard';
+import { useCurrency } from '../context/CurrencyContext';
 
 export default function Solutions() {
+  const { formatPrice } = useCurrency();
   const solutions = [
     { tag: 'AI & AUTOMATION', title: 'Instant Lead Follow-Up', desc: 'When a lead submits a form, they instantly receive personalized WhatsApp and Email engagements.' },
     { tag: 'AI VOICE', title: 'Inbound AI Receptionist', desc: 'Human-like AI answers every inbound call immediately, routes requests, and schedules meetings 24/7.' },
@@ -25,7 +27,7 @@ export default function Solutions() {
           </h2>
         </div>
         <p style={{ color: 'var(--text-muted)', maxWidth: '600px', marginTop: '1.5rem' }}>
-          Not everything needs a full system. Start with what hurts most. Explore our catalogue of 19 pre-built solutions. Starting from ₹14,999.
+          Not everything needs a full system. Start with what hurts most. Explore our catalogue of 19 pre-built solutions. Starting from {formatPrice(14999 / 83.5, { decimalsOverride: 0 })}.
         </p>
       </div>
 

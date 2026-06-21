@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { WORLD_CURRENCIES } from '../utils/currencies';
+import { useCurrency } from '../context/CurrencyContext';
 
 /* ─── CONSTANTS ─── */
 const VOICE_COSTS = {
@@ -61,17 +62,6 @@ const KNOWN_AUTOMATIONS = [
 ];
 
 /* ─── HELPERS ─── */
-function useFmt(currCode, liveRates = {}) {
-  const curr = WORLD_CURRENCIES.find(c => c.code === currCode) || WORLD_CURRENCIES[0];
-  return (usd) => {
-    const rate = liveRates[curr.code] || curr.rate;
-    const val = usd * rate;
-    const isLarge = ['IDR', 'NGN', 'INR', 'JPY', 'PKR', 'KRW', 'VND', 'COP', 'CLP'].includes(curr.code);
-    const decimals = isLarge ? 0 : val < 10 ? 2 : (val < 1000 ? 1 : 0);
-    return `${curr.sym}${val.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}${!['₹','$','€','£','¥','₦','₱','฿','R$','৳'].includes(curr.sym) ? ` ${curr.code}` : ''}`;
-  };
-}
-
 /* ─── CURRENCY DROPDOWN ─── */
 function CurrencyDropdown({ selected, onSelect }) {
   const [open, setOpen] = useState(false);
@@ -285,20 +275,13 @@ export default function RevenueCalculator() {
   const [ttsQ, setTtsQ] = useState('prem');
   const [addons, setAddons] = useState(['whatsapp', 'sheets']);
   const [customAddons, setCustomAddons] = useState([]);
-  const [currency, setCurrency] = useState('INR');
   const [bizOpen, setBizOpen] = useState(false);
-  const [liveRates, setLiveRates] = useState({});
 
-  useEffect(() => {
-    fetch('https://open.er-api.com/v6/latest/USD')
-      .then(r => r.json())
-      .then(d => { if (d && d.rates) setLiveRates(d.rates); })
-      .catch(e => console.log('Failed to fetch live rates', e));
-  }, []);
+  const { currency, setCurrency, formatPrice, liveRates } = useCurrency();
 
   useEffect(() => { setDur(BUSINESS_DURATIONS[bizType] || 3); }, [bizType]);
 
-  const fmt = useFmt(currency, liveRates);
+  const fmt = formatPrice;
   const curr = WORLD_CURRENCIES.find(c => c.code === currency) || WORLD_CURRENCIES[0];
   const currentRate = liveRates[curr.code] || curr.rate;
 
@@ -320,7 +303,7 @@ export default function RevenueCalculator() {
   const fmtDisp = (usd) => {
     const val = usd * currentRate;
     const big = ['IDR','NGN','INR','JPY','PKR','BDT','LKR','NPR','KRW','VND','COP','CLP'].includes(curr.code);
-    return `${curr.sym}${val.toLocaleString(undefined, { maximumFractionDigits: big ? 0 : val < 10 ? 2 : 1 })}`;
+    return formatPrice(usd, { decimalsOverride: big ? 0 : val < 10 ? 2 : 1 });
   };
 
   /* PDF */
