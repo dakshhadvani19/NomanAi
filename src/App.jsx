@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { CurrencyProvider } from './context/CurrencyContext';
 import SEO from './components/SEO';
 import AnimatedBackground from './components/AnimatedBackground';
+import DottedSurface from './components/DottedSurface';
 import GlobalCursorAurora from './components/GlobalCursorAurora';
 import Navbar from './components/Navbar';
 import HeroPentagon from './components/HeroPentagon';
@@ -66,6 +67,7 @@ function App() {
         <BrowserRouter>
         <GlobalCursorAurora />
         <AnimatedBackground />
+        <DottedSurface style={{ position: 'fixed', zIndex: -1, opacity: 0.65 }} />
         <Navbar />
         <div className="mobile-page-wrapper">
           <Routes>
