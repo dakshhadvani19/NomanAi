@@ -29,17 +29,17 @@ const VARIANTS = {
     x: '50%',
     scale: 0.76,
     rotate: 7,
-    opacity: 0.18,
+    opacity: 0.38,
     zIndex: 20,
-    filter: 'blur(10px) brightness(0.30) saturate(0.3)',
+    filter: 'blur(5px) brightness(0.50) saturate(0.55)',
   },
   left: {
     x: '-50%',
     scale: 0.76,
     rotate: -7,
-    opacity: 0.18,
+    opacity: 0.38,
     zIndex: 20,
-    filter: 'blur(10px) brightness(0.30) saturate(0.3)',
+    filter: 'blur(5px) brightness(0.50) saturate(0.55)',
   },
 };
 
