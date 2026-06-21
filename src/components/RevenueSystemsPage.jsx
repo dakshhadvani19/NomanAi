@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import HoverCloudCard from './HoverCloudCard';
 import RevenueCalculator from './RevenueCalculator';
+import RevenueCarousel from './RevenueCarousel';
 import { useCurrency } from '../context/CurrencyContext';
 
 /* ─── HELPERS ─── */
@@ -142,98 +143,8 @@ function SystemsSection() {
   const { formatPrice } = useCurrency();
   return (
     <section className="section-padding container" style={{ background: 'transparent', position: 'relative' }}>
-      <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-        {SYSTEMS_DATA.map((sys, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            style={{ position: 'relative' }}
-          >
-            <HoverCloudCard
-              className="glass-panel"
-              whileHover={{ scale: 1.015, borderColor: 'rgba(6,182,212,0.5)' }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              style={{
-                background: 'rgba(10,13,28,0.6)',
-                backdropFilter: 'blur(20px)',
-                borderRadius: 24,
-                border: '1px solid rgba(255,255,255,0.06)',
-                padding: '3rem',
-                position: 'relative',
-                overflow: 'hidden',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
-              }}
-            >
-              {/* Dynamic hover gradient behind the card border */}
-              <div style={{ position: 'absolute', top: 0, right: 0, width: 300, height: 300, background: 'radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', position: 'relative', zIndex: 10 }}>
-                {/* Top header row */}
-                <div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#22d3ee' }}>System {sys.num}</span>
-                    {sys.badge && (
-                      <span style={{ padding: '0.2rem 0.6rem', borderRadius: 999, background: 'rgba(6,182,212,0.2)', border: '1px solid rgba(6,182,212,0.4)', color: '#67e8f9', fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{sys.badge}</span>
-                    )}
-                  </div>
-                  <h3 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 900, color: '#fff', marginBottom: '0.5rem' }}>{sys.title}</h3>
-                  <p style={{ fontSize: 'clamp(1rem, 3vw, 1.2rem)', color: 'rgba(255,255,255,0.8)', fontWeight: 600, marginBottom: '1.5rem' }}>{sys.desc}</p>
-                  <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, maxWidth: 600 }}>{sys.longDesc}</p>
-                </div>
-
-                {/* Features grid */}
-                <div>
-                  <h4 style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '1.5rem' }}>What's Included</h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                    {sys.features.map((feat, j) => (
-                      <motion.div
-                        key={j}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 + (j * 0.1) }}
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem' }}
-                      >
-                        <CheckCircle2 size={16} color="#22d3ee" style={{ flexShrink: 0 }} />
-                        {feat}
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Footer / Pricing */}
-                <div style={{ marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '12px' }}>
-                    <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f9fafb', lineHeight: 1.2 }}>
-                      From {formatPrice(0, { inrBase: sys.priceInr, decimalsOverride: 0 })}
-                    </span>
-                    <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>
-                      {sys.subpriceInr ? `${formatPrice(0, { inrBase: sys.subpriceInr, decimalsOverride: 0 })}${sys.subpriceText}` : sys.subprice}
-                    </span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-                    <button style={{ 
-                      display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', 
-                      fontSize: '0.75rem', fontWeight: 500, borderRadius: '6px', 
-                      background: 'rgba(6,182,212,0.1)', color: '#22d3ee', 
-                      border: '1px solid rgba(6,182,212,0.2)', cursor: 'pointer', outline: 'none'
-                    }}>
-                      <BarChart size={14} />
-                      View Example Scenario
-                    </button>
-                    <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>
-                      Best for: {sys.bestFor}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </HoverCloudCard>
-          </motion.div>
-        ))}
-
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <RevenueCarousel cards={SYSTEMS_DATA} formatPrice={formatPrice} />
       </div>
     </section>
   );
