@@ -190,7 +190,10 @@ h1, h2, h3, h4 {
   
   .nav-container {
     padding: 0.5rem 1rem !important;
-    gap: 1rem !important;
+    gap: 0.5rem !important;
+    width: 100%;
+    max-width: calc(100vw - 2rem);
+    box-sizing: border-box;
   }
   
   .hero-diagram {
@@ -225,8 +228,8 @@ h1, h2, h3, h4 {
   }
   
   .nav-container {
-    flex-wrap: wrap;
-    justify-content: center !important;
+    justify-content: space-between !important;
+    padding: 0.5rem !important;
   }
   
   /* Scale down any explicitly sized large elements */
