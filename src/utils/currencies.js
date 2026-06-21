@@ -1,5 +1,13 @@
 export const WORLD_CURRENCIES = [
   {
+    "code": "INR",
+    "name": "Indian Rupee",
+    "country": "Indian Rupee",
+    "flag": "🇮🇳",
+    "sym": "₹",
+    "rate": 94.411255
+  },
+  {
     "code": "USD",
     "name": "US Dollar",
     "country": "US Dollar",
@@ -8,12 +16,148 @@ export const WORLD_CURRENCIES = [
     "rate": 1
   },
   {
+    "code": "EUR",
+    "name": "Euro",
+    "country": "Euro",
+    "flag": "🇪🇺",
+    "sym": "€",
+    "rate": 0.87198
+  },
+  {
+    "code": "GBP",
+    "name": "British Pound",
+    "country": "British Pound",
+    "flag": "🇬🇧",
+    "sym": "£",
+    "rate": 0.755931
+  },
+  {
     "code": "AED",
     "name": "United Arab Emirates Dirham",
     "country": "United Arab Emirates Dirham",
     "flag": "🇦🇪",
     "sym": "AED",
     "rate": 3.6725
+  },
+  {
+    "code": "SGD",
+    "name": "Singapore Dollar",
+    "country": "Singapore Dollar",
+    "flag": "🇸🇬",
+    "sym": "SGD",
+    "rate": 1.290687
+  },
+  {
+    "code": "AUD",
+    "name": "Australian Dollar",
+    "country": "Australian Dollar",
+    "flag": "🇦🇺",
+    "sym": "A$",
+    "rate": 1.425642
+  },
+  {
+    "code": "CAD",
+    "name": "Canadian Dollar",
+    "country": "Canadian Dollar",
+    "flag": "🇨🇦",
+    "sym": "CA$",
+    "rate": 1.414888
+  },
+  {
+    "code": "JPY",
+    "name": "Japanese Yen",
+    "country": "Japanese Yen",
+    "flag": "🇯🇵",
+    "sym": "¥",
+    "rate": 161.222868
+  },
+  {
+    "code": "CNY",
+    "name": "Chinese Yuan",
+    "country": "Chinese Yuan",
+    "flag": "🇨🇳",
+    "sym": "CN¥",
+    "rate": 6.789004
+  },
+  {
+    "code": "CHF",
+    "name": "Swiss Franc",
+    "country": "Swiss Franc",
+    "flag": "🇨🇭",
+    "sym": "CHF",
+    "rate": 0.80677
+  },
+  {
+    "code": "HKD",
+    "name": "Hong Kong Dollar",
+    "country": "Hong Kong Dollar",
+    "flag": "🇭🇰",
+    "sym": "HK$",
+    "rate": 7.837707
+  },
+  {
+    "code": "NZD",
+    "name": "New Zealand Dollar",
+    "country": "New Zealand Dollar",
+    "flag": "🇳🇿",
+    "sym": "NZ$",
+    "rate": 1.741949
+  },
+  {
+    "code": "SEK",
+    "name": "Swedish Krona",
+    "country": "Swedish Krona",
+    "flag": "🇸🇪",
+    "sym": "SEK",
+    "rate": 9.579239
+  },
+  {
+    "code": "KRW",
+    "name": "South Korean Won",
+    "country": "South Korean Won",
+    "flag": "🇰🇷",
+    "sym": "₩",
+    "rate": 1531.004518
+  },
+  {
+    "code": "ZAR",
+    "name": "South African Rand",
+    "country": "South African Rand",
+    "flag": "🇿🇦",
+    "sym": "ZAR",
+    "rate": 16.456127
+  },
+  {
+    "code": "BRL",
+    "name": "Brazilian Real",
+    "country": "Brazilian Real",
+    "flag": "🇧🇷",
+    "sym": "R$",
+    "rate": 5.155925
+  },
+  {
+    "code": "MXN",
+    "name": "Mexican Peso",
+    "country": "Mexican Peso",
+    "flag": "🇲🇽",
+    "sym": "MX$",
+    "rate": 17.332852
+  },
+  {
+    "code": "THB",
+    "name": "Thai Baht",
+    "country": "Thai Baht",
+    "flag": "🇹🇭",
+    "sym": "THB",
+    "rate": 32.883132
+  },
+  {
+    "code": "IDR",
+    "name": "Indonesian Rupiah",
+    "country": "Indonesian Rupiah",
+    "flag": "🇮🇩",
+    "sym": "IDR",
+    "rate": 17788.977099
   },
   {
     "code": "AFN",
@@ -62,14 +206,6 @@ export const WORLD_CURRENCIES = [
     "flag": "🇦🇷",
     "sym": "ARS",
     "rate": 1460.2498
-  },
-  {
-    "code": "AUD",
-    "name": "Australian Dollar",
-    "country": "Australian Dollar",
-    "flag": "🇦🇺",
-    "sym": "A$",
-    "rate": 1.425642
   },
   {
     "code": "AWG",
@@ -160,14 +296,6 @@ export const WORLD_CURRENCIES = [
     "rate": 7.007291
   },
   {
-    "code": "BRL",
-    "name": "Brazilian Real",
-    "country": "Brazilian Real",
-    "flag": "🇧🇷",
-    "sym": "R$",
-    "rate": 5.155925
-  },
-  {
     "code": "BSD",
     "name": "Bahamian Dollar",
     "country": "Bahamian Dollar",
@@ -208,28 +336,12 @@ export const WORLD_CURRENCIES = [
     "rate": 2
   },
   {
-    "code": "CAD",
-    "name": "Canadian Dollar",
-    "country": "Canadian Dollar",
-    "flag": "🇨🇦",
-    "sym": "CA$",
-    "rate": 1.414888
-  },
-  {
     "code": "CDF",
     "name": "Congolese Franc",
     "country": "Congolese Franc",
     "flag": "🇨🇩",
     "sym": "CDF",
     "rate": 2319.936745
-  },
-  {
-    "code": "CHF",
-    "name": "Swiss Franc",
-    "country": "Swiss Franc",
-    "flag": "🇨🇭",
-    "sym": "CHF",
-    "rate": 0.80677
   },
   {
     "code": "CLF",
@@ -254,14 +366,6 @@ export const WORLD_CURRENCIES = [
     "flag": "🇨🇳",
     "sym": "CNH",
     "rate": 6.7777
-  },
-  {
-    "code": "CNY",
-    "name": "Chinese Yuan",
-    "country": "Chinese Yuan",
-    "flag": "🇨🇳",
-    "sym": "CN¥",
-    "rate": 6.789004
   },
   {
     "code": "COP",
@@ -360,14 +464,6 @@ export const WORLD_CURRENCIES = [
     "rate": 159.415188
   },
   {
-    "code": "EUR",
-    "name": "Euro",
-    "country": "Euro",
-    "flag": "🇪🇺",
-    "sym": "€",
-    "rate": 0.87198
-  },
-  {
     "code": "FJD",
     "name": "Fijian Dollar",
     "country": "Fijian Dollar",
@@ -390,14 +486,6 @@ export const WORLD_CURRENCIES = [
     "flag": "🇫🇴",
     "sym": "FOK",
     "rate": 6.506464
-  },
-  {
-    "code": "GBP",
-    "name": "British Pound",
-    "country": "British Pound",
-    "flag": "🇬🇧",
-    "sym": "£",
-    "rate": 0.755931
   },
   {
     "code": "GEL",
@@ -464,14 +552,6 @@ export const WORLD_CURRENCIES = [
     "rate": 211.974146
   },
   {
-    "code": "HKD",
-    "name": "Hong Kong Dollar",
-    "country": "Hong Kong Dollar",
-    "flag": "🇭🇰",
-    "sym": "HK$",
-    "rate": 7.837707
-  },
-  {
     "code": "HNL",
     "name": "Honduran Lempira",
     "country": "Honduran Lempira",
@@ -504,14 +584,6 @@ export const WORLD_CURRENCIES = [
     "rate": 306.942695
   },
   {
-    "code": "IDR",
-    "name": "Indonesian Rupiah",
-    "country": "Indonesian Rupiah",
-    "flag": "🇮🇩",
-    "sym": "IDR",
-    "rate": 17788.977099
-  },
-  {
     "code": "ILS",
     "name": "Israeli New Shekel",
     "country": "Israeli New Shekel",
@@ -526,14 +598,6 @@ export const WORLD_CURRENCIES = [
     "flag": "🇮🇲",
     "sym": "IMP",
     "rate": 0.755929
-  },
-  {
-    "code": "INR",
-    "name": "Indian Rupee",
-    "country": "Indian Rupee",
-    "flag": "🇮🇳",
-    "sym": "₹",
-    "rate": 94.411255
   },
   {
     "code": "IQD",
@@ -584,14 +648,6 @@ export const WORLD_CURRENCIES = [
     "rate": 0.709
   },
   {
-    "code": "JPY",
-    "name": "Japanese Yen",
-    "country": "Japanese Yen",
-    "flag": "🇯🇵",
-    "sym": "¥",
-    "rate": 161.222868
-  },
-  {
     "code": "KES",
     "name": "Kenyan Shilling",
     "country": "Kenyan Shilling",
@@ -630,14 +686,6 @@ export const WORLD_CURRENCIES = [
     "flag": "🇰🇲",
     "sym": "KMF",
     "rate": 428.985395
-  },
-  {
-    "code": "KRW",
-    "name": "South Korean Won",
-    "country": "South Korean Won",
-    "flag": "🇰🇷",
-    "sym": "₩",
-    "rate": 1531.004518
   },
   {
     "code": "KWD",
@@ -800,14 +848,6 @@ export const WORLD_CURRENCIES = [
     "rate": 1755.404244
   },
   {
-    "code": "MXN",
-    "name": "Mexican Peso",
-    "country": "Mexican Peso",
-    "flag": "🇲🇽",
-    "sym": "MX$",
-    "rate": 17.332852
-  },
-  {
     "code": "MYR",
     "name": "Malaysian Ringgit",
     "country": "Malaysian Ringgit",
@@ -862,14 +902,6 @@ export const WORLD_CURRENCIES = [
     "flag": "🇳🇵",
     "sym": "NPR",
     "rate": 151.057727
-  },
-  {
-    "code": "NZD",
-    "name": "New Zealand Dollar",
-    "country": "New Zealand Dollar",
-    "flag": "🇳🇿",
-    "sym": "NZ$",
-    "rate": 1.741949
   },
   {
     "code": "OMR",
@@ -1008,22 +1040,6 @@ export const WORLD_CURRENCIES = [
     "rate": 581.085114
   },
   {
-    "code": "SEK",
-    "name": "Swedish Krona",
-    "country": "Swedish Krona",
-    "flag": "🇸🇪",
-    "sym": "SEK",
-    "rate": 9.579239
-  },
-  {
-    "code": "SGD",
-    "name": "Singapore Dollar",
-    "country": "Singapore Dollar",
-    "flag": "🇸🇬",
-    "sym": "SGD",
-    "rate": 1.290687
-  },
-  {
     "code": "SHP",
     "name": "St. Helena Pound",
     "country": "St. Helena Pound",
@@ -1094,14 +1110,6 @@ export const WORLD_CURRENCIES = [
     "flag": "🇸🇿",
     "sym": "SZL",
     "rate": 16.456108
-  },
-  {
-    "code": "THB",
-    "name": "Thai Baht",
-    "country": "Thai Baht",
-    "flag": "🇹🇭",
-    "sym": "THB",
-    "rate": 32.883132
   },
   {
     "code": "TJS",
@@ -1294,14 +1302,6 @@ export const WORLD_CURRENCIES = [
     "flag": "🇾🇪",
     "sym": "YER",
     "rate": 241.414705
-  },
-  {
-    "code": "ZAR",
-    "name": "South African Rand",
-    "country": "South African Rand",
-    "flag": "🇿🇦",
-    "sym": "ZAR",
-    "rate": 16.456127
   },
   {
     "code": "ZMW",
