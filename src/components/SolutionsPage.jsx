@@ -5,6 +5,7 @@ import { ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HoverCloudCard from './HoverCloudCard';
 import { useCurrency } from '../context/CurrencyContext';
+import DottedSurface from './DottedSurface';
 
 /* ─── HELPERS ─── */
 const fadeUp = (delay = 0) => ({
@@ -47,7 +48,9 @@ export default function SolutionsPage() {
     : SOLUTIONS.filter(s => s.category === activeTab);
 
   return (
-    <div style={{ background: '#030712', minHeight: '100vh', color: '#fff', overflowX: 'hidden' }}>
+    <div style={{ background: '#030712', minHeight: '100vh', color: '#fff', overflowX: 'hidden', position: 'relative' }}>
+      {/* Animated dotted wave background */}
+      <DottedSurface style={{ position: 'fixed', zIndex: 0, opacity: 0.65 }} />
       <SEO
         title="AI Automation Solutions for Indian Businesses | Noman ai"
         description="Explore Noman ai's full suite: WhatsApp automation, AI Voice Agents, high-converting landing pages, CRM pipelines and more — all designed to eliminate bottlenecks and scale your business fast."

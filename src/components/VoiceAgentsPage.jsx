@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import HoverCloudCard from './HoverCloudCard';
 import { useCurrency } from '../context/CurrencyContext';
+import DottedSurface from './DottedSurface';
 
 /* ─── helpers ─── */
 const fadeUp = (delay = 0) => ({
@@ -565,7 +566,9 @@ function FAQ() {
 /* ─── PAGE ROOT ─── */
 export default function VoiceAgentsPage() {
   return (
-    <main style={{ position: 'relative', zIndex: 10, background: '#050712', color: '#fff', minHeight: '100vh' }}>
+    <main style={{ position: 'relative', zIndex: 10, background: '#050712', color: '#fff', minHeight: '100vh', overflow: 'hidden' }}>
+      {/* Animated dotted wave background */}
+      <DottedSurface style={{ position: 'fixed', zIndex: 0, opacity: 0.7 }} />
       <SEO
         title="Telugu AI Voice Agents for Lead Automation | Noman ai"
         description="Deploy a Telugu-first AI Voice Agent that calls new leads in 3 seconds, handles objections in natural Telugu, qualifies intent and hands off to WhatsApp — automatically. Serving real estate, FMCG and education businesses across India."
