@@ -184,6 +184,7 @@ function SmoothSlider({ min, max, step = 1, value, onChange, label, format }) {
 
 /* ─── CUSTOM AUTOMATION ADDER ─── */
 function CustomAutomationAdder({ onAdd }) {
+  const { formatPrice } = useCurrency();
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSug, setShowSug] = useState(false);
@@ -237,7 +238,7 @@ function CustomAutomationAdder({ onAdd }) {
               >
                 <span style={{ color: '#e2e8f0', fontSize: '0.87rem' }}>{s.name}</span>
                 <span style={{ color: '#22d3ee', fontWeight: 700, fontSize: '0.78rem', marginLeft: '12px', flexShrink: 0 }}>
-                  {s.usdPerMonth === 0 ? 'Free / % based' : `$${s.usdPerMonth}/mo`}
+                  {s.usdPerMonth === 0 ? 'Free / % based' : `${formatPrice(s.usdPerMonth, { decimalsOverride: 0 })}/mo`}
                 </span>
               </div>
             ))}
@@ -475,8 +476,8 @@ export default function RevenueCalculator() {
             <div style={{ marginBottom: '1.4rem' }}>
               <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '8px' }}>Call Direction</p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                {[['outbound', 'Outbound', 'Agent calls leads', `$${VOICE_COSTS.twilio_out.usd}/min`],
-                  ['inbound',  'Inbound',  'Leads call you',   `$${VOICE_COSTS.twilio_in.usd}/min (cheaper)`]].map(([val, label, desc, cost]) => (
+                {[['outbound', 'Outbound', 'Agent calls leads', `${formatPrice(VOICE_COSTS.twilio_out.usd, { decimalsOverride: 4 })}/min`],
+                  ['inbound',  'Inbound',  'Leads call you',   `${formatPrice(VOICE_COSTS.twilio_in.usd, { decimalsOverride: 4 })}/min (cheaper)`]].map(([val, label, desc, cost]) => (
                   <div key={val} onClick={() => setCallDir(val)}
                     style={{ padding: '10px 12px', borderRadius: '10px', border: `1px solid ${callDir === val ? 'rgba(6,182,212,0.45)' : 'rgba(255,255,255,0.07)'}`, background: callDir === val ? 'rgba(6,182,212,0.08)' : 'rgba(255,255,255,0.01)', cursor: 'pointer', transition: 'all 0.15s' }}>
                     <div style={{ fontWeight: 700, fontSize: '0.83rem', color: callDir === val ? '#22d3ee' : '#c9d4e0' }}>{label}</div>
@@ -491,8 +492,8 @@ export default function RevenueCalculator() {
             <div>
               <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '8px' }}>Voice Quality</p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                {[['std', 'Standard', 'Google TTS', `$${VOICE_COSTS.tts_std.usd}/min`, '~₹1.3/min'],
-                  ['prem','Premium',  'ElevenLabs', `$${VOICE_COSTS.tts_prem.usd}/min`, '~₹4.2/min – Best quality']].map(([val, label, prov, cost, note]) => (
+                {[['std', 'Standard', 'Google TTS', `~${formatPrice(VOICE_COSTS.tts_std.usd, { decimalsOverride: 4 })}/min`],
+                  ['prem','Premium',  'ElevenLabs', `~${formatPrice(VOICE_COSTS.tts_prem.usd, { decimalsOverride: 4 })}/min – Best quality`]].map(([val, label, prov, note]) => (
                   <div key={val} onClick={() => setTtsQ(val)}
                     style={{ padding: '10px 12px', borderRadius: '10px', border: `1px solid ${ttsQ === val ? 'rgba(99,102,241,0.45)' : 'rgba(255,255,255,0.07)'}`, background: ttsQ === val ? 'rgba(99,102,241,0.08)' : 'rgba(255,255,255,0.01)', cursor: 'pointer', transition: 'all 0.15s' }}>
                     <div style={{ fontWeight: 700, fontSize: '0.83rem', color: ttsQ === val ? '#a78bfa' : '#c9d4e0' }}>{label}</div>
@@ -525,7 +526,7 @@ export default function RevenueCalculator() {
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px', flexShrink: 0 }}>
                       <span style={{ fontSize: '0.78rem', fontWeight: 700, color: on ? '#22d3ee' : 'rgba(255,255,255,0.3)' }}>
-                        {opt.usdPerMonth === 0 ? '% fee' : `$${opt.usdPerMonth}/mo`}
+                        {opt.usdPerMonth === 0 ? '% fee' : `${formatPrice(opt.usdPerMonth, { decimalsOverride: 0 })}/mo`}
                       </span>
                       <div style={{ width: '16px', height: '16px', borderRadius: '4px', border: `1.5px solid ${on ? '#22d3ee' : 'rgba(255,255,255,0.18)'}`, background: on ? '#22d3ee' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.13s' }}>
                         {on && <Check size={10} color="#000" strokeWidth={3} />}
@@ -544,7 +545,7 @@ export default function RevenueCalculator() {
                   <div key={a.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', borderRadius: '9px', background: 'rgba(99,102,241,0.07)', border: '1px solid rgba(99,102,241,0.18)', marginBottom: '6px' }}>
                     <span style={{ fontSize: '0.83rem', color: '#e2e8f0' }}>{a.label}</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#a78bfa' }}>{a.usdPerMonth === 0 ? 'Variable' : `$${a.usdPerMonth}/mo`}</span>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#a78bfa' }}>{a.usdPerMonth === 0 ? 'Variable' : `${formatPrice(a.usdPerMonth, { decimalsOverride: 0 })}/mo`}</span>
                       <div onClick={() => setCustomAddons(p => p.filter(x => x.id !== a.id))} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}><Trash2 size={13} color="#f87171" /></div>
                     </div>
                   </div>
