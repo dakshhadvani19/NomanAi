@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 /**
- * Radar Pulse Background
- * ──────────────────────
- * Glowing rings expand outward from the screen center.
- * As each ring passes through a dot, the dot flashes bright cyan then fades.
- * Multiple rings coexist, creating a continuous rolling activation effect.
+ * Galaxy Vortex Background (Concept 3)
+ * ──────────────────────────────────────
+ * Thousands of dots orbit an off-center gravitational core.
+ * Inner dots move fast and glow cyan; outer dots move slow and dim to indigo.
+ * Occasional "shooting stars" streak across the sky.
  */
 export default function DottedSurface({ style = {}, className = '' }) {
   const containerRef = useRef(null);
@@ -15,15 +15,16 @@ export default function DottedSurface({ style = {}, className = '' }) {
     const container = containerRef.current;
     if (!container) return;
 
-    // Use full viewport dimensions (component is position:fixed inset:0)
     let W = window.innerWidth;
     let H = window.innerHeight;
 
-    /* ── Orthographic camera for flat 2D world ── */
+    /* ── Scene & Camera ── */
     const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(
-      -W / 2, W / 2, H / 2, -H / 2, -1, 1
-    );
+    scene.fog = new THREE.FogExp2(0x050712, 0.0006);
+
+    const camera = new THREE.PerspectiveCamera(60, W / H, 1, 4000);
+    // Look down from above, but we will tilt the vortex itself
+    camera.position.set(0, 0, 800);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -31,159 +32,212 @@ export default function DottedSurface({ style = {}, className = '' }) {
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
-    /* ── Dot grid ── */
-    const SPACING = 52; // pixels between dots
-    const COLS = Math.ceil(W / SPACING) + 1;
-    const ROWS = Math.ceil(H / SPACING) + 1;
-    const DOT_COUNT = COLS * ROWS;
-
+    /* ── Galaxy Vortex Particles ── */
+    const DOT_COUNT = 3000;
     const positions = new Float32Array(DOT_COUNT * 3);
     const colors = new Float32Array(DOT_COUNT * 3);
-    const brightness = new Float32Array(DOT_COUNT).fill(0);
-    // Pre-compute each dot's distance from screen center
-    const dotDist = new Float32Array(DOT_COUNT);
+    const sizes = new Float32Array(DOT_COUNT);
 
-    let idx = 0;
-    for (let r = 0; r < ROWS; r++) {
-      for (let c = 0; c < COLS; c++) {
-        const x = c * SPACING - W / 2;
-        const y = r * SPACING - H / 2;
-        positions[idx * 3]     = x;
-        positions[idx * 3 + 1] = y;
-        positions[idx * 3 + 2] = 0;
-        dotDist[idx] = Math.sqrt(x * x + y * y);
-        // Base dim color: very dark teal #0a1a22
-        colors[idx * 3]     = 0.04;
-        colors[idx * 3 + 1] = 0.10;
-        colors[idx * 3 + 2] = 0.14;
-        idx++;
-      }
+    // Per-particle orbital state
+    const angles = new Float32Array(DOT_COUNT);
+    const radii = new Float32Array(DOT_COUNT);
+    const speeds = new Float32Array(DOT_COUNT);
+
+    // The gravitational core (slightly off-center to the right & top)
+    const CORE_X = W * 0.15; 
+    const CORE_Y = H * 0.1;
+
+    const MAX_RADIUS = Math.max(W, H) * 1.2;
+
+    for (let i = 0; i < DOT_COUNT; i++) {
+      // Distribution: heavy concentration near the center using x^3
+      const r = Math.pow(Math.random(), 3) * MAX_RADIUS + 30;
+      const theta = Math.random() * Math.PI * 2;
+
+      radii[i] = r;
+      angles[i] = theta;
+
+      // Orbital speed: Kepler-inspired (slower as r increases)
+      // Base speed + slight random variation so dots in same orbit drift apart
+      speeds[i] = (Math.random() * 0.4 + 0.8) * (200 / Math.pow(r, 1.15));
+
+      // Color mapping: Inner = Cyan (#00BCD4), Outer = Dim Indigo (#4F46E5)
+      // Normalize radius for color mixing
+      const t = Math.min(1, r / (MAX_RADIUS * 0.5));
+      
+      // Cyan RGB: 0.0, 0.74, 0.83
+      // Indigo RGB: 0.31, 0.27, 0.90
+      // Dim Indigo RGB: 0.15, 0.12, 0.45
+      
+      const rCol = 0.00 + t * 0.15;
+      const gCol = 0.74 - t * 0.62;
+      const bCol = 0.83 - t * 0.38;
+
+      colors[i * 3]     = rCol;
+      colors[i * 3 + 1] = gCol;
+      colors[i * 3 + 2] = bCol;
+
+      // Size mapping: Inner = larger, Outer = tiny
+      sizes[i] = Math.max(1.0, 4.0 - t * 3.0);
     }
 
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const colorAttr = new THREE.BufferAttribute(colors, 3);
-    geo.setAttribute('color', colorAttr);
+    geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    const dotMat = new THREE.PointsMaterial({
-      size: 3.5,
+    // Custom shader for circular, soft-edged dots
+    const mat = new THREE.ShaderMaterial({
+      vertexShader: `
+        attribute float size;
+        attribute vec3 color;
+        varying vec3 vColor;
+        void main() {
+          vColor = color;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = size * (1200.0 / -mvPosition.z);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vColor;
+        void main() {
+          // Circular particle mask
+          vec2 xy = gl_PointCoord.xy - vec2(0.5);
+          float ll = length(xy);
+          if (ll > 0.5) discard;
+          
+          // Soft glowing edge
+          float alpha = smoothstep(0.5, 0.1, ll);
+          gl_FragColor = vec4(vColor, alpha * 0.85); // 0.85 global opacity
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending, // Makes overlapping dots glow brighter
+    });
+
+    const vortex = new THREE.Points(geo, mat);
+    
+    // Tilt the vortex back slightly for a 3D perspective
+    vortex.rotation.x = -0.25;
+    vortex.rotation.y = 0.15;
+    scene.add(vortex);
+
+    /* ── Shooting Stars ── */
+    const STAR_COUNT = 4; // A cluster of 4 dots forming a streak
+    const starPos = new Float32Array(STAR_COUNT * 3);
+    const starCol = new Float32Array(STAR_COUNT * 3);
+    for(let i = 0; i < STAR_COUNT * 3; i += 3) {
+       starCol[i] = 0.5; starCol[i+1] = 1.0; starCol[i+2] = 1.0; // bright cyan-white
+    }
+    
+    const starGeo = new THREE.BufferGeometry();
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    starGeo.setAttribute('color', new THREE.BufferAttribute(starCol, 3));
+    
+    const starMat = new THREE.PointsMaterial({
+      size: 5,
       vertexColors: true,
       transparent: true,
-      opacity: 1.0,
-      sizeAttenuation: false,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
     });
-    scene.add(new THREE.Points(geo, dotMat));
+    const stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
 
-    /* ── Ring factory ──
-       Each ring is a unit circle (radius=1) THREE.LineLoop.
-       We expand it via mesh.scale each frame.
-    ── */
-    const MAX_RADIUS = Math.hypot(W / 2, H / 2) + 80;
-    const RING_SPEED = 160;      // px/s — feels deliberate, not rushed
-    const RING_INTERVAL = 2600;  // ms between new rings
-    const HIT_BAND = SPACING * 0.6; // radius window for dot activation
-
-    // Build a unit circle geometry (reused for all rings)
-    const SEGMENTS = 180;
-    const circlePositions = new Float32Array((SEGMENTS + 1) * 3);
-    for (let i = 0; i <= SEGMENTS; i++) {
-      const a = (i / SEGMENTS) * Math.PI * 2;
-      circlePositions[i * 3]     = Math.cos(a);
-      circlePositions[i * 3 + 1] = Math.sin(a);
-      circlePositions[i * 3 + 2] = 0;
+    let starActive = false;
+    let starProgress = 0;
+    let starStartX = 0, starStartY = 0;
+    let starEndX = 0, starEndY = 0;
+    let starTimer;
+    
+    function triggerShootingStar() {
+      starActive = true;
+      starProgress = 0;
+      starMat.opacity = 0.9;
+      
+      // Randomize trajectory
+      const angle = Math.random() * Math.PI * 2;
+      const distance = W + 400;
+      
+      starStartX = Math.cos(angle) * distance;
+      starStartY = Math.sin(angle) * distance;
+      starEndX = -Math.cos(angle) * distance;
+      starEndY = -Math.sin(angle) * distance;
+      
+      // Schedule next star
+      starTimer = setTimeout(triggerShootingStar, 3000 + Math.random() * 8000);
     }
-    const unitCircleGeo = new THREE.BufferGeometry();
-    unitCircleGeo.setAttribute(
-      'position',
-      new THREE.BufferAttribute(circlePositions, 3)
-    );
+    starTimer = setTimeout(triggerShootingStar, 2000);
 
-    const activeRings = []; // { mesh, mat, radius }
-
-    function spawnRing() {
-      const mat = new THREE.LineBasicMaterial({
-        color: 0x22d3ee,
-        transparent: true,
-        opacity: 0.55,
-      });
-      const mesh = new THREE.LineLoop(unitCircleGeo, mat);
-      mesh.scale.set(1, 1, 1);
-      scene.add(mesh);
-      activeRings.push({ mesh, mat, radius: 0 });
-    }
-
-    spawnRing(); // fire immediately on mount
-    const ringTimer = setInterval(spawnRing, RING_INTERVAL);
-
-    /* ── Animation loop ── */
+    /* ── Animation Loop ── */
     let lastTime = performance.now();
     let animId;
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
       const now = performance.now();
-      const dt = Math.min((now - lastTime) / 1000, 0.05); // cap at 50ms
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
       lastTime = now;
 
-      /* Update each ring */
-      for (let ri = activeRings.length - 1; ri >= 0; ri--) {
-        const ring = activeRings[ri];
-        ring.radius += RING_SPEED * dt;
+      // 1. Update Vortex Particles
+      const posArr = geo.attributes.position.array;
+      for (let i = 0; i < DOT_COUNT; i++) {
+        angles[i] += speeds[i] * dt;
+        
+        // Add a slow, undulating Z-wave so the galaxy isn't perfectly flat
+        const zWave = Math.sin(radii[i] * 0.015 - now * 0.001) * 35;
 
-        // Scale the mesh to match radius
-        ring.mesh.scale.set(ring.radius, ring.radius, 1);
+        posArr[i * 3]     = CORE_X + radii[i] * Math.cos(angles[i]);
+        posArr[i * 3 + 1] = CORE_Y + radii[i] * Math.sin(angles[i]);
+        posArr[i * 3 + 2] = zWave;
+      }
+      geo.attributes.position.needsUpdate = true;
 
-        // Fade ring as it travels outward
-        const progress = ring.radius / MAX_RADIUS;
-        ring.mat.opacity = Math.max(0, 0.55 * (1 - progress * 1.1));
+      // Slowly rotate the entire galaxy
+      vortex.rotation.z -= 0.02 * dt;
 
-        // Activate dots that the ring is currently passing through
-        for (let di = 0; di < DOT_COUNT; di++) {
-          const diff = Math.abs(ring.radius - dotDist[di]);
-          if (diff < HIT_BAND && brightness[di] < 0.15) {
-            // Slight stagger: dots closer to the ring center hit first
-            brightness[di] = 0.85 + Math.random() * 0.15; // 0.85–1.0
+      // 2. Update Shooting Star
+      if (starActive) {
+        starProgress += dt * 0.7; // star speed
+        if (starProgress >= 1) {
+          starActive = false;
+          starMat.opacity = 0;
+        } else {
+          const sPos = starGeo.attributes.position.array;
+          const currentX = starStartX + (starEndX - starStartX) * starProgress;
+          const currentY = starStartY + (starEndY - starStartY) * starProgress;
+          
+          // Spread the cluster out along the trajectory to form a streak
+          const dx = (starEndX - starStartX) * 0.01;
+          const dy = (starEndY - starStartY) * 0.01;
+          
+          for(let i = 0; i < STAR_COUNT; i++) {
+             sPos[i * 3]     = currentX - (dx * i * 1.5);
+             sPos[i * 3 + 1] = currentY - (dy * i * 1.5);
+             sPos[i * 3 + 2] = 200; // float above the galaxy
+          }
+          starGeo.attributes.position.needsUpdate = true;
+          
+          // Fade out near the end of the trajectory
+          if (starProgress > 0.8) {
+             starMat.opacity = 0.9 * (1 - (starProgress - 0.8) * 5);
           }
         }
-
-        // Kill ring when fully off screen
-        if (ring.radius > MAX_RADIUS) {
-          scene.remove(ring.mesh);
-          ring.mat.dispose();
-          activeRings.splice(ri, 1);
-        }
       }
-
-      /* Decay dot brightness and write vertex colors */
-      for (let di = 0; di < DOT_COUNT; di++) {
-        if (brightness[di] > 0) {
-          brightness[di] = Math.max(0, brightness[di] - 0.018);
-        }
-        const b = brightness[di];
-
-        // Lerp: dim teal (#0a1a24) → activated cyan (#22d3ee)
-        colorAttr.setXYZ(
-          di,
-          0.04 + b * (0.133 - 0.04),  // r: 0.04 → 0.133
-          0.10 + b * (0.827 - 0.10),  // g: 0.10 → 0.827
-          0.14 + b * (0.933 - 0.14)   // b: 0.14 → 0.933
-        );
-      }
-      colorAttr.needsUpdate = true;
 
       renderer.render(scene, camera);
     };
 
     animate();
 
-    /* ── Resize ── */
+    /* ── Resize Handler ── */
     const onResize = () => {
       W = window.innerWidth;
       H = window.innerHeight;
-      camera.left   = -W / 2;
-      camera.right  =  W / 2;
-      camera.top    =  H / 2;
-      camera.bottom = -H / 2;
+      camera.aspect = W / H;
       camera.updateProjectionMatrix();
       renderer.setSize(W, H);
     };
@@ -192,17 +246,14 @@ export default function DottedSurface({ style = {}, className = '' }) {
     /* ── Cleanup ── */
     return () => {
       window.removeEventListener('resize', onResize);
-      clearInterval(ringTimer);
+      clearTimeout(starTimer);
       cancelAnimationFrame(animId);
 
       scene.traverse((obj) => {
         if (obj.geometry) obj.geometry.dispose();
         if (obj.material) obj.material.dispose();
       });
-      unitCircleGeo.dispose();
-      dotMat.dispose();
       renderer.dispose();
-
       try { container.removeChild(renderer.domElement); } catch (_) {}
     };
   }, []);
