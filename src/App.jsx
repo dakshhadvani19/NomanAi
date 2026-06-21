@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { Analytics } from "@vercel/analytics/react";
 import SEO from './components/SEO';
 import AnimatedBackground from './components/AnimatedBackground';
 import GlobalCursorAurora from './components/GlobalCursorAurora';
@@ -75,6 +76,7 @@ function App() {
         </div>
         <Footer />
       </BrowserRouter>
+      <Analytics />
     </HelmetProvider>
   );
 }
