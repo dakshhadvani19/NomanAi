@@ -5,7 +5,7 @@ import { CheckCircle, Clock, Mail, Phone, ArrowRight, Sparkles, Send, ChevronDow
 import VoiceAgentBanner from './VoiceAgentBanner';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { sendWelcomeEmail } from '../utils/sendWelcomeEmail';
+import { sendWelcomeEmail } from '../utils/sendWelcomeEmail'; // legacy — kept for fallback
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -240,12 +240,12 @@ export default function AuditPage() {
         createdAt: serverTimestamp(),
       });
 
-      // 2. Send welcome email (non-blocking — a failure here won't block submission)
-      sendWelcomeEmail({
-        name:     form.name,
-        email:    form.email,
-        business: form.business,
-      }).catch((err) => console.warn('[EmailJS] Welcome email failed:', err));
+      // 2. Send welcome email via Resend serverless function (non-blocking)
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: form.name, email: form.email, business: form.business }),
+      }).catch((err) => console.warn('[Resend] Welcome email failed:', err));
 
       setSubmitted(true);
     } catch (error) {
@@ -409,7 +409,7 @@ export default function AuditPage() {
                 { icon: <Phone size={15} />, text: 'Tharun Naik (Founder): +91 6362852526' },
                 { icon: <Phone size={15} />, text: 'Daksh Hadvani (Founder): +91 96646 96850' },
               ].map(({ icon, text }, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.88)', fontSize: '0.875rem', fontWeight: 500 }}>
                   <span style={{ color: 'var(--accent-primary)' }}>{icon}</span>
                   {text}
                 </div>
