@@ -25,13 +25,13 @@ const homeSchema = {
   name: 'AI Voice Agents & Revenue Systems',
   provider: {
     '@type': 'Organization',
-    name: 'Noman ai',
-    url: 'https://nomanaivercel.vercel.app',
+    name: 'Outpera',
+    url: 'https://outperavercel.vercel.app',
   },
   serviceType: 'AI Automation',
   areaServed: { '@type': 'Country', name: 'India' },
   description:
-    'Noman ai deploys Telugu-first AI Voice Agents and fully automated Revenue Systems that call leads in seconds, handle objections, qualify intent and close deals — 24/7, without a human team.',
+    'Outpera deploys Telugu-first AI Voice Agents and fully automated Revenue Systems that call leads in seconds, handle objections, qualify intent and close deals — 24/7, without a human team.',
   offers: {
     '@type': 'Offer',
     price: '75000',
@@ -44,10 +44,10 @@ function HomePage() {
   return (
     <main style={{ position: 'relative', zIndex: 10 }}>
       <SEO
-        title="Noman ai | AI Voice Agents & Revenue Systems for Indian Businesses"
-        description="Telugu-first AI Voice Agents that call leads in 3 seconds, qualify and close — 24/7. Noman ai automates your entire revenue pipeline: WhatsApp, calls, CRM and more."
-        url="https://nomanaivercel.vercel.app/"
-        keywords="AI voice agent India, Telugu AI calling agent, automated lead follow-up India, AI revenue system, WhatsApp automation India, business automation Hyderabad, lead conversion AI, AI for real estate India, AI calling software, sales automation India, Noman ai"
+        title="Outpera | AI Voice Agents & Revenue Systems for Indian Businesses"
+        description="Telugu-first AI Voice Agents that call leads in 3 seconds, qualify and close — 24/7. Outpera automates your entire revenue pipeline: WhatsApp, calls, CRM and more."
+        url="https://outperavercel.vercel.app/"
+        keywords="AI voice agent India, Telugu AI calling agent, automated lead follow-up India, AI revenue system, WhatsApp automation India, business automation Hyderabad, lead conversion AI, AI for real estate India, AI calling software, sales automation India, Outpera"
         schema={homeSchema}
       />
       <HeroPentagon />

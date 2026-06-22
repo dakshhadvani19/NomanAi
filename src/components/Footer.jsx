@@ -94,7 +94,7 @@ export default function Footer() {
           transition={{ duration: 0.6 }}
         >
           <Link to="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', marginBottom: '1rem' }}>
-            <span style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em', color: '#fff' }}>NOMAN</span>
+            <span style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em', color: '#fff' }}>OUTPERA</span>
             <span style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #0ea5e9, #6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}> AI</span>
           </Link>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', lineHeight: 1.7, maxWidth: '260px', marginBottom: '1.25rem' }}>
@@ -106,7 +106,7 @@ export default function Footer() {
             Daksh Hadvani: +91 96646 96850
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.35)', fontSize: '0.78rem' }}>
-            <span>nomanai.com</span>
+            <span>outpera.com</span>
           </div>
         </motion.div>
 
@@ -178,7 +178,7 @@ export default function Footer() {
           className="container"
           style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', padding: '1.25rem 2rem', color: 'rgba(255,255,255,0.25)', fontSize: '0.72rem' }}
         >
-          <span>© 2026 NOMAN AI. All rights reserved.</span>
+          <span>© 2026 Outpera. All rights reserved.</span>
           <span>AI Solutions &amp; Web Development · 2026</span>
         </div>
       </div>

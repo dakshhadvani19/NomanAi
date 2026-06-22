@@ -49,14 +49,14 @@ export default function SolutionsPage() {
   return (
     <div style={{ background: 'transparent', minHeight: '100vh', color: '#fff', overflowX: 'hidden', position: 'relative' }}>
       <SEO
-        title="AI Automation Solutions for Indian Businesses | Noman ai"
-        description="Explore Noman ai's full suite: WhatsApp automation, AI Voice Agents, high-converting landing pages, CRM pipelines and more — all designed to eliminate bottlenecks and scale your business fast."
-        url="https://nomanaivercel.vercel.app/solutions"
-        keywords="AI solutions India, WhatsApp automation business, high converting landing page India, AI business tools, automation solutions Hyderabad, digital automation India, AI web development, Noman ai solutions"
+        title="AI Automation Solutions for Indian Businesses | Outpera"
+        description="Explore Outpera's full suite: WhatsApp automation, AI Voice Agents, high-converting landing pages, CRM pipelines and more — all designed to eliminate bottlenecks and scale your business fast."
+        url="https://outperavercel.vercel.app/solutions"
+        keywords="AI solutions India, WhatsApp automation business, high converting landing page India, AI business tools, automation solutions Hyderabad, digital automation India, AI web development, Outpera solutions"
         schema={{
           '@context': 'https://schema.org',
           '@type': 'ItemList',
-          name: 'Noman ai AI Solutions',
+          name: 'Outpera Solutions',
           description: 'Full suite of AI-powered business automation solutions for Indian companies',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'WhatsApp Automation' },

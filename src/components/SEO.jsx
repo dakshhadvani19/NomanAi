@@ -4,13 +4,13 @@ import { Helmet } from 'react-helmet-async';
 export default function SEO({
   title,
   description,
-  url = 'https://nomanaivercel.vercel.app',
+  url = 'https://outperavercel.vercel.app',
   keywords = '',
-  ogImage = 'https://nomanaivercel.vercel.app/og-image.png',
+  ogImage = 'https://outperavercel.vercel.app/og-image.png',
   schema = null,
 }) {
   const defaultKeywords =
-    'AI voice agents, Telugu AI voice agent, AI automation India, lead automation, revenue systems, WhatsApp automation, AI for real estate, AI for education, AI for FMCG, Telugu AI calling, automated lead follow-up, CRM integration, business automation Hyderabad, Noman ai';
+    'AI voice agents, Telugu AI voice agent, AI automation India, lead automation, revenue systems, WhatsApp automation, AI for real estate, AI for education, AI for FMCG, Telugu AI calling, automated lead follow-up, CRM integration, business automation Hyderabad, Outpera';
 
   return (
     <Helmet>
@@ -19,12 +19,12 @@ export default function SEO({
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords || defaultKeywords} />
       <meta name="robots" content="index, follow" />
-      <meta name="author" content="Noman ai" />
+      <meta name="author" content="Outpera" />
       <link rel="canonical" href={url} />
 
       {/* ── Open Graph ── */}
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="Noman ai" />
+      <meta property="og:site_name" content="Outpera" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
@@ -35,7 +35,7 @@ export default function SEO({
 
       {/* ── Twitter Card ── */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@nomanai" />
+      <meta name="twitter:site" content="@outpera" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />

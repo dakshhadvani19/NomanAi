@@ -220,16 +220,16 @@ export default function AuditPage() {
   return (
     <>
       <SEO
-        title="Free AI Automation Audit for Indian Businesses | Noman ai"
-        description="Book a free 30-minute business automation audit with Noman ai. Discover exactly where you're losing leads and revenue — and get a custom AI roadmap to fix it. No cost, no obligation."
-        url="https://nomanaivercel.vercel.app/audit"
-        keywords="free automation audit India, business automation consultation, AI audit free, lead automation audit, revenue system audit, AI for business India free consultation, Noman ai audit"
+        title="Free AI Automation Audit for Indian Businesses | Outpera"
+        description="Book a free 30-minute business automation audit with Outpera. Discover exactly where you're losing leads and revenue — and get a custom AI roadmap to fix it. No cost, no obligation."
+        url="https://outperavercel.vercel.app/audit"
+        keywords="free automation audit India, business automation consultation, AI audit free, lead automation audit, revenue system audit, AI for business India free consultation, Outpera audit"
         schema={{
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
-          name: 'Noman ai',
-          image: 'https://nomanaivercel.vercel.app/Logo_website.png',
-          url: 'https://nomanaivercel.vercel.app',
+          name: 'Outpera',
+          image: 'https://outperavercel.vercel.app/Logo_website.png',
+          url: 'https://outperavercel.vercel.app',
           telephone: '+91-6362852526',
           address: {
             '@type': 'PostalAddress',
@@ -349,7 +349,7 @@ export default function AuditPage() {
             <motion.div {...fadeUp(0.55)} style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               {[
                 { icon: <Clock size={15} />, text: 'We respond within 24 hours' },
-                { icon: <Mail size={15} />, text: 'hello@nomanai.com' },
+                { icon: <Mail size={15} />, text: 'hello@outpera.com' },
                 { icon: <Phone size={15} />, text: 'Tharun Naik (Founder): +91 6362852526' },
                 { icon: <Phone size={15} />, text: 'Daksh Hadvani (Founder): +91 96646 96850' },
               ].map(({ icon, text }, i) => (

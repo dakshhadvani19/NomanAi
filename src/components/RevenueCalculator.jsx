@@ -421,9 +421,9 @@ export default function RevenueCalculator() {
 
       // Header
       doc.setFont('helvetica', 'bold'); doc.setFontSize(22); doc.setTextColor(34, 211, 238);
-      doc.text('NOMAN AI', pad, 22);
+      doc.text('Outpera', pad, 22);
       doc.setFontSize(8); doc.setTextColor(100, 130, 160); doc.setFont('helvetica', 'normal');
-      doc.text('AI Voice Agents & Revenue Systems  ·  nomanaivercel.vercel.app', pad, 28);
+      doc.text('AI Voice Agents & Revenue Systems  ·  outperavercel.vercel.app', pad, 28);
 
       doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.setTextColor(255, 255, 255);
       doc.text('Cost Estimate Quotation', W / 2, 20, { align: 'center' });
@@ -490,15 +490,15 @@ export default function RevenueCalculator() {
       doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(160, 140, 240);
       doc.text('IMPORTANT DISCLAIMER — PLEASE READ', pad + 6, y + 7);
       doc.setFont('helvetica', 'normal'); doc.setTextColor(145, 140, 200);
-      doc.text('This estimate reflects raw infrastructure & API costs only. It does NOT include any Noman ai setup fees,\nagency margin, or ongoing management charges. Actual costs may vary based on real usage.', pad + 6, y + 13, { maxWidth: cW - 12 });
+      doc.text('This estimate reflects raw infrastructure & API costs only. It does NOT include any Outpera setup fees,\nagency margin, or ongoing management charges. Actual costs may vary based on real usage.', pad + 6, y + 13, { maxWidth: cW - 12 });
       y += 30;
 
       doc.setDrawColor(30, 50, 80); doc.setLineWidth(0.2); doc.line(pad, 280, W - pad, 280);
       doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(60, 80, 110);
-      doc.text('nomanaivercel.vercel.app  ·  Noman ai — AI Voice Agents & Revenue Systems  ·  Confidential Cost Estimate', pad, 286);
+      doc.text('outperavercel.vercel.app  ·  Outpera — AI Voice Agents & Revenue Systems  ·  Confidential Cost Estimate', pad, 286);
       doc.text('1 / 1', W - pad, 286, { align: 'right' });
 
-      doc.save(`NomanAI-Estimate-${bizType.replace(/ /g, '')}-${calls}calls.pdf`);
+      doc.save(`OutperaAI-Estimate-${bizType.replace(/ /g, '')}-${calls}calls.pdf`);
     } catch (e) {
       console.error(e);
       alert('PDF export failed. Please try again.');
@@ -740,7 +740,7 @@ export default function RevenueCalculator() {
                 <div>
                   <p style={{ fontSize: '0.73rem', fontWeight: 700, color: '#a78bfa', marginBottom: '3px' }}>Infrastructure Cost Only</p>
                   <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.38)', lineHeight: 1.65, margin: 0 }}>
-                    This estimate covers only raw API costs. It does <strong style={{ color: 'rgba(255,255,255,0.55)' }}>not</strong> include Noman ai's setup fee, agency margin, or management. We discuss those clearly in your audit call.
+                    This estimate covers only raw API costs. It does <strong style={{ color: 'rgba(255,255,255,0.55)' }}>not</strong> include Outpera's setup fee, agency margin, or management. We discuss those clearly in your audit call.
                   </p>
                 </div>
               </div>

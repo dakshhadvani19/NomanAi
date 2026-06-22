@@ -327,15 +327,15 @@ export default function RevenueSystemsPage() {
   return (
     <div style={{ background: 'transparent', color: '#fff', minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
       <SEO
-        title="AI Revenue Systems & Sales Automation for India | Noman ai"
+        title="AI Revenue Systems & Sales Automation for India | Outpera"
         description="End-to-end AI Revenue Systems that catch every lead, qualify intent and convert — with zero human bottleneck. WhatsApp automation, CRM integration, AI calling and retargeting pipelines built for Indian businesses."
-        url="https://nomanaivercel.vercel.app/revenue-systems"
-        keywords="AI revenue system India, sales automation India, automated sales pipeline, AI CRM integration, WhatsApp automation for business, lead management AI, revenue automation Hyderabad, AI for business growth India, Noman ai revenue system"
+        url="https://outperavercel.vercel.app/revenue-systems"
+        keywords="AI revenue system India, sales automation India, automated sales pipeline, AI CRM integration, WhatsApp automation for business, lead management AI, revenue automation Hyderabad, AI for business growth India, Outpera revenue system"
         schema={{
           '@context': 'https://schema.org',
           '@type': 'Service',
           name: 'Automated Revenue Systems',
-          provider: { '@type': 'Organization', name: 'Noman ai', url: 'https://nomanaivercel.vercel.app' },
+          provider: { '@type': 'Organization', name: 'Outpera', url: 'https://outperavercel.vercel.app' },
           serviceType: 'Sales & Revenue Automation',
           description: 'End-to-end operational pipelines designed to catch every lead, qualify intent, and convert with zero human bottleneck.',
           areaServed: { '@type': 'Country', name: 'India' },
