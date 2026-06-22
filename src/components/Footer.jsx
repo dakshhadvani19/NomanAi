@@ -178,9 +178,26 @@ export default function Footer() {
           className="container"
           style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', padding: '1.25rem 2rem', color: 'rgba(255,255,255,0.25)', fontSize: '0.72rem' }}
         >
-          <span>© 2026 Outpera. All rights reserved.</span>
-          <span>AI Solutions &amp; Web Development · 2026</span>
+          <span>© 2026 Outpera AI. All rights reserved.</span>
+          <span>AI Voice Agents &amp; Automation Agency · Hyderabad, India · 2026</span>
         </div>
+        {/* Visually hidden brand aliases for SEO crawlers — screen-reader accessible */}
+        <p
+          aria-label="Brand name variants"
+          style={{
+            position: 'absolute',
+            width: '1px',
+            height: '1px',
+            padding: 0,
+            margin: '-1px',
+            overflow: 'hidden',
+            clip: 'rect(0,0,0,0)',
+            whiteSpace: 'nowrap',
+            borderWidth: 0,
+          }}
+        >
+          Outpera is also known as Outpero, Outperra, and NomanAi — an AI Voice Agent and AI Automation agency based in Hyderabad, India, serving businesses across India with voice agents, WhatsApp automation, and revenue systems.
+        </p>
       </div>
     </motion.footer>
   );

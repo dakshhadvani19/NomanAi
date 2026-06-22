@@ -49,20 +49,24 @@ export default function SolutionsPage() {
   return (
     <div style={{ background: 'transparent', minHeight: '100vh', color: '#fff', overflowX: 'hidden', position: 'relative' }}>
       <SEO
-        title="AI Automation Solutions for Indian Businesses | Outpera"
-        description="Explore Outpera's full suite: WhatsApp automation, AI Voice Agents, high-converting landing pages, CRM pipelines and more — all designed to eliminate bottlenecks and scale your business fast."
+        title="AI Automation Solutions for Indian Businesses | Outpera (Outpero / NomanAi)"
+        description="Explore Outpera's full AI automation suite: WhatsApp automation, AI Voice Agents, high-converting landing pages, CRM pipelines, revenue systems & more — all built for Indian businesses. Also searched as Outpero, NomanAi, AI automation agency India."
         url="https://outperavercel.vercel.app/solutions"
-        keywords="AI solutions India, WhatsApp automation business, high converting landing page India, AI business tools, automation solutions Hyderabad, digital automation India, AI web development, Outpera solutions"
+        keywords="AI solutions india, WhatsApp automation business india, high converting landing page india, AI business tools india, automation solutions hyderabad, digital automation india, AI web development india, Outpero solutions, NomanAi solutions, ai automation solutions, ai automation agency india, best AI automation india, appointment booking automation, follow-up automation india, cart abandonment AI, invoice automation, inbound AI voice agent, outbound AI voice agent"
         schema={{
           '@context': 'https://schema.org',
           '@type': 'ItemList',
-          name: 'Outpera Solutions',
-          description: 'Full suite of AI-powered business automation solutions for Indian companies',
+          '@id': 'https://outperavercel.vercel.app/solutions#itemlist',
+          name: 'Outpera AI Automation Solutions',
+          description: 'Full suite of AI-powered business automation solutions for Indian companies — WhatsApp, voice agents, CRM, landing pages and more.',
           itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'WhatsApp Automation' },
-            { '@type': 'ListItem', position: 2, name: 'AI Voice Agents' },
-            { '@type': 'ListItem', position: 3, name: 'Revenue Systems' },
-            { '@type': 'ListItem', position: 4, name: 'High-Converting Landing Pages' },
+            { '@type': 'ListItem', position: 1, name: 'WhatsApp Business Automation', url: 'https://outperavercel.vercel.app/solutions' },
+            { '@type': 'ListItem', position: 2, name: 'AI Voice Agents', url: 'https://outperavercel.vercel.app/voice-agents' },
+            { '@type': 'ListItem', position: 3, name: 'AI Revenue Systems', url: 'https://outperavercel.vercel.app/revenue-systems' },
+            { '@type': 'ListItem', position: 4, name: 'High-Converting Landing Pages', url: 'https://outperavercel.vercel.app/solutions' },
+            { '@type': 'ListItem', position: 5, name: 'AI Lead Qualification', url: 'https://outperavercel.vercel.app/solutions' },
+            { '@type': 'ListItem', position: 6, name: 'Appointment Booking Automation', url: 'https://outperavercel.vercel.app/solutions' },
+            { '@type': 'ListItem', position: 7, name: 'CRM Integration & Automation', url: 'https://outperavercel.vercel.app/solutions' },
           ],
         }}
       />

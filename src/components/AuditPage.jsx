@@ -5,6 +5,7 @@ import { CheckCircle, Clock, Mail, Phone, ArrowRight, Sparkles, Send, ChevronDow
 import VoiceAgentBanner from './VoiceAgentBanner';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { sendWelcomeEmail } from '../utils/sendWelcomeEmail';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -193,13 +194,18 @@ export default function AuditPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      // Send data to Firestore
+      // 1. Save to Firestore
       await addDoc(collection(db, 'audit_bookings'), {
         ...form,
         createdAt: serverTimestamp(),
       });
 
-
+      // 2. Send welcome email (non-blocking — a failure here won't block submission)
+      sendWelcomeEmail({
+        name:     form.name,
+        email:    form.email,
+        business: form.business,
+      }).catch((err) => console.warn('[EmailJS] Welcome email failed:', err));
 
       setSubmitted(true);
     } catch (error) {
@@ -220,17 +226,21 @@ export default function AuditPage() {
   return (
     <>
       <SEO
-        title="Free AI Automation Audit for Indian Businesses | Outpera"
-        description="Book a free 30-minute business automation audit with Outpera. Discover exactly where you're losing leads and revenue — and get a custom AI roadmap to fix it. No cost, no obligation."
+        title="Free AI Automation Audit for Indian Businesses | Outpera (Outpero / NomanAi)"
+        description="Book a free 30-minute business automation audit with Outpera (also known as Outpero / NomanAi). Discover exactly where you're losing leads and revenue — and get a custom AI voice agent & automation roadmap to fix it. Hyderabad, India. No cost, no obligation."
         url="https://outperavercel.vercel.app/audit"
-        keywords="free automation audit India, business automation consultation, AI audit free, lead automation audit, revenue system audit, AI for business India free consultation, Outpera audit"
+        keywords="free automation audit india, business automation consultation india, AI audit free, lead automation audit, revenue system audit, AI for business india free consultation, Outpera audit, Outpero audit, NomanAi audit, free AI audit india, free business audit hyderabad, AI consultation india, automation consultation india, free AI consultation, voice agent consultation india"
         schema={{
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
+          '@id': 'https://outperavercel.vercel.app/audit#localbusiness',
           name: 'Outpera',
-          image: 'https://outperavercel.vercel.app/Logo_website.png',
+          alternateName: ['Outpero', 'Outperra', 'NomanAi'],
+          image: 'https://outperavercel.vercel.app/og-image.png',
+          logo: 'https://outperavercel.vercel.app/Logo_website.png',
           url: 'https://outperavercel.vercel.app',
           telephone: '+91-6362852526',
+          priceRange: '₹₹₹',
           address: {
             '@type': 'PostalAddress',
             addressLocality: 'Hyderabad',
@@ -239,8 +249,8 @@ export default function AuditPage() {
           },
           geo: {
             '@type': 'GeoCoordinates',
-            latitude: 17.385,
-            longitude: 78.4867,
+            latitude: 17.385044,
+            longitude: 78.486671,
           },
           openingHoursSpecification: {
             '@type': 'OpeningHoursSpecification',
@@ -248,7 +258,13 @@ export default function AuditPage() {
             opens: '09:00',
             closes: '20:00',
           },
-          priceRange: '₹₹',
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'Free Business Automation Audit',
+            itemListElement: [
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Free 30-Minute AI Automation Audit' } },
+            ],
+          },
         }}
       />
       <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', paddingTop: '100px', paddingBottom: '80px' }}>

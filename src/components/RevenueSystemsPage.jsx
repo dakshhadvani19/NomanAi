@@ -327,18 +327,34 @@ export default function RevenueSystemsPage() {
   return (
     <div style={{ background: 'transparent', color: '#fff', minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
       <SEO
-        title="AI Revenue Systems & Sales Automation for India | Outpera"
-        description="End-to-end AI Revenue Systems that catch every lead, qualify intent and convert — with zero human bottleneck. WhatsApp automation, CRM integration, AI calling and retargeting pipelines built for Indian businesses."
+        title="AI Revenue Systems & Sales Automation India | Outpera (Outpero / NomanAi)"
+        description="End-to-end AI Revenue Systems that catch every lead, qualify intent and convert with zero human bottleneck. WhatsApp automation, CRM integration, AI calling & retargeting pipelines for Indian businesses. Hyderabad-based, India-wide. Also known as Outpero & NomanAi."
         url="https://outperavercel.vercel.app/revenue-systems"
-        keywords="AI revenue system India, sales automation India, automated sales pipeline, AI CRM integration, WhatsApp automation for business, lead management AI, revenue automation Hyderabad, AI for business growth India, Outpera revenue system"
+        keywords="AI revenue system india, revenue automation india, sales automation india, automated sales pipeline, AI CRM integration, WhatsApp automation for business, lead management AI, revenue automation hyderabad, AI for business growth india, Outpero revenue system, NomanAi revenue system, ai automation india, automated sales india, lead pipeline automation, AI sales automation, best AI revenue system india"
         schema={{
           '@context': 'https://schema.org',
           '@type': 'Service',
+          '@id': 'https://outperavercel.vercel.app/revenue-systems#service',
           name: 'Automated Revenue Systems',
-          provider: { '@type': 'Organization', name: 'Outpera', url: 'https://outperavercel.vercel.app' },
-          serviceType: 'Sales & Revenue Automation',
-          description: 'End-to-end operational pipelines designed to catch every lead, qualify intent, and convert with zero human bottleneck.',
-          areaServed: { '@type': 'Country', name: 'India' },
+          alternateName: ['Outpero Revenue System', 'NomanAi Revenue System', 'AI Sales Automation India'],
+          provider: {
+            '@type': 'Organization',
+            name: 'Outpera',
+            alternateName: ['Outpero', 'NomanAi'],
+            url: 'https://outperavercel.vercel.app',
+          },
+          serviceType: ['Sales Automation', 'Revenue Automation', 'Lead Automation', 'WhatsApp Automation', 'CRM Integration'],
+          description: 'End-to-end operational pipelines designed to catch every lead, qualify intent, and convert with zero human bottleneck. Built for Indian businesses.',
+          areaServed: [
+            { '@type': 'Country', name: 'India' },
+            { '@type': 'State', name: 'Telangana' },
+          ],
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'INR',
+            price: '75000',
+            availability: 'https://schema.org/InStock',
+          },
         }}
       />
       <HeroSection />

@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://outperavercel.vercel.app/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://outperavercel.vercel.app/og-image.png</image:loc>
+      <image:title>Outpera – AI Voice Agents &amp; Revenue Automation for India</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://outperavercel.vercel.app/voice-agents</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://outperavercel.vercel.app/og-image.png</image:loc>
+      <image:title>Outpera Telugu AI Voice Agents – Automated Lead Calling India</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://outperavercel.vercel.app/revenue-systems</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://outperavercel.vercel.app/og-image.png</image:loc>
+      <image:title>Outpera AI Revenue Systems – Sales Automation India</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://outperavercel.vercel.app/solutions</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://outperavercel.vercel.app/audit</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
 </urlset>

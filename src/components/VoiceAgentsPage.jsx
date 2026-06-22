@@ -567,16 +567,18 @@ export default function VoiceAgentsPage() {
   return (
     <main style={{ position: 'relative', zIndex: 10, background: 'transparent', color: '#fff', minHeight: '100vh', overflow: 'hidden' }}>
       <SEO
-        title="Telugu AI Voice Agents for Lead Automation | Outpera"
-        description="Deploy a Telugu-first AI Voice Agent that calls new leads in 3 seconds, handles objections in natural Telugu, qualifies intent and hands off to WhatsApp — automatically. Serving real estate, FMCG and education businesses across India."
+        title="AI Voice Agents India | Telugu AI Calling & Lead Automation | Outpera"
+        description="Deploy a Telugu-first AI Voice Agent that calls new leads in 3 seconds, handles objections in natural Telugu/Hindi/English, qualifies intent and routes to WhatsApp — 24/7, automatically. Best AI voice agent agency in Hyderabad, India. Also known as Outpero / NomanAi."
         url="https://outperavercel.vercel.app/voice-agents"
-        keywords="Telugu AI voice agent, AI calling agent India, automated lead calling, AI for real estate India, Telugu AI calling software, instant lead follow-up AI, voice bot India, AI inbound outbound calls, lead qualification AI, Outpera voice agent"
+        keywords="Telugu AI voice agent, ai voice agent india, ai voice agents india, voice agent india, ai calling agent india, automated lead calling india, AI for real estate india, Telugu AI calling software, instant lead follow-up AI, voice bot india, AI inbound outbound calls, lead qualification AI, Outpero voice agent, NomanAi voice agent, outpera voice agent, voice agent agency india, ai phone agent india, best AI voice agent india, Telugu voice bot, automated calling india, AI calling software india, inbound AI voice agent, outbound AI voice agent"
         schema={{
           '@context': 'https://schema.org',
           '@type': 'Product',
-          name: 'Outpera Telugu Voice Agent',
-          description: 'A Telugu-first AI voice agent that calls leads in under 3 seconds, qualifies intent and handles objections 24/7 — built for Indian businesses.',
-          brand: { '@type': 'Brand', name: 'Outpera' },
+          '@id': 'https://outperavercel.vercel.app/voice-agents#product',
+          name: 'Outpera Telugu AI Voice Agent',
+          alternateName: ['Outpero Voice Agent', 'NomanAi Voice Agent', 'AI Calling Agent India'],
+          description: 'A Telugu-first AI voice agent that calls leads in under 3 seconds, qualifies intent and handles objections 24/7 — built for Indian businesses in real estate, FMCG and education.',
+          brand: { '@type': 'Brand', name: 'Outpera', alternateName: ['Outpero', 'NomanAi'] },
           offers: {
             '@type': 'Offer',
             priceCurrency: 'INR',
@@ -588,6 +590,7 @@ export default function VoiceAgentsPage() {
             '@type': 'AggregateRating',
             ratingValue: '4.9',
             reviewCount: '38',
+            bestRating: '5',
           },
         }}
       />
