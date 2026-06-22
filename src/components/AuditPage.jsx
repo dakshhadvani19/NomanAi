@@ -41,19 +41,35 @@ function FormField({ label, children, delay }) {
   );
 }
 
-function FocusInput({ style: extraStyle, ...props }) {
+function FocusInput({ style: extraStyle, hasError, isValid, ...props }) {
   const [focused, setFocused] = useState(false);
+
+  let borderColor = focused ? 'rgba(6,182,212,0.6)' : 'rgba(255,255,255,0.08)';
+  let boxShadow = focused ? '0 0 0 3px rgba(6,182,212,0.12), inset 0 0 20px rgba(6,182,212,0.04)' : 'none';
+  let background = focused ? 'rgba(6,182,212,0.07)' : 'rgba(6,182,212,0.04)';
+
+  if (hasError) {
+    borderColor = 'rgba(239,68,68,0.7)';
+    boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+    background = 'rgba(239,68,68,0.04)';
+  } else if (isValid) {
+    borderColor = 'rgba(34,197,94,0.6)';
+    boxShadow = '0 0 0 3px rgba(34,197,94,0.1)';
+    background = 'rgba(34,197,94,0.04)';
+  }
+
   return (
     <input
       {...props}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
+      onFocus={(e) => { setFocused(true); props.onFocus && props.onFocus(e); }}
+      onBlur={(e) => { setFocused(false); props.onBlur && props.onBlur(e); }}
       style={{
         ...inputStyle,
         ...extraStyle,
-        borderColor: focused ? 'rgba(6,182,212,0.6)' : 'rgba(255,255,255,0.08)',
-        boxShadow: focused ? '0 0 0 3px rgba(6,182,212,0.12), inset 0 0 20px rgba(6,182,212,0.04)' : 'none',
-        background: focused ? 'rgba(6,182,212,0.07)' : 'rgba(6,182,212,0.04)',
+        borderColor,
+        boxShadow,
+        background,
+        transition: 'border-color 0.15s, box-shadow 0.15s, background 0.15s',
       }}
     />
   );
@@ -183,15 +199,39 @@ function CustomDropdown({ value, options, placeholder, onChange, name, required 
   );
 }
 
+// ── Validation helpers ──────────────────────────────────────────────────────
+const validateEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+const validatePhone = (v) => {
+  // Strip spaces, dashes, parentheses
+  const digits = v.replace(/[\s\-().+]/g, '');
+  // Accept 10-digit Indian numbers, or with country code (91 prefix → 12 digits)
+  return /^(91)?[6-9]\d{9}$/.test(digits) || /^\d{10,15}$/.test(digits);
+};
+
 export default function AuditPage() {
   const [form, setForm] = useState({ name: '', business: '', email: '', phone: '', businessType: '', businessSize: '', challenge: '' });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  // Track which fields the user has interacted with
+  const [touched, setTouched] = useState({ email: false, phone: false });
+
+  const emailError = touched.email && form.email && !validateEmail(form.email)
+    ? 'Please enter a valid email address (e.g. you@company.com)'
+    : null;
+  const phoneError = touched.phone && form.phone && !validatePhone(form.phone)
+    ? 'Please enter a valid phone number (10 digits, e.g. +91 98765 43210)'
+    : null;
+
+  const isFormValid = !emailError && !phoneError;
 
   const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleBlur = (e) => setTouched(prev => ({ ...prev, [e.target.name]: true }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Mark both fields as touched on submit attempt
+    setTouched({ email: true, phone: true });
+    if (!isFormValid) return;
     setSubmitting(true);
     try {
       // 1. Save to Firestore
@@ -410,11 +450,49 @@ export default function AuditPage() {
                   </FormField>
 
                   <FormField label="Email *" delay={0.25}>
-                    <FocusInput type="email" name="email" placeholder="you@company.com" required value={form.email} onChange={handleChange} />
+                    <FocusInput
+                      type="email"
+                      name="email"
+                      placeholder="you@company.com"
+                      required
+                      value={form.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      hasError={!!emailError}
+                      isValid={touched.email && form.email && validateEmail(form.email)}
+                    />
+                    {emailError && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        style={{ margin: 0, fontSize: '0.75rem', color: '#f87171', display: 'flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        ⚠ {emailError}
+                      </motion.p>
+                    )}
                   </FormField>
 
                   <FormField label="Phone (WhatsApp preferred) *" delay={0.3}>
-                    <FocusInput type="tel" name="phone" placeholder="+91 98765 43210" required value={form.phone} onChange={handleChange} />
+                    <FocusInput
+                      type="tel"
+                      name="phone"
+                      placeholder="+91 98765 43210"
+                      required
+                      value={form.phone}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      hasError={!!phoneError}
+                      isValid={touched.phone && form.phone && validatePhone(form.phone)}
+                    />
+                    {phoneError && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        style={{ margin: 0, fontSize: '0.75rem', color: '#f87171', display: 'flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        ⚠ {phoneError}
+                      </motion.p>
+                    )}
                   </FormField>
 
                   <div className="mobile-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
@@ -447,8 +525,8 @@ export default function AuditPage() {
 
                   <motion.button
                     type="submit"
-                    disabled={submitting}
-                    whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(6,182,212,0.5)' }}
+                    disabled={submitting || !isFormValid && (touched.email || touched.phone)}
+                    whileHover={{ scale: (submitting || (!isFormValid && (touched.email || touched.phone))) ? 1 : 1.02, boxShadow: '0 0 40px rgba(6,182,212,0.5)' }}
                     whileTap={{ scale: 0.98 }}
                     style={{
                       marginTop: '0.5rem',
