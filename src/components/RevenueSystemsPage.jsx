@@ -67,7 +67,7 @@ function HeroSection() {
           Three of the most expensive problems in any growing business — each one fixed completely.
         </motion.p>
 
-        <motion.div {...fadeUp(0.45)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ display: 'inline-block' }}>
+        <motion.div {...fadeUp(0.45)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }} style={{ display: 'inline-block' }}>
           <Link
             to="/audit"
             style={{
