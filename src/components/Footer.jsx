@@ -101,7 +101,7 @@ export default function Footer() {
             AI automations, voice agents, and web systems — engineered around your outcomes, not our deliverables.
           </p>
           <div style={{ color: '#fff', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.6 }}>
-            <span style={{ fontWeight: 800, color: '#38bdf8', display: 'block', marginBottom: '6px' }}>Founders &amp; Contact:</span>
+            <span style={{ fontWeight: 800, color: '#ffffff', display: 'block', marginBottom: '6px' }}>Founders &amp; Contact:</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <div>
                 <span style={{ fontWeight: 700, color: '#fff' }}>Tharun Naik:</span>{' '}

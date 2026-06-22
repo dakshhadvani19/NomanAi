@@ -88,7 +88,7 @@ function HeroSection() {
           >
             <motion.div
               animate={{ x: ['-100%', '200%'] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
               style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '30%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)', transform: 'skewX(-20deg)' }}
             />
             Book Free Audit
