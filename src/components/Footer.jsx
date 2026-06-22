@@ -100,10 +100,32 @@ export default function Footer() {
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', lineHeight: 1.7, maxWidth: '260px', marginBottom: '1.25rem' }}>
             AI automations, voice agents, and web systems — engineered around your outcomes, not our deliverables.
           </p>
-          <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.78rem', marginBottom: '1.25rem', lineHeight: 1.6 }}>
-            <span style={{ fontWeight: 700, color: '#fff', display: 'block', marginBottom: '4px' }}>Founders &amp; Contact:</span>
-            Tharun Naik: +91 6362852526<br />
-            Daksh Hadvani: +91 96646 96850
+          <div style={{ color: '#fff', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.6 }}>
+            <span style={{ fontWeight: 800, color: '#38bdf8', display: 'block', marginBottom: '6px' }}>Founders &amp; Contact:</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div>
+                <span style={{ fontWeight: 700, color: '#fff' }}>Tharun Naik:</span>{' '}
+                <a
+                  href="tel:+916362852526"
+                  style={{ color: '#38bdf8', textDecoration: 'none', fontWeight: 700, transition: 'color 0.2s' }}
+                  onMouseOver={e => e.currentTarget.style.color = '#60a5fa'}
+                  onMouseOut={e => e.currentTarget.style.color = '#38bdf8'}
+                >
+                  +91 6362852526
+                </a>
+              </div>
+              <div>
+                <span style={{ fontWeight: 700, color: '#fff' }}>Daksh Hadvani:</span>{' '}
+                <a
+                  href="tel:+919664696850"
+                  style={{ color: '#38bdf8', textDecoration: 'none', fontWeight: 700, transition: 'color 0.2s' }}
+                  onMouseOver={e => e.currentTarget.style.color = '#60a5fa'}
+                  onMouseOut={e => e.currentTarget.style.color = '#38bdf8'}
+                >
+                  +91 96646 96850
+                </a>
+              </div>
+            </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.35)', fontSize: '0.78rem' }}>
             <span>outpera.com</span>
