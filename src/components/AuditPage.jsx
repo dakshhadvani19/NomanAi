@@ -238,10 +238,25 @@ const validateEmail = (v) => {
 };
 
 const validatePhone = (v) => {
-  // Strip spaces, dashes, parentheses
+  // Strip spaces, dashes, parentheses, plus
   const digits = v.replace(/[\s\-().+]/g, '');
-  // Accept 10-digit Indian numbers, or with country code (91 prefix → 12 digits)
-  return /^(91)?[6-9]\d{9}$/.test(digits) || /^\d{10,15}$/.test(digits);
+  
+  // If it starts with 91 (e.g., +91), it MUST be exactly 12 digits total
+  if (digits.startsWith('91')) {
+    return /^91[6-9]\d{9}$/.test(digits);
+  }
+  
+  // If it's a standard 10-digit Indian number without country code
+  if (digits.length === 10) {
+    return /^[6-9]\d{9}$/.test(digits);
+  }
+  
+  // For other international numbers, allow 11 to 15 digits
+  if (digits.length >= 11 && digits.length <= 15) {
+    return true;
+  }
+  
+  return false;
 };
 
 export default function AuditPage() {
