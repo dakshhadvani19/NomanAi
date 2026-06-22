@@ -200,7 +200,43 @@ function CustomDropdown({ value, options, placeholder, onChange, name, required 
 }
 
 // ── Validation helpers ──────────────────────────────────────────────────────
-const validateEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+
+// Disposable / temp email domains to block
+const DISPOSABLE_DOMAINS = new Set([
+  'mailinator.com','tempmail.com','guerrillamail.com','yopmail.com',
+  'throwaway.email','trashmail.com','dispostable.com','mailnull.com',
+  'spam4.me','sharklasers.com','grr.la','guerrillamail.info',
+  'fakeinbox.com','maildrop.cc','getairmail.com','discard.email',
+  'tempinbox.com','spamgourmet.com','mytemp.email','temp-mail.org',
+]);
+
+const validateEmail = (v) => {
+  const email = v.trim().toLowerCase();
+
+  // 1. Strict character + structure pattern
+  //    - Local part: 2–64 chars, valid email chars only
+  //    - Domain: valid chars, at least one dot
+  //    - TLD: 2–10 letters only
+  const strictPattern = /^[a-zA-Z0-9][a-zA-Z0-9._%+\-]{1,63}@[a-zA-Z0-9][a-zA-Z0-9.\-]{0,61}[a-zA-Z0-9]\.[a-zA-Z]{2,10}$/;
+  if (!strictPattern.test(email)) return false;
+
+  const [local, domain] = email.split('@');
+
+  // 2. No consecutive dots anywhere
+  if (/\.\./.test(email)) return false;
+
+  // 3. Local part must not start or end with a dot
+  if (local.startsWith('.') || local.endsWith('.')) return false;
+
+  // 4. Block all-same-character local part (e.g. aaa@aaa.com)
+  if (/^(.)\1+$/.test(local)) return false;
+
+  // 5. Block disposable/temp email providers
+  if (DISPOSABLE_DOMAINS.has(domain)) return false;
+
+  return true;
+};
+
 const validatePhone = (v) => {
   // Strip spaces, dashes, parentheses
   const digits = v.replace(/[\s\-().+]/g, '');
