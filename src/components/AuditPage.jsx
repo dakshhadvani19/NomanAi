@@ -453,16 +453,16 @@ export default function AuditPage() {
             </motion.div>
 
             {/* Contact details */}
-            <motion.div {...fadeUp(0.55)} style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+            <motion.div {...fadeUp(0.55)} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               {[
                 { icon: <Clock size={15} />, text: 'We respond within 24 hours' },
                 { icon: <Mail size={15} />, text: 'hello@outpera.com' },
                 { icon: <Phone size={15} />, text: 'Tharun Naik (Founder): +91 6362852526' },
                 { icon: <Phone size={15} />, text: 'Daksh Hadvani (Founder): +91 96646 96850' },
               ].map(({ icon, text }, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.88)', fontSize: '0.875rem', fontWeight: 500 }}>
-                  <span style={{ color: 'var(--accent-primary)' }}>{icon}</span>
-                  {text}
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <span style={{ color: 'var(--accent-primary)', flexShrink: 0, display: 'flex' }}>{icon}</span>
+                  <span style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.5 }}>{text}</span>
                 </div>
               ))}
             </motion.div>
