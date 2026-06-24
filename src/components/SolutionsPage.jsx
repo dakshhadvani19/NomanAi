@@ -183,21 +183,6 @@ export default function SolutionsPage() {
             position: 'relative',
             overflow: 'hidden'
           }}>
-            <div style={{ position: 'absolute', top: 0, right: 0, width: 300, height: 300, background: 'rgba(14,165,233,0.1)', filter: 'blur(80px)', borderRadius: '50%' }} />
-            
-            <div style={{ position: 'relative', zIndex: 1, maxWidth: 500 }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#38bdf8', marginBottom: '1rem' }}>REVENUE SYSTEMS</div>
-              <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 900, color: '#fff', marginBottom: '1rem' }}>Need a complete transformation?</h2>
-              <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>Stop stitching tools together. We offer fully integrated, end-to-end systems that eliminate operational bottlenecks and scale seamlessly.</p>
-            </div>
-            
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <Link to="/revenue-systems" style={{ textDecoration: 'none' }}>
-                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ padding: '1rem 2rem', borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(14,165,233,0.4)', color: '#fff', fontWeight: 700, fontSize: '1rem', cursor: 'pointer', backdropFilter: 'blur(10px)', transition: 'background 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(14,165,233,0.15)'} onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}>
-                  Explore Revenue Systems
-                </motion.button>
-              </Link>
-            </div>
           </HoverCloudCard>
         </div>
       </section>

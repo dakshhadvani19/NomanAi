@@ -17,6 +17,7 @@ import Footer from './components/Footer';
 import VoiceAgentsPage from './components/VoiceAgentsPage';
 import RevenueSystemsPage from './components/RevenueSystemsPage';
 import SolutionsPage from './components/SolutionsPage';
+import ScrollToTop from './components/ScrollToTop';
 
 const homeSchema = {
   '@context': 'https://schema.org',
@@ -76,6 +77,7 @@ function App() {
     <HelmetProvider>
       <CurrencyProvider>
         <BrowserRouter>
+        <ScrollToTop />
         <GlobalCursorAurora />
         <DottedSurface style={{ position: 'fixed', zIndex: -1, opacity: 0.65 }} />
         <Navbar />
