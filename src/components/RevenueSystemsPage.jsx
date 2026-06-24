@@ -46,12 +46,7 @@ function HeroSection() {
       />
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 2rem', textAlign: 'center', position: 'relative', zIndex: 10 }}>
-        <motion.div
-          {...fadeUp(0)}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}
-        >
-          <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#22d3ee' }}>REVENUE SYSTEMS</span>
-        </motion.div>
+        
 
         <motion.h1
           {...fadeUp(0.15)}
@@ -204,9 +199,6 @@ function BottomCTA() {
 
         </motion.div>
 
-        <motion.p {...fadeUp(0.3)} style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)' }}>
-          No obligation. No pitch. Just clarity.
-        </motion.p>
       </div>
     </section>
   );

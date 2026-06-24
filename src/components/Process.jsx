@@ -58,7 +58,7 @@ export default function Process() {
     { num: '01', title: 'We understand your business', desc: '30-minute call. We learn your business, find where money is leaking, and decide what to build.' },
     { num: '02', title: 'We Scope & Price It', desc: 'You get exact deliverables, timeline, and cost in writing. No surprises before we start or after.' },
     { num: '03', title: 'We Build It', desc: 'We handle the entire build and setup. You stay focused on your business.' },
-    { num: '04', title: 'Goes Live. You See Results.', desc: 'System goes live in 2 weeks. You see hours saved, and revenue retained within 30 days.' }
+    { num: '04', title: 'Goes Live , You See Results.', desc: 'System goes live in 2 weeks. You see hours saved, and revenue retained within 30 days.' }
   ];
 
   const stats = [
@@ -72,14 +72,13 @@ export default function Process() {
     <section className="section-padding container">
       <div style={{ marginBottom: '4rem' }}>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          OUR PROCESS <span style={{ flexGrow: 1, height: '1px', background: 'var(--glass-border)' }}></span>
+          OUR PROCESS 
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '2rem' }}>
           <h2 style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)' }}>
-            From first call to live system.<br />
+            From first call to live system<br />
             <span style={{ color: 'var(--text-muted)' }}>In 2 weeks.</span>
           </h2>
-          <p style={{ color: 'var(--text-muted)' }}>Fixed scope. Fixed price. No surprises.</p>
         </div>
       </div>
 

@@ -143,7 +143,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.25rem 0.75rem', borderRadius: '999px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)', color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2rem' }}
           >
-            <Sparkles size={14} /> SYSTEMS THAT OUTPERFORM
+            SYSTEMS THAT OUTPERFORM
           </motion.div>
 
           <h1 style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)', lineHeight: 1.1, marginBottom: '1.5rem', fontWeight: 800, minHeight: '160px' }}>

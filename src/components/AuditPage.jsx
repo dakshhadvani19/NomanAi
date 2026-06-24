@@ -407,11 +407,6 @@ export default function AuditPage() {
         <VoiceAgentBanner />
 
         {/* Badge */}
-        <motion.div {...fadeUp(0)} style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '999px', background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.25)', color: 'var(--accent-primary)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
-            Free 30-Minute Audit
-          </div>
-        </motion.div>
 
         <div className="audit-layout" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '4rem', alignItems: 'start' }}>
 

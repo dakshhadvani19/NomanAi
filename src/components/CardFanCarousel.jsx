@@ -192,7 +192,7 @@ export default function CardFanCarousel({ cards }) {
           position: 'relative',
           width: '100%',
           maxWidth: '900px',
-          height: '440px',
+          height: '520px',
           margin: '0 auto',
         }}
       >

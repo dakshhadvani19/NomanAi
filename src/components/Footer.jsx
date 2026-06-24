@@ -128,7 +128,6 @@ export default function Footer() {
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.35)', fontSize: '0.78rem' }}>
-            <span>outpera.com</span>
           </div>
         </motion.div>
 
@@ -200,8 +199,7 @@ export default function Footer() {
           className="container"
           style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', padding: '1.25rem 2rem', color: 'rgba(255,255,255,0.25)', fontSize: '0.72rem' }}
         >
-          <span>© 2026 Outpera AI. All rights reserved.</span>
-          <span>AI Voice Agents &amp; Automation Agency · Hyderabad, India · 2026</span>
+          
         </div>
         {/* Visually hidden brand aliases for SEO crawlers — screen-reader accessible */}
         <p
