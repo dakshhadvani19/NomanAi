@@ -116,6 +116,7 @@ function FanCard({ sys, role, onClick, index }) {
         justifyContent: 'space-between',
         borderTop: '1px solid var(--glass-border)',
         paddingTop: '1.5rem',
+        paddingBottom: '1rem',
       }}>
         <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>{sys.price}</span>
         {isCenter && (

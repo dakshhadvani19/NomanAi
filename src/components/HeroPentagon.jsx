@@ -160,8 +160,8 @@ export default function HeroSection() {
           </motion.p>
 
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20, pointerEvents: 'none' }}
+            animate={{ opacity: 1, y: 0, pointerEvents: 'auto' }}
             transition={{ delay: 3.5, duration: 0.6 }}
             style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}
           >
@@ -327,44 +327,6 @@ export default function HeroSection() {
               <span style={{ position: 'relative', zIndex: 2 }}>{pos.label}</span>
             </motion.div>
           ))}
-        </div>
-      </div>
-
-      {/* Systems Built For Marquee */}
-      <div style={{ paddingTop: '3rem', paddingBottom: '1rem', overflow: 'hidden', position: 'relative' }}>
-        <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', fontWeight: 600 }}>Systems Built For</p>
-        
-        {/* Marquee Wrapper with True CSS Mask for Seamless Background Blending */}
-        <div style={{
-          maskImage: 'linear-gradient(90deg, transparent, black 150px, black calc(100% - 150px), transparent)',
-          WebkitMaskImage: 'linear-gradient(90deg, transparent, black 150px, black calc(100% - 150px), transparent)',
-        }}>
-          <motion.div 
-            style={{ display: 'flex', gap: '1rem', width: 'max-content' }}
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-          >
-          {/* Duplicate list twice for seamless loop */}
-          {[...['D2C Brands', 'Legal Firms', 'E-commerce', 'SaaS Startups', 'Real Estate', 'Clinics & Healthcare', 'Coaches & Consultants'], ...['D2C Brands', 'Legal Firms', 'E-commerce', 'SaaS Startups', 'Real Estate', 'Clinics & Healthcare', 'Coaches & Consultants']].map((tag, i) => (
-            <span key={i} style={{ 
-              padding: '0.75rem 1.75rem', 
-              borderRadius: '9999px', 
-              background: 'rgba(5, 10, 20, 0.6)', 
-              border: '1px solid rgba(255,255,255,0.06)', 
-              fontSize: '0.9rem',
-              color: '#8c95a6',
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              boxShadow: '0 4px 10px rgba(0,0,0,0.2)'
-            }}
-            onMouseOver={(e) => { e.target.style.color = '#ffffff'; e.target.style.background = 'rgba(15, 25, 40, 0.8)'; e.target.style.borderColor = 'rgba(255,255,255,0.15)'; }}
-            onMouseOut={(e) => { e.target.style.color = '#8c95a6'; e.target.style.background = 'rgba(5, 10, 20, 0.6)'; e.target.style.borderColor = 'rgba(255,255,255,0.06)'; }}
-            >
-              {tag}
-            </span>
-          ))}
-          </motion.div>
         </div>
       </div>
 

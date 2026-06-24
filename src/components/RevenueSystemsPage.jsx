@@ -150,80 +150,6 @@ function SystemsSection() {
   );
 }
 
-/* ─── SECTION 3: BANNER CTA ─── */
-function BannerCTA() {
-  return (
-    <section className="section-padding container" style={{ background: 'transparent' }}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        style={{ maxWidth: 1000, margin: '0 auto' }}
-      >
-        <motion.div
-          className="glass-panel"
-          animate={{ y: [-5, 5, -5] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          style={{
-            background: 'linear-gradient(90deg, rgba(6,182,212,0.05), transparent)',
-            border: '1px solid rgba(6,182,212,0.2)',
-            borderRadius: 24,
-            padding: '3rem',
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '2rem',
-            position: 'relative',
-            overflow: 'hidden'
-          }}
-        >
-          {/* Subtle glow inside banner */}
-          <div style={{ position: 'absolute', top: '-50%', right: '10%', width: 200, height: 200, background: 'radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)', filter: 'blur(30px)' }} />
-
-          <div style={{ maxWidth: 500, position: 'relative', zIndex: 10 }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#22d3ee', marginBottom: '0.75rem', display: 'block' }}>INDIVIDUAL SOLUTIONS</span>
-            <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 900, color: '#fff', marginBottom: '1rem' }}>Not ready for a full system?</h3>
-            <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>Don't wait to fix what hurts most. Explore our library of 19 standalone solutions designed to solve specific bottlenecks instantly.</p>
-          </div>
-
-          <div style={{ position: 'relative', zIndex: 10 }}>
-            <Link
-              to="/solutions"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '1rem 2rem',
-                borderRadius: 999,
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.15)',
-                color: '#fff',
-                fontWeight: 700,
-                fontSize: '1rem',
-                textDecoration: 'none',
-                backdropFilter: 'blur(10px)',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
-              }}
-            >
-              Explore 19 Solutions
-            </Link>
-          </div>
-        </motion.div>
-      </motion.div>
-    </section>
-  );
-}
-
 /* ─── SECTION 4: BOTTOM CTA ─── */
 function BottomCTA() {
   return (
@@ -275,37 +201,7 @@ function BottomCTA() {
           >
             Book Free Audit <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
           </Link>
-          <a
-            href="#top"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1.1rem 2.5rem',
-              borderRadius: 999,
-              background: 'transparent',
-              border: '1px solid rgba(255,255,255,0.2)',
-              color: '#fff',
-              fontWeight: 700,
-              fontSize: '1.1rem',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          >
-            Explore the Solutions
-          </a>
+
         </motion.div>
 
         <motion.p {...fadeUp(0.3)} style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)' }}>
@@ -360,7 +256,6 @@ export default function RevenueSystemsPage() {
       <HeroSection />
       <SystemsSection />
       <RevenueCalculator />
-      <BannerCTA />
       <BottomCTA />
     </div>
   );

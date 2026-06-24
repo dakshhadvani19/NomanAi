@@ -45,7 +45,7 @@ export default function ProblemCards() {
               backdropFilter: 'blur(16px)'
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '12px' }}>
               <div style={{ 
                 border: '1px solid rgba(255,255,255,0.08)', 
                 borderRadius: '50%', 

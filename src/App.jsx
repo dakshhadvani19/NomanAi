@@ -12,7 +12,6 @@ import HeroPentagon from './components/HeroPentagon';
 import ProblemCards from './components/ProblemCards';
 import Systems from './components/Systems';
 import Process from './components/Process';
-import Solutions from './components/Solutions';
 import AuditPage from './components/AuditPage';
 import Footer from './components/Footer';
 import VoiceAgentsPage from './components/VoiceAgentsPage';
@@ -67,7 +66,6 @@ function HomePage() {
       <ProblemCards />
       <Systems />
       <Process />
-      <Solutions />
     </main>
   );
 }
