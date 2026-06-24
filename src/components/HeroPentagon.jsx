@@ -170,30 +170,31 @@ export default function HeroSection() {
 
               
             </Link>
-            <motion.a 
-              href="#systems" 
-              style={{ 
-                color: 'var(--text-main)', 
-                textDecoration: 'none', 
-                fontWeight: 600, 
-                display: 'inline-flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                padding: '0.9rem 2rem', 
-                borderRadius: '999px',
-                border: '1px solid rgba(255,255,255,0.1)',
-                background: 'transparent'
-              }} 
-              whileHover={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                borderColor: 'rgba(255, 255, 255, 0.2)',
-                boxShadow: '0 0 25px rgba(255, 255, 255, 0.1)'
-              }}
-              transition={{ duration: 0.3 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              See Our Systems
-            </motion.a>
+            <Link to="/revenue-systems" style={{ textDecoration: 'none' }}>
+              <motion.div 
+                style={{ 
+                  color: 'var(--text-main)', 
+                  textDecoration: 'none', 
+                  fontWeight: 600, 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  padding: '0.9rem 2rem', 
+                  borderRadius: '999px',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'transparent'
+                }} 
+                whileHover={{ 
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  borderColor: 'rgba(255, 255, 255, 0.2)',
+                  boxShadow: '0 0 25px rgba(255, 255, 255, 0.1)'
+                }}
+                transition={{ duration: 0.3 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                See Our Systems
+              </motion.div>
+            </Link>
           </motion.div>
         </div>
 

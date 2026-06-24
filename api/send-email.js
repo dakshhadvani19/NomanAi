@@ -1,6 +1,4 @@
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
   // Only allow POST
@@ -15,66 +13,56 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: 'Outpera Team <onboarding@resend.dev>',
-      to: [email],
-      subject: `Audit Confirmed — Welcome to Outpera, ${name}!`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-          <body style="margin:0;padding:0;background:#0a0f1e;font-family:'Segoe UI',Arial,sans-serif;">
-            <div style="max-width:560px;margin:40px auto;background:#0d1526;border-radius:16px;overflow:hidden;border:1px solid rgba(6,182,212,0.2);">
-              
-              <!-- Header -->
-              <div style="background:linear-gradient(135deg,#0ea5e9,#6366f1);padding:32px 36px;">
-                <h1 style="margin:0;color:#fff;font-size:22px;font-weight:800;letter-spacing:-0.5px;">OUTP<span style="opacity:0.85;">ERA</span> <span style="opacity:0.7;font-size:18px;">AI</span></h1>
-                <p style="margin:6px 0 0;color:rgba(255,255,255,0.8);font-size:14px;">AI Automations & Voice Agents</p>
-              </div>
-
-              <!-- Body -->
-              <div style="padding:36px;">
-                <h2 style="margin:0 0 12px;color:#fff;font-size:20px;font-weight:700;">Hi ${name}, your audit is booked! 🎉</h2>
-                <p style="margin:0 0 20px;color:rgba(255,255,255,0.7);font-size:15px;line-height:1.7;">
-                  Thank you for booking a free audit for <strong style="color:#38bdf8;">${business}</strong>. 
-                  Our team has received your request and will reach out to you within <strong style="color:#fff;">24 hours</strong>.
-                </p>
-
-                <!-- What happens next -->
-                <div style="background:rgba(6,182,212,0.07);border:1px solid rgba(6,182,212,0.15);border-radius:12px;padding:20px 24px;margin-bottom:24px;">
-                  <p style="margin:0 0 12px;color:#38bdf8;font-weight:700;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;">What happens next</p>
-                  <ul style="margin:0;padding-left:18px;color:rgba(255,255,255,0.75);font-size:14px;line-height:2;">
-                    <li>We review your current workflows</li>
-                    <li>Identify 2–3 immediate quick wins</li>
-                    <li>Map out the highest-ROI system for your business</li>
-                    <li>Give you a custom estimate — no obligations</li>
-                  </ul>
-                </div>
-
-                <!-- Contact -->
-                <p style="margin:0 0 6px;color:rgba(255,255,255,0.5);font-size:13px;">Any questions? Reach us directly:</p>
-                <p style="margin:0;color:rgba(255,255,255,0.75);font-size:14px;">📞 Tharun Naik: <a href="tel:+916362852526" style="color:#38bdf8;text-decoration:none;">+91 6362852526</a></p>
-                <p style="margin:4px 0 0;color:rgba(255,255,255,0.75);font-size:14px;">📞 Daksh Hadvani: <a href="tel:+919664696850" style="color:#38bdf8;text-decoration:none;">+91 96646 96850</a></p>
-              </div>
-
-              <!-- Footer -->
-              <div style="padding:20px 36px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
-                <p style="margin:0;color:rgba(255,255,255,0.3);font-size:12px;">© 2025 Outpera AI · outpera.vercel.app</p>
-              </div>
-
-            </div>
-          </body>
-        </html>
-      `,
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS.replace(/\s+/g, ''),
+      },
     });
 
-    if (error) {
-      console.error('[Resend] Error:', error);
-      return res.status(500).json({ error: error.message });
-    }
+    const mailOptions = {
+      from: '"Outpera Team" <' + process.env.GMAIL_USER + '>',
+      replyTo: process.env.GMAIL_USER,
+      to: email,
+      subject: `Audit Confirmed - Welcome to Outpera, ${name}`,
+      text: `Hi ${name},\n\nYour audit is booked.\n\nThank you for booking an audit for ${business}. Our team has received your request and will reach out to you within 24 hours.\n\nWhat happens next:\n- We review your current workflows\n- Identify immediate quick wins\n- Map out the best system for your business\n- Give you a custom estimate\n\nAny questions? Reach us directly:\nTharun Naik: +91 6362852526\nDaksh Hadvani: +91 9664696850\n\nOutpera AI`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333333;">
+          <h2 style="color: #000000;">Hi ${name}, your audit is booked.</h2>
+          <p style="font-size: 16px; line-height: 1.5;">
+            Thank you for booking an audit for <strong>${business}</strong>. 
+            Our team has received your request and will reach out to you within 24 hours.
+          </p>
+          
+          <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <p style="margin-top: 0; font-weight: bold;">What happens next:</p>
+            <ul style="margin-bottom: 0;">
+              <li>We review your current workflows</li>
+              <li>Identify immediate quick wins</li>
+              <li>Map out the best system for your business</li>
+              <li>Give you a custom estimate</li>
+            </ul>
+          </div>
+          
+          <p style="font-size: 14px; color: #666666; margin-bottom: 5px;">Any questions? Reach us directly:</p>
+          <p style="margin: 0; font-size: 14px;"><strong>Tharun Naik:</strong> +91 6362852526</p>
+          <p style="margin: 5px 0 0; font-size: 14px;"><strong>Daksh Hadvani:</strong> +91 96646 96850</p>
+          
+          <hr style="border: none; border-top: 1px solid #eeeeee; margin: 30px 0 20px;" />
+          <p style="font-size: 12px; color: #999999; text-align: center;">
+            &copy; 2025 Outpera AI
+          </p>
+        </div>
+      `,
+    };
 
-    return res.status(200).json({ success: true, id: data?.id });
+    const info = await transporter.sendMail(mailOptions);
+    console.log('[Nodemailer] Email sent: ', info.messageId);
+
+    return res.status(200).json({ success: true, id: info.messageId });
   } catch (err) {
-    console.error('[Resend] Unexpected error:', err);
+    console.error('[Nodemailer] Unexpected error:', err);
     return res.status(500).json({ error: 'Failed to send email' });
   }
 }
