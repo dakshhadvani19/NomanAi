@@ -168,24 +168,6 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      {/* ─── BOTTOM CALL TO ACTION ─── */}
-      <section className="section-padding container">
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <HoverCloudCard className="glass-panel" style={{ 
-            background: 'linear-gradient(135deg, rgba(14,165,233,0.1) 0%, rgba(3,7,18,0.8) 100%)', 
-            borderRadius: 32, 
-            border: '1px solid rgba(14,165,233,0.2)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '2rem',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-          </HoverCloudCard>
-        </div>
-      </section>
 
     </div>
   );
