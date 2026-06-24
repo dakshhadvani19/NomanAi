@@ -14,7 +14,7 @@ const fadeUp = (delay = 0) => ({
 });
 
 const BUSINESS_TYPES = ['Real Estate', 'Clinic', 'Coaching', 'D2C', 'Legal', 'SaaS', 'E-commerce', 'Other'];
-const BUSINESS_SIZES = ['Solo (1 person)', '2–10 employees', '11–50 employees', '51–200 employees', '200+ employees'];
+const BUSINESS_SIZES = ['Solo (1 person)', '2–10 employees', '11–50 employees', '51–200 employees', 'Specify approximate'];
 
 const inputStyle = {
   width: '100%',
@@ -260,7 +260,7 @@ const validatePhone = (v) => {
 };
 
 export default function AuditPage() {
-  const [form, setForm] = useState({ name: '', business: '', email: '', phone: '', businessType: '', businessSize: '', challenge: '' });
+  const [form, setForm] = useState({ name: '', business: '', email: '', phone: '', businessType: '', otherBusinessType: '', businessSize: '', otherBusinessSize: '', challenge: '' });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   // Track which fields the user has interacted with
@@ -409,7 +409,7 @@ export default function AuditPage() {
         {/* Badge */}
         <motion.div {...fadeUp(0)} style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '999px', background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.25)', color: 'var(--accent-primary)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
-            <Sparkles size={13} /> Free 30-Minute Audit
+            Free 30-Minute Audit
           </div>
         </motion.div>
 
@@ -556,6 +556,18 @@ export default function AuditPage() {
                         required
                         onChange={handleChange}
                       />
+                      {form.businessType === 'Other' && (
+                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} style={{ marginTop: '0.5rem' }}>
+                          <FocusInput
+                            type="text"
+                            name="otherBusinessType"
+                            placeholder="Please specify"
+                            required
+                            value={form.otherBusinessType}
+                            onChange={handleChange}
+                          />
+                        </motion.div>
+                      )}
                     </FormField>
 
                     <FormField label="Business Size *" delay={0.4}>
@@ -567,6 +579,18 @@ export default function AuditPage() {
                         required
                         onChange={handleChange}
                       />
+                      {form.businessSize === 'Specify approximate' && (
+                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} style={{ marginTop: '0.5rem' }}>
+                          <FocusInput
+                            type="text"
+                            name="otherBusinessSize"
+                            placeholder="Please specify"
+                            required
+                            value={form.otherBusinessSize}
+                            onChange={handleChange}
+                          />
+                        </motion.div>
+                      )}
                     </FormField>
                   </div>
 

@@ -78,7 +78,7 @@ export default function VoiceAgentBanner() {
 
         <div>
           <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#fff', marginBottom: '0.2rem', letterSpacing: '-0.01em' }}>
-            Looking for an AI Voice Agent? 🎙️
+            Looking for an AI Voice Agent? 
           </h3>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.5, maxWidth: '460px' }}>
             Automate your inbound &amp; outbound calls with our lightning-fast, regional-language AI voice agents.
