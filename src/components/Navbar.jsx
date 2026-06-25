@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, ArrowRight, Menu, X } from 'lucide-react';
+import { Sparkles, ArrowRight, Menu, X, Shield } from 'lucide-react';
 
 export default function Navbar() {
   const location = useLocation();
@@ -20,7 +20,8 @@ export default function Navbar() {
     { name: 'Revenue Systems', path: '/revenue-systems' },
     { name: 'AI Voice Agents', path: '/voice-agents' },
     { name: 'Solutions', path: '/solutions' },
-    { name: 'Contact', path: '/audit' }
+    { name: 'Contact', path: '/audit' },
+    { name: 'Admin Panel', path: '/client-portal', icon: Shield },
   ];
 
   const activePath = navItems.some((item) => item.path === location.pathname)
@@ -134,6 +135,8 @@ export default function Navbar() {
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
             const isHovered = hoveredPath === item.path;
+            const isAdminPanel = item.path === '/client-portal';
+            const Icon = item.icon;
 
             return (
               <Link 
@@ -146,14 +149,20 @@ export default function Navbar() {
                   padding: '0.5rem 1.1rem',
                   textDecoration: 'none', 
                   fontSize: '0.85rem',
-                  color: isActive ? '#fff' : 'rgba(255,255,255,0.6)',
+                  color: isActive
+                    ? (isAdminPanel ? '#06b6d4' : '#fff')
+                    : isAdminPanel
+                      ? 'rgba(6,182,212,0.7)'
+                      : 'rgba(255,255,255,0.6)',
                   transition: 'color 0.2s',
                   display: 'flex',
                   alignItems: 'center',
+                  gap: '0.35rem',
                   outline: 'none',
                   zIndex: 2
                 }}
               >
+                {Icon && <Icon size={13} strokeWidth={2.5} />}
                 {/* Liquid Text Stretch Effect */}
                 <motion.span 
                   animate={{ 
@@ -268,7 +277,11 @@ export default function Navbar() {
                 to={item.path}
                 onClick={() => setIsMobileMenuOpen(false)}
                 style={{
-                  color: location.pathname === item.path ? '#fff' : 'rgba(255,255,255,0.7)',
+                  color: location.pathname === item.path
+                    ? (item.path === '/client-portal' ? '#06b6d4' : '#fff')
+                    : item.path === '/client-portal'
+                      ? 'rgba(6,182,212,0.75)'
+                      : 'rgba(255,255,255,0.7)',
                   textDecoration: 'none',
                   fontSize: '1.1rem',
                   fontWeight: 600,
@@ -276,10 +289,14 @@ export default function Navbar() {
                   borderBottom: '1px solid rgba(255,255,255,0.05)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  gap: '0.5rem',
                 }}
               >
-                {item.name}
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {item.icon && <item.icon size={16} strokeWidth={2.5} />}
+                  {item.name}
+                </span>
                 <ArrowRight size={16} opacity={0.5} />
               </Link>
             ))}

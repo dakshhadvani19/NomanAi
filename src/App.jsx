@@ -18,6 +18,7 @@ import VoiceAgentsPage from './components/VoiceAgentsPage';
 import RevenueSystemsPage from './components/RevenueSystemsPage';
 import SolutionsPage from './components/SolutionsPage';
 import ScrollToTop from './components/ScrollToTop';
+import ClientPortal from './components/ClientPortal';
 
 const homeSchema = {
   '@context': 'https://schema.org',
@@ -88,6 +89,7 @@ function App() {
             <Route path="/voice-agents" element={<VoiceAgentsPage />} />
             <Route path="/revenue-systems" element={<RevenueSystemsPage />} />
             <Route path="/solutions" element={<SolutionsPage />} />
+            <Route path="/client-portal" element={<ClientPortal />} />
           </Routes>
         </div>
         <Footer />
