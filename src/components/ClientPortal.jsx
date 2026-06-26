@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { auth, db } from '../firebase';
 import {
-  GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged,
+  GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged,
 } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import SEO from './SEO';
@@ -372,7 +372,7 @@ function SignInScreen({ onSignIn, loading, error }) {
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
           )}
-          {loading ? 'Redirecting to Google…' : 'Sign in with Google'}
+          {loading ? 'Signing in…' : 'Sign in with Google'}
         </button>
 
         <p style={{ marginTop: '1.5rem', fontSize: '0.73rem', color: 'rgba(255,255,255,0.28)', lineHeight: 1.6 }}>
@@ -464,67 +464,35 @@ export default function ClientPortal() {
   const [callsError, setCallsError]     = useState(null);
 
   // ── Auth listener ──────────────────────────────────────────────────────────
-  // We use a ref to gate onAuthStateChanged until getRedirectResult has resolved.
-  // Without this, onAuthStateChanged fires with null BEFORE Firebase processes the
-  // redirect token — causing a false 'unauthenticated' flash that sticks forever.
-  const redirectResolvedRef = useRef(false);
 
   useEffect(() => {
-    let unsub = () => {};
-
-    const startAuthListener = () => {
-      unsub = onAuthStateChanged(auth, async (fbUser) => {
-        if (!redirectResolvedRef.current) return; // still waiting on redirect result
-        if (fbUser) {
-          setUser(fbUser);
-          setPageState('checking_access');
-          try {
-            const q = query(
-              collection(db, 'agents'),
-              where('allowedEmails', 'array-contains', fbUser.email)
-            );
-            const snap = await getDocs(q);
-            if (snap.empty) {
-              setPageState('unauthorized');
-            } else {
-              setClientRecord(snap.docs[0].data());
-              setPageState('ready');
-            }
-          } catch (err) {
-            console.error('[Portal] Firestore access check failed:', err);
+    const unsub = onAuthStateChanged(auth, async (fbUser) => {
+      if (fbUser) {
+        setUser(fbUser);
+        setPageState('checking_access');
+        try {
+          const q = query(
+            collection(db, 'agents'),
+            where('allowedEmails', 'array-contains', fbUser.email)
+          );
+          const snap = await getDocs(q);
+          if (snap.empty) {
             setPageState('unauthorized');
+          } else {
+            setClientRecord(snap.docs[0].data());
+            setPageState('ready');
           }
-        } else {
-          setUser(null);
-          setClientRecord(null);
-          setPageState('unauthenticated');
+        } catch (err) {
+          console.error('[Portal] Firestore access check failed:', err);
+          setPageState('unauthorized');
         }
-      });
-    };
-
-    // 1. Resolve any pending redirect FIRST, then start the auth listener.
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result) {
-          console.log('[Portal] Redirect sign-in completed for:', result.user?.email);
-        }
-      })
-      .catch((err) => {
-        // Ignore "no pending redirect" codes — they fire on every normal page load
-        const ignored = ['auth/no-current-user', 'auth/null-user', 'auth/no-auth-event'];
-        if (!ignored.includes(err.code)) {
-          console.error('[Portal] Redirect result error:', err.code, err.message);
-          setAuthError('Sign-in failed. Please try again.');
-        }
-      })
-      .finally(() => {
-        // Gate is now open — let onAuthStateChanged handle state
-        redirectResolvedRef.current = true;
-        startAuthListener();
-      });
-
-    return () => unsub();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      } else {
+        setUser(null);
+        setClientRecord(null);
+        setPageState('unauthenticated');
+      }
+    });
+    return unsub;
   }, []);
 
   // ── Initial data load when portal becomes ready ────────────────────────────
@@ -577,16 +545,19 @@ export default function ClientPortal() {
 
   // ── Handlers ──────────────────────────────────────────────────────────────
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     setAuthError('');
     setPageState('authenticating');
-    // Use redirect flow — works across all browsers, popup blockers, and
-    // cross-origin contexts (unlike signInWithPopup which gets auto-closed).
-    signInWithRedirect(auth, googleProvider).catch((err) => {
-      console.error('[Portal] Redirect initiation error:', err);
-      setAuthError('Sign-in failed. Please try again.');
+    try {
+      await signInWithPopup(auth, googleProvider);
+      // onAuthStateChanged will fire automatically and handle the rest
+    } catch (err) {
+      console.error('[Portal] Sign-in error:', err.code, err.message);
+      const cancelled = err.code === 'auth/popup-closed-by-user'
+        || err.code === 'auth/cancelled-popup-request';
+      setAuthError(cancelled ? '' : 'Sign-in failed. Please try again.');
       setPageState('unauthenticated');
-    });
+    }
   };
 
   const handleSignOut = async () => {
