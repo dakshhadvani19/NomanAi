@@ -300,87 +300,211 @@ function StatCard({ icon, label, value, delay, accentColor = '#06b6d4' }) {
 // ─── SignInScreen ─────────────────────────────────────────────────────────────
 
 function SignInScreen({ onSignIn, loading, error }) {
+  const [isHoveringGoogle, setIsHoveringGoogle] = useState(false);
+
   return (
-    <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
+    <main style={{
+      minHeight: '100vh',
+      backgroundColor: '#f8f9fa',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '1.5rem',
+      position: 'relative',
+      fontFamily: 'sans-serif',
+      color: 'black',
+      overflow: 'hidden'
+    }}>
+      {/* Animated Background Shapes */}
+      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+        {/* Blue Square */}
+        <motion.div
+          animate={{
+            y: [0, 80, -40, 0],
+            x: [0, 50, -30, 0],
+            rotate: [0, 90, 180, 360]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            position: 'absolute', top: '10%', left: '5%',
+            width: 'clamp(8rem, 15vw, 14rem)', height: 'clamp(8rem, 15vw, 14rem)',
+            backgroundColor: '#00d3ff',
+            border: '3px solid black',
+            boxShadow: '8px 8px 0px 0px rgba(0,0,0,1)',
+            opacity: 0.8
+          }}
+        />
+        
+        {/* Green Circle */}
+        <motion.div
+          animate={{
+            y: [0, -60, 40, 0],
+            x: [0, -40, 60, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            position: 'absolute', top: '60%', left: '15%',
+            width: 'clamp(10rem, 20vw, 16rem)', height: 'clamp(10rem, 20vw, 16rem)',
+            backgroundColor: '#53e17c',
+            borderRadius: '50%',
+            border: '3px solid black',
+            boxShadow: '8px 8px 0px 0px rgba(0,0,0,1)',
+            opacity: 0.8
+          }}
+        />
+
+        {/* Yellow Pill */}
+        <motion.div
+          animate={{
+            y: [0, 50, -50, 0],
+            x: [0, 60, -40, 0],
+            rotate: [0, -45, -90, -180, -360]
+          }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            position: 'absolute', top: '15%', right: '5%',
+            width: 'clamp(12rem, 25vw, 18rem)', height: 'clamp(5rem, 10vw, 7rem)',
+            backgroundColor: '#ffc82e',
+            borderRadius: '9999px',
+            border: '3px solid black',
+            boxShadow: '8px 8px 0px 0px rgba(0,0,0,1)',
+            opacity: 0.8
+          }}
+        />
+
+        {/* Orange Rectangle with rounded corners */}
+        <motion.div
+          animate={{
+            y: [0, -70, 30, 0],
+            x: [0, -50, 20, 0],
+            rotate: [0, 20, 90, 180, 360]
+          }}
+          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            position: 'absolute', bottom: '10%', right: '10%',
+            width: 'clamp(12rem, 25vw, 18rem)', height: 'clamp(6rem, 12vw, 8rem)',
+            backgroundColor: '#ff7139',
+            border: '3px solid black',
+            boxShadow: '8px 8px 0px 0px rgba(0,0,0,1)',
+            borderRadius: '1.5rem',
+            opacity: 0.8
+          }}
+        />
+      </div>
+
+      {/* Main Container */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          background: 'rgba(12, 17, 35, 0.75)',
-          border: '1px solid rgba(255,255,255,0.08)',
-          borderRadius: 24, padding: '3rem',
-          maxWidth: 420, width: '100%',
-          textAlign: 'center',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
-          boxShadow: '0 40px 80px rgba(0,0,0,0.5)',
+          width: '100%', maxWidth: '28rem',
+          backgroundColor: 'white',
+          border: '3px solid black',
+          padding: 'clamp(2rem, 5vw, 3rem)',
+          boxShadow: '12px 12px 0px 0px rgba(0,0,0,1)',
+          zIndex: 10,
+          position: 'relative',
+          overflow: 'hidden'
         }}
       >
+        {/* Top decorative bar */}
         <div style={{
-          width: 64, height: 64, borderRadius: 18, margin: '0 auto 1.5rem',
-          background: 'rgba(6,182,212,0.12)', border: '1px solid rgba(6,182,212,0.2)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>
-          <Shield size={28} color="#06b6d4" />
+          position: 'absolute', top: 0, left: 0, width: '100%', height: '0.5rem',
+          backgroundColor: '#ff7139',
+          borderBottom: '2px solid black'
+        }} />
+
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <h1 style={{
+            fontSize: 'clamp(2.25rem, 5vw, 3rem)',
+            fontWeight: 900,
+            textTransform: 'uppercase',
+            letterSpacing: '-0.05em',
+            marginBottom: '1rem',
+            color: 'black'
+          }}>
+            Admin Panel
+          </h1>
+          <p style={{ fontSize: '1.125rem', color: '#4b5563', fontWeight: 500 }}>
+            Sign in with your registered Google account to access your voice agent dashboard.
+          </p>
         </div>
 
-        <h1 style={{ fontSize: '1.65rem', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '0.7rem' }}>
-          Admin Panel
-        </h1>
-        <p style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.65, marginBottom: '2rem' }}>
-          Sign in with your registered Google account to access your voice agent dashboard.
-        </p>
-
         {error && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{
-              padding: '11px 15px', borderRadius: 12, marginBottom: '1.25rem',
-              background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)',
-              color: '#f87171', fontSize: '0.82rem',
-            }}
-          >
+          <div style={{
+            padding: '12px 16px', borderRadius: '8px', marginBottom: '1.5rem',
+            backgroundColor: '#fee2e2', border: '2px solid #ef4444',
+            color: '#b91c1c', fontSize: '0.9rem', fontWeight: 600, textAlign: 'center'
+          }}>
             {error}
-          </motion.div>
+          </div>
         )}
 
-        <button
-          onClick={onSignIn}
-          disabled={loading}
-          style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12,
-            width: '100%', padding: '13px 20px', borderRadius: 13,
-            border: '1px solid rgba(255,255,255,0.1)', cursor: loading ? 'not-allowed' : 'pointer',
-            background: loading ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.06)',
-            color: loading ? 'rgba(255,255,255,0.35)' : '#fff',
-            fontSize: '0.93rem', fontWeight: 600, fontFamily: 'inherit',
-            transition: 'background 0.2s',
-          }}
-          onMouseEnter={e => { if (!loading) e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
-          onMouseLeave={e => { if (!loading) e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
-        >
-          {loading ? (
-            <Spinner size={18} />
-          ) : (
-            /* Google "G" logo */
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-          )}
-          {loading ? 'Signing in…' : 'Sign in with Google'}
-        </button>
+        <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+          <button
+            onClick={onSignIn}
+            disabled={loading}
+            onMouseEnter={() => !loading && setIsHoveringGoogle(true)}
+            onMouseLeave={() => setIsHoveringGoogle(false)}
+            style={{
+              position: 'relative',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#f9fafb',
+              padding: '1rem 1.5rem',
+              borderRadius: '0.75rem',
+              fontWeight: 700,
+              fontSize: '1.125rem',
+              color: 'black',
+              overflow: 'hidden',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              border: '2px solid black',
+              boxShadow: isHoveringGoogle ? '6px 6px 0px 0px rgba(0,0,0,1)' : '4px 4px 0px 0px rgba(0,0,0,1)',
+              transform: loading ? 'none' : (isHoveringGoogle ? 'scale(1.02)' : 'scale(1)'),
+              transition: 'transform 0.15s, box-shadow 0.15s',
+              width: '100%'
+            }}
+          >
+            {/* Animated 4-color Background Hover State */}
+            <div style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%',
+              opacity: isHoveringGoogle ? 1 : 0,
+              transition: 'opacity 0.5s',
+              overflow: 'hidden', zIndex: 0, borderRadius: '0.75rem'
+            }}>
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                style={{
+                  width: '200%', height: '200%',
+                  position: 'absolute', top: '-50%', left: '-50%',
+                  background: 'conic-gradient(from 0deg, #EA4335, #FBBC05, #34A853, #4285F4, #EA4335)'
+                }}
+              />
+              <div style={{ position: 'absolute', inset: '4px', backgroundColor: 'white', borderRadius: '0.5rem', zIndex: 0 }} />
+            </div>
 
-        <p style={{ marginTop: '1.5rem', fontSize: '0.73rem', color: 'rgba(255,255,255,0.28)', lineHeight: 1.6 }}>
-          Access is restricted to registered client accounts.<br />
-          Contact the Outpera team to get access.
-        </p>
+            <span style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              {loading ? (
+                <Spinner size={24} color="#000" />
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" style={{ width: '1.5rem', height: '1.5rem' }}>
+                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                  <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.9c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                  <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                  <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                  <path fill="none" d="M0 0h48v48H0z"/>
+                </svg>
+              )}
+              {loading ? 'Signing in…' : 'Sign in with Google'}
+            </span>
+          </button>
+        </div>
       </motion.div>
-    </div>
+    </main>
   );
 }
 
