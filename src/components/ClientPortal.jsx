@@ -464,55 +464,66 @@ export default function ClientPortal() {
   const [callsError, setCallsError]     = useState(null);
 
   // ── Auth listener ──────────────────────────────────────────────────────────
+  // We use a ref to gate onAuthStateChanged until getRedirectResult has resolved.
+  // Without this, onAuthStateChanged fires with null BEFORE Firebase processes the
+  // redirect token — causing a false 'unauthenticated' flash that sticks forever.
+  const redirectResolvedRef = useRef(false);
 
   useEffect(() => {
-    // Handle redirect result first (when user returns from Google sign-in page)
-    getRedirectResult(auth)
-      .then((result) => {
-        // result is null if this page load was NOT a redirect return
-        // Firebase's onAuthStateChanged below handles the actual session
-        if (result) {
-          console.log('[Portal] Redirect sign-in successful for:', result.user.email);
-        }
-      })
-      .catch((err) => {
-        if (err.code !== 'auth/no-current-user' && err.code !== 'auth/null-user') {
-          console.error('[Portal] Redirect result error:', err.code);
-          setAuthError('Sign-in failed. Please try again.');
+    let unsub = () => {};
+
+    const startAuthListener = () => {
+      unsub = onAuthStateChanged(auth, async (fbUser) => {
+        if (!redirectResolvedRef.current) return; // still waiting on redirect result
+        if (fbUser) {
+          setUser(fbUser);
+          setPageState('checking_access');
+          try {
+            const q = query(
+              collection(db, 'agents'),
+              where('allowedEmails', 'array-contains', fbUser.email)
+            );
+            const snap = await getDocs(q);
+            if (snap.empty) {
+              setPageState('unauthorized');
+            } else {
+              setClientRecord(snap.docs[0].data());
+              setPageState('ready');
+            }
+          } catch (err) {
+            console.error('[Portal] Firestore access check failed:', err);
+            setPageState('unauthorized');
+          }
+        } else {
+          setUser(null);
+          setClientRecord(null);
           setPageState('unauthenticated');
         }
       });
+    };
 
-    const unsub = onAuthStateChanged(auth, async (fbUser) => {
-      if (fbUser) {
-        setUser(fbUser);
-        setPageState('checking_access');
-        try {
-          const q = query(
-            collection(db, 'agents'),
-            where('allowedEmails', 'array-contains', fbUser.email)
-          );
-          const snap = await getDocs(q);
-          if (snap.empty) {
-            setPageState('unauthorized');
-          } else {
-            setClientRecord(snap.docs[0].data());
-            setPageState('ready');
-          }
-        } catch (err) {
-          console.error('[Portal] Firestore access check failed:', err);
-          setPageState('unauthorized');
+    // 1. Resolve any pending redirect FIRST, then start the auth listener.
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result) {
+          console.log('[Portal] Redirect sign-in completed for:', result.user?.email);
         }
-      } else {
-        setUser(null);
-        setClientRecord(null);
-        // Only set unauthenticated if we are not in the middle of redirect
-        if (pageState !== 'authenticating') {
-          setPageState('unauthenticated');
+      })
+      .catch((err) => {
+        // Ignore "no pending redirect" codes — they fire on every normal page load
+        const ignored = ['auth/no-current-user', 'auth/null-user', 'auth/no-auth-event'];
+        if (!ignored.includes(err.code)) {
+          console.error('[Portal] Redirect result error:', err.code, err.message);
+          setAuthError('Sign-in failed. Please try again.');
         }
-      }
-    });
-    return unsub;
+      })
+      .finally(() => {
+        // Gate is now open — let onAuthStateChanged handle state
+        redirectResolvedRef.current = true;
+        startAuthListener();
+      });
+
+    return () => unsub();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
