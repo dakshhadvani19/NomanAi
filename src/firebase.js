@@ -1,12 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
-// In Vite, environment variables are accessed via import.meta.env
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAABi3l26Qxq02OD3k2v_c-rMMEye2-X88",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAABi3126QxqO2OD3k2v_c-rMMEye2-X88",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "outpero-b5cdf.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "outpero-b5cdf",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "outpero-b5cdf.firebasestorage.app",
@@ -17,7 +15,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 // Initialize Firebase services
 export const auth = getAuth(app);

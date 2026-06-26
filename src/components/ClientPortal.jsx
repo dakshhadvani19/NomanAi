@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { auth, db } from '../firebase';
 import {
-  GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged,
+  GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged,
 } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import SEO from './SEO';
@@ -372,7 +372,7 @@ function SignInScreen({ onSignIn, loading, error }) {
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
           )}
-          {loading ? 'Signing in…' : 'Sign in with Google'}
+          {loading ? 'Redirecting to Google…' : 'Sign in with Google'}
         </button>
 
         <p style={{ marginTop: '1.5rem', fontSize: '0.73rem', color: 'rgba(255,255,255,0.28)', lineHeight: 1.6 }}>
@@ -466,6 +466,23 @@ export default function ClientPortal() {
   // ── Auth listener ──────────────────────────────────────────────────────────
 
   useEffect(() => {
+    // Handle redirect result first (when user returns from Google sign-in page)
+    getRedirectResult(auth)
+      .then((result) => {
+        // result is null if this page load was NOT a redirect return
+        // Firebase's onAuthStateChanged below handles the actual session
+        if (result) {
+          console.log('[Portal] Redirect sign-in successful for:', result.user.email);
+        }
+      })
+      .catch((err) => {
+        if (err.code !== 'auth/no-current-user' && err.code !== 'auth/null-user') {
+          console.error('[Portal] Redirect result error:', err.code);
+          setAuthError('Sign-in failed. Please try again.');
+          setPageState('unauthenticated');
+        }
+      });
+
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
         setUser(fbUser);
@@ -489,10 +506,14 @@ export default function ClientPortal() {
       } else {
         setUser(null);
         setClientRecord(null);
-        setPageState('unauthenticated');
+        // Only set unauthenticated if we are not in the middle of redirect
+        if (pageState !== 'authenticating') {
+          setPageState('unauthenticated');
+        }
       }
     });
     return unsub;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ── Initial data load when portal becomes ready ────────────────────────────
@@ -545,16 +566,16 @@ export default function ClientPortal() {
 
   // ── Handlers ──────────────────────────────────────────────────────────────
 
-  const handleSignIn = async () => {
+  const handleSignIn = () => {
     setAuthError('');
     setPageState('authenticating');
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-      const cancelled = err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request';
-      setAuthError(cancelled ? 'Sign-in cancelled.' : 'Sign-in failed. Please try again.');
+    // Use redirect flow — works across all browsers, popup blockers, and
+    // cross-origin contexts (unlike signInWithPopup which gets auto-closed).
+    signInWithRedirect(auth, googleProvider).catch((err) => {
+      console.error('[Portal] Redirect initiation error:', err);
+      setAuthError('Sign-in failed. Please try again.');
       setPageState('unauthenticated');
-    }
+    });
   };
 
   const handleSignOut = async () => {
