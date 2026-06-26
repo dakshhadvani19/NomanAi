@@ -30,3 +30,8 @@ dist-ssr
 
 .vercel
 .env*.local
+
+# Service account / secrets — NEVER commit these
+admin_access.json
+add-authorized-domain.js
+add-client.js
