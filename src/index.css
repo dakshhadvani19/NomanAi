@@ -487,3 +487,259 @@ html, body {
     padding: 1.75rem !important;
   }
 }
+
+/* ============================================================
+   PAGE LOADER  —  UIverse by Nawsome, adapted for Outpera
+   Future white neo-brutalist theme:
+     background  : #f8f9fa  (white)
+     primary1    : #00d3ff  (cyan  — dot color when pushed)
+     primary2    : #ff7139  (orange — secondary push color)
+     bg (dot bg) : #f0f0f0  (very light gray resting state of dot)
+   ============================================================ */
+
+/* CSS variables scoped to the loader */
+.outpera-pl {
+  --bg:        #f0f0f0;
+  --primary1:  #00d3ff;
+  --primary2:  #ff7139;
+  --fg-t:      rgba(0, 0, 0, 0.55);
+  --trans-dur: 0.3s;
+
+  box-shadow:
+    2em 0 2em rgba(0, 0, 0, 0.08) inset,
+    -2em 0 2em rgba(255, 255, 255, 0.6) inset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transform: rotateX(30deg) rotateZ(45deg);
+  width: 14em;
+  height: 14em;
+  color: #111;
+  font-family: 'Outfit', sans-serif;
+}
+
+.outpera-pl,
+.outpera-pl__dot {
+  border-radius: 50%;
+}
+
+.outpera-pl__dot {
+  animation-name: outpera-shadow724;
+  /* Stronger, visible shadow on white background */
+  box-shadow: 0.1em 0.1em 0 0.1em rgba(0,0,0,0.25), 0.3em 0 0.4em rgba(0,0,0,0.18);
+  top: calc(50% - 0.75em);
+  left: calc(50% - 0.75em);
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.outpera-pl__dot,
+.outpera-pl__dot::before,
+.outpera-pl__dot::after {
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  position: absolute;
+}
+
+.outpera-pl__dot::before,
+.outpera-pl__dot::after {
+  content: "";
+  display: block;
+  left: 0;
+  width: inherit;
+  transition: background-color var(--trans-dur);
+}
+
+.outpera-pl__dot::before {
+  animation-name: outpera-pushInOut1724;
+  background-color: var(--bg);
+  border-radius: inherit;
+  /* Subtle inset shine on white */
+  box-shadow: 0.05em 0 0.15em rgba(0, 211, 255, 0.35) inset;
+  height: inherit;
+  z-index: 1;
+}
+
+.outpera-pl__dot::after {
+  animation-name: outpera-pushInOut2724;
+  background-color: var(--primary1);
+  border-radius: 0.75em;
+  /* Bright cyan glow inside the colored portion */
+  box-shadow:
+    0.1em 0.3em 0.25em rgba(255, 255, 255, 0.7) inset,
+    0 -0.4em 0.2em rgba(0, 150, 200, 0.35) inset,
+    0 -1em 0.25em rgba(0, 0, 0, 0.12) inset;
+  bottom: 0;
+  clip-path: polygon(0 75%, 100% 75%, 100% 100%, 0 100%);
+  height: 3em;
+  transform: rotate(-45deg);
+  transform-origin: 50% 2.25em;
+}
+
+/* Position each of the 12 dots around the ring */
+.outpera-pl__dot:nth-child(1)  { transform: rotate(0deg)    translateX(5em) rotate(0deg);   z-index: 5; }
+.outpera-pl__dot:nth-child(2)  { transform: rotate(-30deg)  translateX(5em) rotate(30deg);  z-index: 4; }
+.outpera-pl__dot:nth-child(3)  { transform: rotate(-60deg)  translateX(5em) rotate(60deg);  z-index: 3; }
+.outpera-pl__dot:nth-child(4)  { transform: rotate(-90deg)  translateX(5em) rotate(90deg);  z-index: 2; }
+.outpera-pl__dot:nth-child(5)  { transform: rotate(-120deg) translateX(5em) rotate(120deg); z-index: 1; }
+.outpera-pl__dot:nth-child(6)  { transform: rotate(-150deg) translateX(5em) rotate(150deg); z-index: 1; }
+.outpera-pl__dot:nth-child(7)  { transform: rotate(-180deg) translateX(5em) rotate(180deg); z-index: 2; }
+.outpera-pl__dot:nth-child(8)  { transform: rotate(-210deg) translateX(5em) rotate(210deg); z-index: 3; }
+.outpera-pl__dot:nth-child(9)  { transform: rotate(-240deg) translateX(5em) rotate(240deg); z-index: 4; }
+.outpera-pl__dot:nth-child(10) { transform: rotate(-270deg) translateX(5em) rotate(270deg); z-index: 5; }
+.outpera-pl__dot:nth-child(11) { transform: rotate(-300deg) translateX(5em) rotate(300deg); z-index: 6; }
+.outpera-pl__dot:nth-child(12) { transform: rotate(-330deg) translateX(5em) rotate(330deg); z-index: 6; }
+
+/* Staggered animation delays (unchanged from original) */
+.outpera-pl__dot:nth-child(1),  .outpera-pl__dot:nth-child(1)::before,  .outpera-pl__dot:nth-child(1)::after  { animation-delay: 0s; }
+.outpera-pl__dot:nth-child(2),  .outpera-pl__dot:nth-child(2)::before,  .outpera-pl__dot:nth-child(2)::after  { animation-delay: -0.1666666667s; }
+.outpera-pl__dot:nth-child(3),  .outpera-pl__dot:nth-child(3)::before,  .outpera-pl__dot:nth-child(3)::after  { animation-delay: -0.3333333333s; }
+.outpera-pl__dot:nth-child(4),  .outpera-pl__dot:nth-child(4)::before,  .outpera-pl__dot:nth-child(4)::after  { animation-delay: -0.5s; }
+.outpera-pl__dot:nth-child(5),  .outpera-pl__dot:nth-child(5)::before,  .outpera-pl__dot:nth-child(5)::after  { animation-delay: -0.6666666667s; }
+.outpera-pl__dot:nth-child(6),  .outpera-pl__dot:nth-child(6)::before,  .outpera-pl__dot:nth-child(6)::after  { animation-delay: -0.8333333333s; }
+.outpera-pl__dot:nth-child(7),  .outpera-pl__dot:nth-child(7)::before,  .outpera-pl__dot:nth-child(7)::after  { animation-delay: -1s; }
+.outpera-pl__dot:nth-child(8),  .outpera-pl__dot:nth-child(8)::before,  .outpera-pl__dot:nth-child(8)::after  { animation-delay: -1.1666666667s; }
+.outpera-pl__dot:nth-child(9),  .outpera-pl__dot:nth-child(9)::before,  .outpera-pl__dot:nth-child(9)::after  { animation-delay: -1.3333333333s; }
+.outpera-pl__dot:nth-child(10), .outpera-pl__dot:nth-child(10)::before, .outpera-pl__dot:nth-child(10)::after { animation-delay: -1.5s; }
+.outpera-pl__dot:nth-child(11), .outpera-pl__dot:nth-child(11)::before, .outpera-pl__dot:nth-child(11)::after { animation-delay: -1.6666666667s; }
+.outpera-pl__dot:nth-child(12), .outpera-pl__dot:nth-child(12)::before, .outpera-pl__dot:nth-child(12)::after { animation-delay: -1.8333333333s; }
+
+.outpera-pl__text {
+  font-size: 0.75em;
+  font-weight: 700;
+  max-width: 5rem;
+  position: relative;
+  color: rgba(0, 0, 0, 0.6);
+  text-shadow: 0 0 0.15em rgba(0, 211, 255, 0.4);
+  transform: rotateZ(-45deg);
+}
+
+/* ── Full-screen loader container ── */
+.outpera-loader-root {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  overflow: hidden;
+}
+
+/* ── Floating background shapes (Xinity palette) ── */
+.outpera-loader-shape {
+  position: absolute;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.outpera-loader-shape--square {
+  width: clamp(6rem, 12vw, 10rem);
+  height: clamp(6rem, 12vw, 10rem);
+  background-color: #00d3ff;
+  border: 3px solid black;
+  box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+  top: 8%;
+  left: 6%;
+}
+
+.outpera-loader-shape--circle {
+  width: clamp(8rem, 15vw, 13rem);
+  height: clamp(8rem, 15vw, 13rem);
+  background-color: #53e17c;
+  border: 3px solid black;
+  box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+  border-radius: 50%;
+  bottom: 10%;
+  left: 12%;
+}
+
+.outpera-loader-shape--pill {
+  width: clamp(10rem, 20vw, 16rem);
+  height: clamp(4rem, 7vw, 6rem);
+  background-color: #ffc82e;
+  border: 3px solid black;
+  box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+  border-radius: 9999px;
+  top: 12%;
+  right: 6%;
+}
+
+.outpera-loader-shape--rectangle {
+  width: clamp(12rem, 25vw, 18rem);
+  height: clamp(6rem, 12vw, 8rem);
+  background-color: #ff7139;
+  border: 3px solid black;
+  box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+  border-radius: 1.5rem;
+  bottom: 10%;
+  right: 10%;
+}
+
+/* ── Brand label under the spinner ── */
+.outpera-loader-brand {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+/* ============================================================
+   PAGE LOADER KEYFRAMES  (original UIverse animations, unchanged)
+   ============================================================ */
+
+@keyframes outpera-shadow724 {
+  from {
+    animation-timing-function: ease-in;
+    box-shadow: 0.1em 0.1em 0 0.1em rgba(0,0,0,0.2), 0.3em 0 0.3em rgba(0,0,0,0.15);
+  }
+  25% {
+    animation-timing-function: ease-out;
+    box-shadow: 0.1em 0.1em 0 0.1em rgba(0,0,0,0.25), 0.8em 0 0.8em rgba(0,0,0,0.28);
+  }
+  50%, to {
+    box-shadow: 0.1em 0.1em 0 0.1em rgba(0,0,0,0.2), 0.3em 0 0.3em rgba(0,0,0,0.15);
+  }
+}
+
+@keyframes outpera-pushInOut1724 {
+  from {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--bg);
+    transform: translate(0, 0);
+  }
+  25% {
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    background-color: var(--primary2);   /* orange on the push-out burst */
+    transform: translate(-71%, -71%);
+  }
+  50%, to {
+    background-color: var(--bg);
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes outpera-pushInOut2724 {
+  from {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--bg);
+    clip-path: polygon(0 75%, 100% 75%, 100% 100%, 0 100%);
+  }
+  25% {
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    background-color: var(--primary1);   /* cyan on the push-in burst */
+    clip-path: polygon(0 25%, 100% 25%, 100% 100%, 0 100%);
+  }
+  50%, to {
+    background-color: var(--bg);
+    clip-path: polygon(0 75%, 100% 75%, 100% 100%, 0 100%);
+  }
+}
